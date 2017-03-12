@@ -1,6 +1,7 @@
 package edu.itechart.contactlist.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Contact extends Entity {
     private String firstName;
@@ -13,12 +14,15 @@ public class Contact extends Entity {
     private String website;
     private String email;
     private String job;
+    private Address address;
+    private List<Phone> phones;
 
     public Contact() {
     }
 
     public Contact(long id, String firstName, String lastName, String middleName, Date birthDate, String nationality,
-                   char gender, int martialStatus, String website, String email, String job) {
+                   char gender, int martialStatus, String website, String email, String job, Address address,
+                   List<Phone> phones) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -30,6 +34,8 @@ public class Contact extends Entity {
         this.website = website;
         this.email = email;
         this.job = job;
+        this.address = address;
+        this.phones = phones;
     }
 
     public String getFirstName() {
@@ -110,5 +116,21 @@ public class Contact extends Entity {
 
     public void setJob(String job) {
         this.job = job;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(List<Phone> phones) {
+        this.phones = phones;
     }
 }

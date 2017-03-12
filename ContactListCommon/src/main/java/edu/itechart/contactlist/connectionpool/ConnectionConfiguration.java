@@ -8,6 +8,8 @@ class ConnectionConfiguration {
     private static String url = getProperty("url");
     private static String user = getProperty("user");
     private static String password = getProperty("password");
+    private static int poolCapacity = Integer.parseInt(getProperty("poolCapacity"));
+
 
     private ConnectionConfiguration() {
     }
@@ -22,6 +24,10 @@ class ConnectionConfiguration {
 
     static String getPassword() {
         return password;
+    }
+
+    static int getPoolCapacity() {
+        return poolCapacity;
     }
 
     private static String getProperty(String key) {

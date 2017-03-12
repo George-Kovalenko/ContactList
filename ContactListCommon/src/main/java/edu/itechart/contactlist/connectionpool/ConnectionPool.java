@@ -1,5 +1,6 @@
 package edu.itechart.contactlist.connectionpool;
 
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.sql.Driver;
@@ -8,10 +9,14 @@ import java.sql.SQLException;
 
 public class ConnectionPool {
     private static ConnectionPool instance;
-    private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class);
+    private static final int POOL_CAPACITY = ConnectionConfiguration.getPoolCapacity();
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
     private ConnectionPool() {
         registerDriver();
+        String url = ConnectionConfiguration.getUrl();
+        String user = ConnectionConfiguration.getUser();
+        String password = ConnectionConfiguration.getPassword();
     }
 
     public static ConnectionPool getInstance() {

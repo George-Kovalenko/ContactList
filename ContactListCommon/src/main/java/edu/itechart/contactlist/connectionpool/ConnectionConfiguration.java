@@ -1,4 +1,4 @@
-package edu.itechart.contactlist.connection;
+package edu.itechart.contactlist.connectionpool;
 
 import java.util.ResourceBundle;
 

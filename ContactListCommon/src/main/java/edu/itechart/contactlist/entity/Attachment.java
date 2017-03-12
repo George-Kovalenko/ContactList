@@ -7,16 +7,18 @@ public class Attachment extends Entity {
     private String fileName;
     private Timestamp uploadDate;
     private String comment;
+    private long contactID;
 
     public Attachment() {
     }
 
-    public Attachment(long id, String filePath, String fileName, Timestamp uploadDate, String comment) {
+    public Attachment(long id, String filePath, String fileName, Timestamp uploadDate, String comment, long contactID) {
         super(id);
         this.filePath = filePath;
         this.fileName = fileName;
         this.uploadDate = uploadDate;
         this.comment = comment;
+        this.contactID = contactID;
     }
 
     public String getFilePath() {
@@ -49,5 +51,13 @@ public class Attachment extends Entity {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public long getContactID() {
+        return contactID;
+    }
+
+    public void setContactID(long contactID) {
+        this.contactID = contactID;
     }
 }

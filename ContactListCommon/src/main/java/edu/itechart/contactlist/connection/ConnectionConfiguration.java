@@ -9,6 +9,9 @@ class ConnectionConfiguration {
     private static String user = getProperty("user");
     private static String password = getProperty("password");
 
+    private ConnectionConfiguration() {
+    }
+
     static String getUrl() {
         return url;
     }

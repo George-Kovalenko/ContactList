@@ -8,6 +8,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -17,6 +18,7 @@ public class ConnectionPool {
     private static AtomicBoolean created = new AtomicBoolean(false);
     private static AtomicBoolean released = new AtomicBoolean(false);
     private static final int POOL_CAPACITY = ConnectionConfiguration.getPoolCapacity();
+    private static final int TIME_WAIT = ConnectionConfiguration.getTimeWait();
     private static ArrayBlockingQueue<Connection> connections;
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
@@ -46,6 +48,23 @@ public class ConnectionPool {
         return instance;
     }
 
+    public static Connection getConnection() throws ConnectionPoolException {
+        if (released.get()) {
+            throw new ConnectionPoolException("Couldn't get connection when pool released");
+        }
+        try {
+            Connection connection = connections.poll(TIME_WAIT, TimeUnit.MILLISECONDS);
+            if (connection != null)  {
+                return connection;
+            } else {
+                throw new ConnectionPoolException("Timeout waiting for connection");
+            }
+        } catch (InterruptedException e) {
+            LOGGER.error("Error when waiting for connection", e);
+            return null;
+        }
+    }
+
     private static void addConnectionInPool(String url, String user, String password) {
         try {
             Connection connection = DriverManager.getConnection(url, user, password);
@@ -61,6 +80,19 @@ public class ConnectionPool {
             DriverManager.registerDriver(driver);
         } catch (SQLException e) {
             LOGGER.error("Couldn't register driver", e);
+        }
+    }
+
+    public static void releaseConnection(Connection connection) {
+        if (connection != null) {
+            try {
+                if (!connection.getAutoCommit()) {
+                    connection.rollback();
+                }
+                connections.add(connection);
+            } catch (SQLException e) {
+                LOGGER.error("Error when realising connection", e);
+            }
         }
     }
 }

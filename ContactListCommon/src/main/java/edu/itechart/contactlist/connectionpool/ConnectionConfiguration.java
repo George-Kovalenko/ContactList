@@ -9,6 +9,7 @@ class ConnectionConfiguration {
     private static String user = getProperty("user");
     private static String password = getProperty("password");
     private static int poolCapacity = Integer.parseInt(getProperty("poolCapacity"));
+    private static int timeWait = Integer.parseInt(getProperty("timeWait"));
 
 
     private ConnectionConfiguration() {
@@ -28,6 +29,10 @@ class ConnectionConfiguration {
 
     static int getPoolCapacity() {
         return poolCapacity;
+    }
+
+    static int getTimeWait() {
+        return timeWait;
     }
 
     private static String getProperty(String key) {

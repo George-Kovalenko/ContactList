@@ -8,9 +8,14 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
     private static ConnectionPool instance;
+    private static ReentrantLock locking = new ReentrantLock();
+    private static AtomicBoolean created = new AtomicBoolean(false);
+    private static AtomicBoolean released = new AtomicBoolean(false);
     private static final int POOL_CAPACITY = ConnectionConfiguration.getPoolCapacity();
     private static ArrayBlockingQueue<Connection> connections;
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
@@ -27,6 +32,17 @@ public class ConnectionPool {
     }
 
     public static ConnectionPool getInstance() {
+        if (!created.get()) {
+            locking.lock();
+            if (!created.get()) {
+                try {
+                    instance = new ConnectionPool();
+                    created.set(true);
+                } finally {
+                    locking.unlock();
+                }
+            }
+        }
         return instance;
     }
 

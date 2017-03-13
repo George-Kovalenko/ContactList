@@ -19,7 +19,7 @@ public class ConnectionPool {
     private static AtomicBoolean released = new AtomicBoolean(false);
     private static final int POOL_CAPACITY = ConnectionConfiguration.getPoolCapacity();
     private static final int TIME_WAIT = ConnectionConfiguration.getTimeWait();
-    private static ArrayBlockingQueue<Connection> connections;
+    private static ArrayBlockingQueue<ProxyConnection> connections;
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
     private ConnectionPool() {
@@ -48,12 +48,12 @@ public class ConnectionPool {
         return instance;
     }
 
-    public static Connection getConnection() throws ConnectionPoolException {
+    public static ProxyConnection getConnection() throws ConnectionPoolException {
         if (released.get()) {
             throw new ConnectionPoolException("Couldn't get connection when pool released");
         }
         try {
-            Connection connection = connections.poll(TIME_WAIT, TimeUnit.MILLISECONDS);
+            ProxyConnection connection = connections.poll(TIME_WAIT, TimeUnit.MILLISECONDS);
             if (connection != null)  {
                 return connection;
             } else {
@@ -68,7 +68,8 @@ public class ConnectionPool {
     private static void addConnectionInPool(String url, String user, String password) {
         try {
             Connection connection = DriverManager.getConnection(url, user, password);
-            connections.add(connection);
+            ProxyConnection proxyConnection = new ProxyConnection(connection);
+            connections.add(proxyConnection);
         } catch (SQLException e) {
             LOGGER.error("Couldn't connect to database", e);
         }
@@ -83,7 +84,7 @@ public class ConnectionPool {
         }
     }
 
-    public static void releaseConnection(Connection connection) {
+    public static void releaseConnection(ProxyConnection connection) {
         if (connection != null) {
             try {
                 if (!connection.getAutoCommit()) {

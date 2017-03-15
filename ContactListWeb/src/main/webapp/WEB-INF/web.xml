@@ -3,6 +3,10 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
+    <listener>
+        <listener-class>edu.itechart.contactlist.listener.ControllerListener</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>edu.itechart.contactlist.controller.Controller</servlet-class>
@@ -12,7 +16,7 @@
         <servlet-name>Controller</servlet-name>
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
-
+    
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

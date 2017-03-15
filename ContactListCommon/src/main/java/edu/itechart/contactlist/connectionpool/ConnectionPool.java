@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -28,6 +29,9 @@ public class ConnectionPool {
         String password = ConnectionConfiguration.getPassword();
         connections = new ArrayBlockingQueue<>(POOL_CAPACITY);
         for (int i = 0; i < connections.size(); i++) {
+            this.addConnectionInPool(url, user, password);
+        }
+        for (int i = connections.size(); i < POOL_CAPACITY; i++) {
             this.addConnectionInPool(url, user, password);
         }
     }
@@ -80,6 +84,19 @@ public class ConnectionPool {
         }
     }
 
+    private void deregisterDriver() {
+        Enumeration<Driver> drivers = DriverManager.getDrivers();
+        while (drivers.hasMoreElements()) {
+            Driver driver = drivers.nextElement();
+            try {
+                DriverManager.deregisterDriver(driver);
+            } catch (SQLException e) {
+                LOGGER.error("Couldn't deregister driver " + driver.toString(), e);
+            }
+        }
+
+    }
+
     public void releaseConnection(ProxyConnection connection) {
         if (connection != null) {
             try {
@@ -91,5 +108,19 @@ public class ConnectionPool {
                 LOGGER.error("Error when realising connection", e);
             }
         }
+    }
+
+    public void releasePool() {
+        while (!connections.isEmpty()) {
+            ProxyConnection connection;
+            if ((connection = connections.poll()) != null) {
+                try {
+                    connection.trueClose();
+                } catch (SQLException e) {
+                    LOGGER.error("Error when releasing pool", e);
+                }
+            }
+        }
+        deregisterDriver();
     }
 }

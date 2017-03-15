@@ -16,7 +16,6 @@ public class ConnectionPool {
     private static ConnectionPool instance;
     private static ReentrantLock locking = new ReentrantLock();
     private static AtomicBoolean created = new AtomicBoolean(false);
-    private static AtomicBoolean released = new AtomicBoolean(false);
     private static final int POOL_CAPACITY = ConnectionConfiguration.getPoolCapacity();
     private static final int TIME_WAIT = ConnectionConfiguration.getTimeWait();
     private static ArrayBlockingQueue<ProxyConnection> connections;
@@ -29,7 +28,7 @@ public class ConnectionPool {
         String password = ConnectionConfiguration.getPassword();
         connections = new ArrayBlockingQueue<>(POOL_CAPACITY);
         for (int i = 0; i < connections.size(); i++) {
-            addConnectionInPool(url, user, password);
+            this.addConnectionInPool(url, user, password);
         }
     }
 
@@ -48,10 +47,7 @@ public class ConnectionPool {
         return instance;
     }
 
-    public static ProxyConnection getConnection() throws ConnectionPoolException {
-        if (released.get()) {
-            throw new ConnectionPoolException("Couldn't get connection when pool released");
-        }
+    public ProxyConnection getConnection() throws ConnectionPoolException {
         try {
             ProxyConnection connection = connections.poll(TIME_WAIT, TimeUnit.MILLISECONDS);
             if (connection != null)  {
@@ -65,7 +61,7 @@ public class ConnectionPool {
         }
     }
 
-    private static void addConnectionInPool(String url, String user, String password) {
+    private void addConnectionInPool(String url, String user, String password) {
         try {
             Connection connection = DriverManager.getConnection(url, user, password);
             ProxyConnection proxyConnection = new ProxyConnection(connection);
@@ -84,7 +80,7 @@ public class ConnectionPool {
         }
     }
 
-    public static void releaseConnection(ProxyConnection connection) {
+    public void releaseConnection(ProxyConnection connection) {
         if (connection != null) {
             try {
                 if (!connection.getAutoCommit()) {

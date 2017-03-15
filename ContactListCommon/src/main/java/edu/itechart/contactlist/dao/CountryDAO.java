@@ -10,11 +10,7 @@ import java.sql.SQLException;
 public class CountryDAO extends AbstractDAO {
     private static final String FIND_BY_ID = "SELECT * FROM countries WHERE id=?";
 
-    public CountryDAO() {
-    }
-
-    public CountryDAO(Connection connection) {
-        super(connection);
+    public CountryDAO() throws DAOException {
     }
 
     public Country findById(long id) throws DAOException {

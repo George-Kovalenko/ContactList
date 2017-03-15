@@ -4,7 +4,7 @@ import edu.itechart.contactlist.connectionpool.ConnectionPool;
 import edu.itechart.contactlist.connectionpool.ConnectionPoolException;
 import edu.itechart.contactlist.connectionpool.ProxyConnection;
 
-public abstract class AbstractDAO implements AutoCloseable{
+public abstract class AbstractDAO implements AutoCloseable {
     protected ProxyConnection connection;
 
     public AbstractDAO() throws DAOException {

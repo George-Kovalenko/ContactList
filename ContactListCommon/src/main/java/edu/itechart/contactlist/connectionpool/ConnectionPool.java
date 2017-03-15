@@ -50,7 +50,7 @@ public class ConnectionPool {
     public ProxyConnection getConnection() throws ConnectionPoolException {
         try {
             ProxyConnection connection = connections.poll(TIME_WAIT, TimeUnit.MILLISECONDS);
-            if (connection != null)  {
+            if (connection != null) {
                 return connection;
             } else {
                 throw new ConnectionPoolException("Timeout waiting for connection");

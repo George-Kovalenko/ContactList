@@ -21,6 +21,21 @@ public class Contact extends Entity {
     }
 
     public Contact(long id, String firstName, String lastName, String middleName, Date birthDate, String nationality,
+                   char gender, int martialStatus, String website, String email, String job) {
+        super(id);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.birthDate = birthDate;
+        this.nationality = nationality;
+        this.gender = gender;
+        this.martialStatus = martialStatus;
+        this.website = website;
+        this.email = email;
+        this.job = job;
+    }
+
+    public Contact(long id, String firstName, String lastName, String middleName, Date birthDate, String nationality,
                    char gender, int martialStatus, String website, String email, String job, Address address,
                    List<Phone> phones) {
         super(id);

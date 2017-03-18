@@ -1,7 +1,7 @@
 package edu.itechart.contactlist.entity;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Contact extends Entity {
     private String firstName;
@@ -15,7 +15,7 @@ public class Contact extends Entity {
     private String email;
     private String job;
     private Address address;
-    private List<Phone> phones;
+    private ArrayList<Phone> phones;
 
     public Contact() {
     }
@@ -37,7 +37,7 @@ public class Contact extends Entity {
 
     public Contact(long id, String firstName, String lastName, String middleName, Date birthDate, String nationality,
                    char gender, int martialStatus, String website, String email, String job, Address address,
-                   List<Phone> phones) {
+                   ArrayList<Phone> phones) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -141,11 +141,11 @@ public class Contact extends Entity {
         this.address = address;
     }
 
-    public List<Phone> getPhones() {
+    public ArrayList<Phone> getPhones() {
         return phones;
     }
 
-    public void setPhones(List<Phone> phones) {
+    public void setPhones(ArrayList<Phone> phones) {
         this.phones = phones;
     }
 }

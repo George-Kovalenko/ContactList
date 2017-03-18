@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ContactDAO extends AbstractDAO {
     private static final String SELECT_ALL = "SELECT * FROM contacts";
@@ -16,12 +15,13 @@ public class ContactDAO extends AbstractDAO {
         super();
     }
 
-    public List<Contact> findAll() throws DAOException {
+    public ArrayList<Contact> findAll() throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
             ResultSet resultSet = preparedStatement.executeQuery();
-            List<Contact> contacts = new ArrayList<>();
+            ArrayList<Contact> contacts = new ArrayList<>();
+            ContactFactory contactFactory = new ContactFactory();
             while (resultSet.next()) {
-                Contact contact = new ContactFactory().createInstanceFromResultSet(resultSet);
+                Contact contact = contactFactory.createInstanceFromResultSet(resultSet);
                 contacts.add(contact);
             }
             return contacts;

@@ -5,6 +5,12 @@ public enum CommandEnum {
         {
             command = new ShowContactListCommand();
         }
+    },
+
+    SHOW_CONTACT {
+        {
+            command = new ShowContactCommand();
+        }
     };
 
     protected Command command;

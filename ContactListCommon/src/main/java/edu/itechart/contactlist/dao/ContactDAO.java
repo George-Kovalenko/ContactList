@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class ContactDAO extends AbstractDAO {
     private static final String SELECT_ALL = "SELECT * FROM contacts";
+    private static final String SELECT_BY_ID = "SELECT * FROM contacts WHERE id=?";
 
     public ContactDAO() throws DAOException {
         super();
@@ -28,7 +29,23 @@ public class ContactDAO extends AbstractDAO {
             }
             return contacts;
         } catch (SQLException e) {
-            throw new DAOException("Error in findAll()", e);
+            throw new DAOException("Error in Contact.findAll()", e);
+        }
+    }
+
+    public Contact findById(long id) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            AddressDAO addressDAO = new AddressDAO();
+            Contact contact = new Contact();
+            if (resultSet.next()) {
+                contact = new ContactFactory().createInstanceFromResultSet(resultSet);
+                contact.setAddress(addressDAO.findById(contact.getId()));
+            }
+            return contact;
+        } catch (SQLException e) {
+            throw new DAOException("Error in Contact.findById()", e);
         }
     }
 }

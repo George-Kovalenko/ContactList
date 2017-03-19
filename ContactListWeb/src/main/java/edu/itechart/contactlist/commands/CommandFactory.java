@@ -19,8 +19,8 @@ public class CommandFactory {
                 throw new CommandException(e);
             }
         } else {
-            LOGGER.error("Null command");
-            return null;
+            LOGGER.info("Default command SHOW_COMMAND_LIST");
+            return new ShowContactListCommand();
         }
     }
 }

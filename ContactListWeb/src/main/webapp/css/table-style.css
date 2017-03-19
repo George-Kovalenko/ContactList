@@ -1,0 +1,49 @@
+body {
+    font-size: 18px;
+}
+
+a {
+	text-decoration: none;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th {
+	text-align: left;
+}
+
+tbody tr:hover {
+	background-color: #C6D2F1;
+}
+
+td, th {
+	padding: 10px;
+	border: 2px solid #B8B9B6;
+}
+
+td:first-child {
+	text-align: center;
+}
+
+.column-1 {
+	width: 4%;
+}
+
+.column-2 {
+	width: 20%
+}
+
+.column-3 {
+	width: 10%;
+}
+
+.column-4 {
+	width: 32%;
+}
+
+.column-5 {
+	width: 33%;
+}

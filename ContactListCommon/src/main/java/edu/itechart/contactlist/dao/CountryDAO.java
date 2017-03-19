@@ -22,7 +22,7 @@ public class CountryDAO extends AbstractDAO {
                 return null;
             }
         } catch (SQLException e) {
-            throw new DAOException("Error in findById()", e);
+            throw new DAOException("Error in Country.findById()", e);
         }
     }
 }

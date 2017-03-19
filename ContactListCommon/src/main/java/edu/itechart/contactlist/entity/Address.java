@@ -11,6 +11,16 @@ public class Address extends Entity {
     public Address() {
     }
 
+    public Address(long id, String city, String street, int houseNumber, int flatNumber,
+                   String postcode) {
+        super(id);
+        this.city = city;
+        this.street = street;
+        this.houseNumber = houseNumber;
+        this.flatNumber = flatNumber;
+        this.postcode = postcode;
+    }
+
     public Address(long id, Country country, String city, String street, int houseNumber, int flatNumber,
                    String postcode) {
         super(id);

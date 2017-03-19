@@ -20,8 +20,10 @@ public class ContactDAO extends AbstractDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             ArrayList<Contact> contacts = new ArrayList<>();
             ContactFactory contactFactory = new ContactFactory();
+            AddressDAO addressDAO = new AddressDAO();
             while (resultSet.next()) {
                 Contact contact = contactFactory.createInstanceFromResultSet(resultSet);
+                contact.setAddress(addressDAO.findById(contact.getId()));
                 contacts.add(contact);
             }
             return contacts;

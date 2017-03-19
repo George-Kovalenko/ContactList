@@ -16,7 +16,7 @@ public abstract class AbstractDAO implements AutoCloseable {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         ConnectionPool.getInstance().releaseConnection(connection);
     }
 }

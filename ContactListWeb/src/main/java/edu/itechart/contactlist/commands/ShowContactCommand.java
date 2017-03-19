@@ -14,9 +14,8 @@ public class ShowContactCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        try {
+        try (ContactDAO contactDAO = new ContactDAO()) {
             long id = Long.parseLong(request.getParameter(REQUEST_PARAM_NAME));
-            ContactDAO contactDAO = new ContactDAO();
             Contact contact = contactDAO.findById(id);
             request.setAttribute(REQUEST_ATTR_CONTACTS, contact);
         } catch (DAOException e) {

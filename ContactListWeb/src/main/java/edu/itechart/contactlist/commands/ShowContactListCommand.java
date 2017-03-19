@@ -14,10 +14,8 @@ public class ShowContactListCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        ArrayList<Contact> contacts;
-        try {
-            ContactDAO contactDAO = new ContactDAO();
-            contacts = contactDAO.findAll();
+        try (ContactDAO contactDAO = new ContactDAO()) {
+            ArrayList<Contact> contacts = contactDAO.findAll();
             request.setAttribute(REQUEST_ATTR_CONTACTS, contacts);
         } catch (DAOException e) {
             throw new CommandException(e);

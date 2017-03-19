@@ -28,10 +28,7 @@ public class ConnectionPool {
         String user = ConnectionConfiguration.getUser();
         String password = ConnectionConfiguration.getPassword();
         connections = new ArrayBlockingQueue<>(POOL_CAPACITY);
-        for (int i = 0; i < connections.size(); i++) {
-            this.addConnectionInPool(url, user, password);
-        }
-        for (int i = connections.size(); i < POOL_CAPACITY; i++) {
+        for (int i = 0; i < POOL_CAPACITY; i++) {
             this.addConnectionInPool(url, user, password);
         }
     }

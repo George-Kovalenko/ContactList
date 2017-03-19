@@ -13,8 +13,9 @@ public class CommandFactory {
         String command = request.getParameter(PARAM_NAME);
         if (command != null) {
             try {
+                command = command.toUpperCase();
                 LOGGER.info("Command " + command);
-                return CommandEnum.valueOf(command.toUpperCase()).getCommand();
+                return CommandEnum.valueOf(command).getCommand();
             } catch (IllegalArgumentException e) {
                 throw new CommandException(e);
             }

@@ -17,11 +17,11 @@ public class ContactDAO extends AbstractDAO {
     }
 
     public ArrayList<Contact> findAll() throws DAOException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL);
+             AddressDAO addressDAO = new AddressDAO()) {
             ResultSet resultSet = preparedStatement.executeQuery();
             ArrayList<Contact> contacts = new ArrayList<>();
             ContactFactory contactFactory = new ContactFactory();
-            AddressDAO addressDAO = new AddressDAO();
             while (resultSet.next()) {
                 Contact contact = contactFactory.createInstanceFromResultSet(resultSet);
                 contact.setAddress(addressDAO.findById(contact.getId()));
@@ -34,10 +34,10 @@ public class ContactDAO extends AbstractDAO {
     }
 
     public Contact findById(long id) throws DAOException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);
+             AddressDAO addressDAO = new AddressDAO()) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            AddressDAO addressDAO = new AddressDAO();
             Contact contact = new Contact();
             if (resultSet.next()) {
                 contact = new ContactFactory().createInstanceFromResultSet(resultSet);

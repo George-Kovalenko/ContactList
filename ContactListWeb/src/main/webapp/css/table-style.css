@@ -28,6 +28,10 @@ td:first-child {
 	text-align: center;
 }
 
+caption {
+	text-align: left;
+}
+
 .column-1 {
 	width: 4%;
 }
@@ -46,4 +50,9 @@ td:first-child {
 
 .column-5 {
 	width: 33%;
+}
+
+.phone-list, .attachment-list {
+	margin-top: 20px;
+	width: 50%;
 }

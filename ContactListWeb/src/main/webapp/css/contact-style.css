@@ -1,0 +1,22 @@
+.contact-container {
+    margin-left: 10px;
+}
+
+.contact-info {
+    width: 20%;
+}
+
+.contact-info > label {
+    margin: 5px 0;
+    display: block;
+}
+
+.contact-info label input[type="text"] {
+    float: right;
+    margin-left: 10px;
+}
+
+.radio-buttons {
+    display: inline-block;
+    float: right;
+}

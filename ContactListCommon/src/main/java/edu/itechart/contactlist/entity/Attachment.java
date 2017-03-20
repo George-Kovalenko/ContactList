@@ -3,7 +3,6 @@ package edu.itechart.contactlist.entity;
 import java.sql.Timestamp;
 
 public class Attachment extends Entity {
-    private String filePath;
     private String fileName;
     private Timestamp uploadDate;
     private String comment;
@@ -14,19 +13,10 @@ public class Attachment extends Entity {
 
     public Attachment(long id, String filePath, String fileName, Timestamp uploadDate, String comment, long contactID) {
         super(id);
-        this.filePath = filePath;
         this.fileName = fileName;
         this.uploadDate = uploadDate;
         this.comment = comment;
         this.contactID = contactID;
-    }
-
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
     }
 
     public String getFileName() {

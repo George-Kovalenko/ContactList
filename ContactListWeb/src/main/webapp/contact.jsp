@@ -7,6 +7,7 @@
     <title>Контакт</title>
     <link rel="stylesheet" type="text/css" href="css/table-style.css">
     <link rel="stylesheet" type="text/css" href="css/contact-style.css">
+    <link rel="stylesheet" type="text/css" href="css/nav-button-style.css">
 </head>
 <body>
     <div class="contact-container">
@@ -83,9 +84,14 @@
         </div>
         <div class="phone-list">
             <table>
-                <caption>
-                    <h3>Список телефонов</h3>
-                </caption>
+                <div class="nav-buttons">
+                    <div class="nav-button add" title="add"></div>
+                    <div class="nav-button edit" title="edit"></div>
+                    <div class="nav-button delete" title="delete"></div>
+                </div>
+                <h3>
+                    Список телефонов
+                </h3>
                 <col class="column-1">
                 <col class="column-2">
                 <col class="column-3">
@@ -118,9 +124,14 @@
         </div>
         <div class="attachment-list">
             <table>
-                <caption>
-                    <h3>Список присоединений</h3>
-                </caption>
+                <div class="nav-buttons">
+                    <div class="nav-button add" title="add"></div>
+                    <div class="nav-button edit" title="edit"></div>
+                    <div class="nav-button delete" title="delete"></div>
+                </div>
+                <h3>
+                    Список присоединений
+                </h3>
                 <col class="column-1">
                 <col class="column-2">
                 <col class="column-3">

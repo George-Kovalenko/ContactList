@@ -16,6 +16,7 @@ public class Contact extends Entity {
     private String job;
     private Address address;
     private ArrayList<Phone> phones;
+    private ArrayList<Attachment> attachments;
 
     public Contact() {
     }
@@ -37,7 +38,7 @@ public class Contact extends Entity {
 
     public Contact(long id, String firstName, String lastName, String middleName, Date birthDate, String nationality,
                    char gender, int martialStatus, String website, String email, String job, Address address,
-                   ArrayList<Phone> phones) {
+                   ArrayList<Phone> phones, ArrayList<Attachment> attachments) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -51,6 +52,7 @@ public class Contact extends Entity {
         this.job = job;
         this.address = address;
         this.phones = phones;
+        this.attachments = attachments;
     }
 
     public String getFirstName() {
@@ -147,5 +149,13 @@ public class Contact extends Entity {
 
     public void setPhones(ArrayList<Phone> phones) {
         this.phones = phones;
+    }
+
+    public ArrayList<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(ArrayList<Attachment> attachments) {
+        this.attachments = attachments;
     }
 }

@@ -1,5 +1,6 @@
 package edu.itechart.contactlist.dao;
 
+import edu.itechart.contactlist.entity.Attachment;
 import edu.itechart.contactlist.entity.Contact;
 import edu.itechart.contactlist.entityfactory.ContactFactory;
 
@@ -19,7 +20,8 @@ public class ContactDAO extends AbstractDAO {
     public ArrayList<Contact> findAll() throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL);
              AddressDAO addressDAO = new AddressDAO();
-             PhoneDAO phoneDAO = new PhoneDAO()) {
+             PhoneDAO phoneDAO = new PhoneDAO();
+             AttachmentDAO attachmentDAO = new AttachmentDAO()) {
             ResultSet resultSet = preparedStatement.executeQuery();
             ArrayList<Contact> contacts = new ArrayList<>();
             ContactFactory contactFactory = new ContactFactory();
@@ -27,6 +29,7 @@ public class ContactDAO extends AbstractDAO {
                 Contact contact = contactFactory.createInstanceFromResultSet(resultSet);
                 contact.setAddress(addressDAO.findById(contact.getId()));
                 contact.setPhones(phoneDAO.findByContactId(contact.getId()));
+                contact.setAttachments(attachmentDAO.findByContactId(contact.getId()));
                 contacts.add(contact);
             }
             return contacts;
@@ -38,7 +41,8 @@ public class ContactDAO extends AbstractDAO {
     public Contact findById(long id) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);
              AddressDAO addressDAO = new AddressDAO();
-             PhoneDAO phoneDAO = new PhoneDAO()) {
+             PhoneDAO phoneDAO = new PhoneDAO();
+             AttachmentDAO attachmentDAO = new AttachmentDAO()) {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             Contact contact = new Contact();
@@ -46,6 +50,7 @@ public class ContactDAO extends AbstractDAO {
                 contact = new ContactFactory().createInstanceFromResultSet(resultSet);
                 contact.setAddress(addressDAO.findById(contact.getId()));
                 contact.setPhones(phoneDAO.findByContactId(contact.getId()));
+                contact.setAttachments(attachmentDAO.findByContactId(contact.getId()));
             }
             return contact;
         } catch (SQLException e) {

@@ -134,14 +134,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>
-                        <input type="checkbox" name="check" id="2">
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <c:forEach var="attachment" items="${contact.attachments}">
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="check-attachment-${attachment.id}" id="${attachment.id}">
+                            </td>
+                            <td>
+                                <c:out value="${attachment.fileName}"/>
+                            </td>
+                            <td>
+                                <c:out value="${attachment.uploadDate}"/>
+                            </td>
+                            <td>
+                                <c:out value="${attachment.comment}"/>
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>

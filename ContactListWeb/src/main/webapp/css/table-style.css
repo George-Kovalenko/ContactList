@@ -56,3 +56,7 @@ caption {
 	margin-top: 20px;
 	width: 50%;
 }
+
+.attachment-list .column-3 {
+	width: 15%;
+}

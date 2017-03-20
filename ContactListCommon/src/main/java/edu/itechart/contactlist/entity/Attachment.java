@@ -11,7 +11,7 @@ public class Attachment extends Entity {
     public Attachment() {
     }
 
-    public Attachment(long id, String filePath, String fileName, Timestamp uploadDate, String comment, long contactID) {
+    public Attachment(long id, String fileName, Timestamp uploadDate, String comment, long contactID) {
         super(id);
         this.fileName = fileName;
         this.uploadDate = uploadDate;

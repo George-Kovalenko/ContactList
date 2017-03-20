@@ -39,7 +39,7 @@
                         <c:out value="${contact.birthDate}"/>
                     </td>
                     <td>
-                        <c:out value="${contact.address.country.name}, г.
+                        <c:out value="${contact.address.country}, г.
                                       ${contact.address.city}, ул.
                                       ${contact.address.street}, д.
                                       ${contact.address.houseNumber}, кв.

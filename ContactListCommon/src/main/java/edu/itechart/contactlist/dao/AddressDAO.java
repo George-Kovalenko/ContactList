@@ -15,14 +15,12 @@ public class AddressDAO extends AbstractDAO {
     }
 
     public Address findById(long id) throws DAOException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);
-             CountryDAO countryDAO = new CountryDAO()) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
             preparedStatement.setLong(1,  id);
             ResultSet resultSet = preparedStatement.executeQuery();
             Address address = new Address();
             if (resultSet.next()) {
                 address = new AddressFactory().createInstanceFromResultSet(resultSet);
-                address.setCountry(countryDAO.findById(resultSet.getLong("country_id")));
             }
             return address;
         } catch (SQLException e) {

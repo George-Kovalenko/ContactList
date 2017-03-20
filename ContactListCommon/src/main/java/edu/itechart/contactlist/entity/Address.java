@@ -1,7 +1,7 @@
 package edu.itechart.contactlist.entity;
 
 public class Address extends Entity {
-    private Country country;
+    private String country;
     private String city;
     private String street;
     private int houseNumber;
@@ -11,17 +11,7 @@ public class Address extends Entity {
     public Address() {
     }
 
-    public Address(long id, String city, String street, int houseNumber, int flatNumber,
-                   String postcode) {
-        super(id);
-        this.city = city;
-        this.street = street;
-        this.houseNumber = houseNumber;
-        this.flatNumber = flatNumber;
-        this.postcode = postcode;
-    }
-
-    public Address(long id, Country country, String city, String street, int houseNumber, int flatNumber,
+    public Address(long id, String country, String city, String street, int houseNumber, int flatNumber,
                    String postcode) {
         super(id);
         this.country = country;
@@ -32,11 +22,11 @@ public class Address extends Entity {
         this.postcode = postcode;
     }
 
-    public Country getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(Country country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 

@@ -58,7 +58,7 @@
             <h3>Адрес</h3>
             <label>
                 Страна
-                <input type="text" value="${contact.address.country.name}">
+                <input type="text" value="${contact.address.country}">
             </label>
             <label>
                 Город

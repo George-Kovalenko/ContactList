@@ -99,14 +99,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>
-                        <input type="checkbox" name="check" id="1">
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <c:forEach var="phone" items="${contact.phones}">
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="check-phone-${phone.id}" id="${phone.id}">
+                            </td>
+                            <td>
+                                <c:out value="${phone.countryCode} ${phone.operatorCode} ${phone.number}"/>
+                            </td>
+                            <td></td>
+                            <td>
+                                <c:out value="${phone.comment}"/>
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>

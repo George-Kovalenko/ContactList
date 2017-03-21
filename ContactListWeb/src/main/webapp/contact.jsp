@@ -125,9 +125,9 @@
         <div class="attachment-list">
             <table>
                 <div class="nav-buttons">
-                    <div class="nav-button add" title="add"></div>
-                    <div class="nav-button edit" title="edit"></div>
-                    <div class="nav-button delete" title="delete"></div>
+                    <div class="nav-button add" title="add" id="add-attachment-button"></div>
+                    <div class="nav-button edit" title="edit" id="edit-attachment-button"></div>
+                    <div class="nav-button delete" title="delete" id="delete-attachment-button"></div>
                 </div>
                 <h3>
                     Список присоединений
@@ -188,6 +188,23 @@
             <div class="popup-buttons">
                 <div class="popup-button" id="submit-phone-button">Сохранить</div>
                 <div class="popup-button" id="cancel-phone-button">Отмена</div>
+            </div>
+        </div>
+    </div>
+    <div class="popup-window" id="attachment-popup">
+        <div class="popup-content">
+            <div class="popup-title">
+                Редактирование присоединений
+            </div>
+            <label>Имя файла
+                <input type="file" id="file-path">
+            </label>
+            <label>Комментарий
+                <textarea rows="5" maxlength="255" id="attachment-comment"></textarea>
+            </label>
+            <div class="popup-buttons">
+                <div class="popup-button" id="submit-attachment-button">Сохранить</div>
+                <div class="popup-button" id="cancel-attachment-button">Отмена</div>
             </div>
         </div>
     </div>

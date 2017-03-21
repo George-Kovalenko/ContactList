@@ -34,7 +34,7 @@ public class ContactDAO extends AbstractDAO {
             }
             return contacts;
         } catch (SQLException e) {
-            throw new DAOException("Error in Contact.findAll()", e);
+            throw new DAOException("Error in ContactDAO.findAll()", e);
         }
     }
 
@@ -54,7 +54,7 @@ public class ContactDAO extends AbstractDAO {
             }
             return contact;
         } catch (SQLException e) {
-            throw new DAOException("Error in Contact.findById()", e);
+            throw new DAOException("Error in ContactDAO.findById()", e);
         }
     }
 }

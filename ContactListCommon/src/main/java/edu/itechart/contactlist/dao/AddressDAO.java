@@ -24,7 +24,7 @@ public class AddressDAO extends AbstractDAO {
             }
             return address;
         } catch (SQLException e) {
-            throw new DAOException("Error in Address.findById()", e);
+            throw new DAOException("Error in AddressDAO.findById()", e);
         }
     }
 }

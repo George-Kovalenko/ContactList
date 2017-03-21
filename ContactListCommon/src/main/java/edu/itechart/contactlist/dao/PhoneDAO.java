@@ -27,7 +27,7 @@ public class PhoneDAO extends AbstractDAO {
             }
             return phones;
         } catch (SQLException e) {
-            throw new DAOException("Error in Phone.findByContactId", e);
+            throw new DAOException("Error in PhoneDAO.findByContactId", e);
         }
     }
 }

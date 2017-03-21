@@ -27,7 +27,7 @@ public class AttachmentDAO extends AbstractDAO {
             }
             return attachments;
         } catch (SQLException e) {
-            throw new DAOException("Error in Attachment.findByContactId", e);
+            throw new DAOException("Error in AttachmentDAO.findByContactId", e);
         }
     }
 }

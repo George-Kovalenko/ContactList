@@ -10,7 +10,7 @@ public class Contact extends Entity {
     private Date birthDate;
     private String nationality;
     private String gender;
-    private int martialStatus;
+    private int maritalStatus;
     private String website;
     private String email;
     private String job;
@@ -22,7 +22,7 @@ public class Contact extends Entity {
     }
 
     public Contact(long id, String firstName, String lastName, String middleName, Date birthDate, String nationality,
-                   String gender, int martialStatus, String website, String email, String job) {
+                   String gender, int maritalStatus, String website, String email, String job) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -30,14 +30,14 @@ public class Contact extends Entity {
         this.birthDate = birthDate;
         this.nationality = nationality;
         this.gender = gender;
-        this.martialStatus = martialStatus;
+        this.maritalStatus = maritalStatus;
         this.website = website;
         this.email = email;
         this.job = job;
     }
 
     public Contact(long id, String firstName, String lastName, String middleName, Date birthDate, String nationality,
-                   String gender, int martialStatus, String website, String email, String job, Address address,
+                   String gender, int maritalStatus, String website, String email, String job, Address address,
                    ArrayList<Phone> phones, ArrayList<Attachment> attachments) {
         super(id);
         this.firstName = firstName;
@@ -46,7 +46,7 @@ public class Contact extends Entity {
         this.birthDate = birthDate;
         this.nationality = nationality;
         this.gender = gender;
-        this.martialStatus = martialStatus;
+        this.maritalStatus = maritalStatus;
         this.website = website;
         this.email = email;
         this.job = job;
@@ -103,12 +103,12 @@ public class Contact extends Entity {
         this.gender = gender;
     }
 
-    public int getMartialStatus() {
-        return martialStatus;
+    public int getMaritalStatus() {
+        return maritalStatus;
     }
 
-    public void setMartialStatus(int martialStatus) {
-        this.martialStatus = martialStatus;
+    public void setMaritalStatus(int maritalStatus) {
+        this.maritalStatus = maritalStatus;
     }
 
     public String getWebsite() {

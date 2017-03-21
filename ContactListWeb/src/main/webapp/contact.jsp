@@ -31,7 +31,7 @@
             </label>
             <label>
                 Пол
-                <select class="select-field" name="sex">
+                <select class="select-field">
                     <option ${empty contact or empty contact.gender ? 'selected' : ''} value="x">Не выбран</option>
                     <option ${not empty contact and contact.gender == 'm' ? 'selected' : ''} value="m">Мужчина</option>
                     <option ${not empty contact and contact.gender == 'f' ? 'selected' : ''} value="f">Женщина</option>
@@ -43,7 +43,17 @@
             </label>
             <label>
                 Семейное положение
-                <input type="text">
+                <select class="select-field">
+                    <option ${empty contact or empty contact.maritalStatus ? 'selected' : ''} value="0">
+                        Не выбрано
+                    </option>
+                    <c:forEach var="maritalStatus" items="${maritalStatuses}">
+                        <option ${empty contact or contact.maritalStatus != maritalStatus.id ? '' : 'selected'}
+                                value="${maritalStatus.id}">
+                                ${maritalStatus.name}
+                        </option>
+                    </c:forEach>
+                </select>
             </label>
             <label>
                 Website

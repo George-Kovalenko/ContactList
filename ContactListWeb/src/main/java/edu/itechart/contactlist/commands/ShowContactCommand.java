@@ -2,22 +2,29 @@ package edu.itechart.contactlist.commands;
 
 import edu.itechart.contactlist.dao.ContactDAO;
 import edu.itechart.contactlist.dao.DAOException;
+import edu.itechart.contactlist.dao.MaritalStatusDAO;
 import edu.itechart.contactlist.entity.Contact;
+import edu.itechart.contactlist.entity.MaritalStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 public class ShowContactCommand implements Command {
     private static final String REQUEST_PARAM_NAME = "contact_id";
     private static final String REQUEST_ATTR_CONTACTS = "contact";
+    private static final String REQUEST_ATTR_MARITAL_STATUSES = "maritalStatuses";
     private static final String URL_CONTACT = "/contact.jsp";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        try (ContactDAO contactDAO = new ContactDAO()) {
+        try (ContactDAO contactDAO = new ContactDAO();
+             MaritalStatusDAO maritalStatusDAO = new MaritalStatusDAO()) {
             long id = Long.parseLong(request.getParameter(REQUEST_PARAM_NAME));
             Contact contact = contactDAO.findById(id);
+            ArrayList<MaritalStatus> maritalStatuses = maritalStatusDAO.findAll();
             request.setAttribute(REQUEST_ATTR_CONTACTS, contact);
+            request.setAttribute(REQUEST_ATTR_MARITAL_STATUSES, maritalStatuses);
         } catch (DAOException e) {
             throw new CommandException(e);
         }

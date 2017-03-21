@@ -20,3 +20,61 @@
     display: inline-block;
     float: right;
 }
+
+.popup-window {
+    position: fixed;
+    display: none;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.05);
+}
+
+.popup-content {
+    position: relative;
+    margin: 13% auto;
+    width: 400px;
+    background-color: #C9C9C9;
+    border: 2px solid #D2D1D1;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.popup-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.popup-window label {
+    display: block;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.popup-window label input, .popup-window label textarea {
+    width: 50%;
+    float: right;
+    margin-right: 20px;
+}
+
+.popup-buttons {
+    margin-top: 80px;
+    content: "";
+    clear: both;
+    text-align: center;
+}
+
+.popup-button {
+    width: 120px;
+    padding: 5px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    background-color: #EEECEC;
+    border: 2px solid lightgray;
+    border-radius: 5px;
+}

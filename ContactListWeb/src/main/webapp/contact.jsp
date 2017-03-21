@@ -85,9 +85,9 @@
         <div class="phone-list">
             <table>
                 <div class="nav-buttons">
-                    <div class="nav-button add" title="add"></div>
-                    <div class="nav-button edit" title="edit"></div>
-                    <div class="nav-button delete" title="delete"></div>
+                    <div class="nav-button add" title="add" id="add-phone-button"></div>
+                    <div class="nav-button edit" title="edit" id="edit-phone-button"></div>
+                    <div class="nav-button delete" title="delete" id="delete-phone-button"></div>
                 </div>
                 <h3>
                     Список телефонов
@@ -165,5 +165,32 @@
             </table>
         </div>
     </div>
+    <div class="popup-window" id="phone-popup">
+        <div class="popup-content">
+            <div class="popup-title">
+                Редактирование телефона
+            </div>
+            <label>Код страны
+                <input type="text" id="country-code">
+            </label>
+            <label>Код оператора
+                <input type="text" id="operator-code">
+            </label>
+            <label>Номер
+                <input type="text" id="phone-number">
+            </label>
+            <label>Тип
+                <input type="text" id="phone-type">
+            </label>
+            <label>Коментарий
+                <textarea rows="5" maxlength="255" id="phone-comment"></textarea>
+            </label>
+            <div class="popup-buttons">
+                <div class="popup-button" id="submit-phone-button">Сохранить</div>
+                <div class="popup-button" id="cancel-phone-button">Отмена</div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/contact-list-script.js"></script>
 </body>
 </html>

@@ -31,10 +31,11 @@
             </label>
             <label>
                 Пол
-                <div class="radio-buttons">
-                    <input type="radio"><label>Мужской</label>
-                    <input type="radio"><label>Женский</label>
-                </div>
+                <select class="select-field" name="sex">
+                    <option ${empty contact or empty contact.gender ? 'selected' : ''} value="x">Не выбран</option>
+                    <option ${not empty contact and contact.gender == 'm' ? 'selected' : ''} value="m">Мужчина</option>
+                    <option ${not empty contact and contact.gender == 'f' ? 'selected' : ''} value="f">Женщина</option>
+                </select>
             </label>
             <label>
                 Гражданство

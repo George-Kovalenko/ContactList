@@ -14,7 +14,7 @@ public class ContactFactory extends AbstractEntityFactory<Contact> {
                 resultSet.getString("middle_name"),
                 resultSet.getDate("birth_date"),
                 resultSet.getString("nationality"),
-                resultSet.getString("gender").charAt(0),
+                resultSet.getString("gender"),
                 resultSet.getInt("marital_status"),
                 resultSet.getString("website"),
                 resultSet.getString("email"),

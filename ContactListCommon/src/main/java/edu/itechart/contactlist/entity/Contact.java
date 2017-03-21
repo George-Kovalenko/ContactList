@@ -9,7 +9,7 @@ public class Contact extends Entity {
     private String middleName;
     private Date birthDate;
     private String nationality;
-    private char gender;
+    private String gender;
     private int martialStatus;
     private String website;
     private String email;
@@ -22,7 +22,7 @@ public class Contact extends Entity {
     }
 
     public Contact(long id, String firstName, String lastName, String middleName, Date birthDate, String nationality,
-                   char gender, int martialStatus, String website, String email, String job) {
+                   String gender, int martialStatus, String website, String email, String job) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,7 +37,7 @@ public class Contact extends Entity {
     }
 
     public Contact(long id, String firstName, String lastName, String middleName, Date birthDate, String nationality,
-                   char gender, int martialStatus, String website, String email, String job, Address address,
+                   String gender, int martialStatus, String website, String email, String job, Address address,
                    ArrayList<Phone> phones, ArrayList<Attachment> attachments) {
         super(id);
         this.firstName = firstName;
@@ -95,11 +95,11 @@ public class Contact extends Entity {
         this.nationality = nationality;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

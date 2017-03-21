@@ -13,12 +13,12 @@
 
 .contact-info label input[type="text"] {
     float: right;
-    margin-left: 10px;
+    width: 180px;
 }
 
-.radio-buttons {
-    display: inline-block;
+.select-field {
     float: right;
+    width: 184px;
 }
 
 .popup-window {

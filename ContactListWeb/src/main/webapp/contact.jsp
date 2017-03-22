@@ -226,6 +226,6 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="js/contact-list-script.js"></script>
+    <script type="text/javascript" src="js/contact-page-script.js"></script>
 </body>
 </html>

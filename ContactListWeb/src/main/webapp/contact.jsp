@@ -110,24 +110,24 @@
                 <thead>
                 <tr>
                     <th></th>
-                    <th>Номер телефон</th>
+                    <th>Номер телефона</th>
                     <th>Тип телефона</th>
                     <th>Комментарий</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="phone-body">
                     <c:forEach var="phone" items="${contact.phones}">
-                        <tr>
+                        <tr id="phone-${phone.id}">
                             <td>
-                                <input type="checkbox" name="check-phone-${phone.id}" id="${phone.id}">
+                                <input type="checkbox" name="check-phone" value="${phone.id}">
                             </td>
-                            <td>
+                            <td id="phone-number-${phone.id}">
                                 <c:out value="${phone.countryCode} ${phone.operatorCode} ${phone.number}"/>
                             </td>
-                            <td>
+                            <td id="phone-type-${phone.id}">
                                 <c:out value="${not empty phone.phoneType ? phoneTypes[phone.phoneType - 1].name : ''}"/>
                             </td>
-                            <td>
+                            <td id="phone-comment-${phone.id}">
                                 <c:out value="${phone.comment}"/>
                             </td>
                         </tr>
@@ -193,10 +193,10 @@
                 <input type="text" id="phone-number">
             </label>
             <label>Тип
-                <select class="select-field" id="phone-type">
-                    <option value="0">Не выбран</option>
+                <select class="select-field" id="phone-type-select">
+                    <option value="">Не выбран</option>
                     <c:forEach var="phoneType" items="${phoneTypes}">
-                        <option value="${phoneType.id}">${phoneType.name}</option>
+                        <option value="${phoneType.name}">${phoneType.name}</option>
                     </c:forEach>
                 </select>
             </label>

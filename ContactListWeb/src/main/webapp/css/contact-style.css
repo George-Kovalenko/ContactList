@@ -11,7 +11,7 @@
     display: block;
 }
 
-input, textarea {
+input[type="text"], input[type="file"], textarea {
     float: right;
     width: 180px;
 }

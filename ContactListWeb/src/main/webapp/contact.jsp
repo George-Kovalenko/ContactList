@@ -33,8 +33,8 @@
                 Пол
                 <select class="select-field">
                     <option ${empty contact or empty contact.gender ? 'selected' : ''} value="x">Не выбран</option>
-                    <option ${not empty contact and contact.gender == 'm' ? 'selected' : ''} value="m">Мужчина</option>
-                    <option ${not empty contact and contact.gender == 'f' ? 'selected' : ''} value="f">Женщина</option>
+                    <option ${not empty contact and contact.gender == 'm' ? 'selected' : ''} value="m">Мужской</option>
+                    <option ${not empty contact and contact.gender == 'f' ? 'selected' : ''} value="f">Женский</option>
                 </select>
             </label>
             <label>

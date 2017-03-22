@@ -4,14 +4,14 @@ public class Phone extends Entity {
     private String countryCode;
     private String operatorCode;
     private String number;
-    private char phoneType;
+    private int phoneType;
     private String comment;
     private long contactID;
 
     public Phone() {
     }
 
-    public Phone(long id, String countryCode, String operatorCode, String number, char phoneType, String comment,
+    public Phone(long id, String countryCode, String operatorCode, String number, int phoneType, String comment,
                  long contactID) {
         super(id);
         this.countryCode = countryCode;
@@ -46,11 +46,11 @@ public class Phone extends Entity {
         this.number = number;
     }
 
-    public char getPhoneType() {
+    public int getPhoneType() {
         return phoneType;
     }
 
-    public void setPhoneType(char phoneType) {
+    public void setPhoneType(int phoneType) {
         this.phoneType = phoneType;
     }
 

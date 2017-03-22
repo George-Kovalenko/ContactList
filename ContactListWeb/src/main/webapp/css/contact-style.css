@@ -11,7 +11,7 @@
     display: block;
 }
 
-.contact-info label input[type="text"] {
+input, textarea {
     float: right;
     width: 180px;
 }
@@ -39,11 +39,15 @@
     background-color: #C9C9C9;
     border: 2px solid #D2D1D1;
     border-radius: 15px;
-    padding: 10px;
+    padding: 10px 20px 10px 10px;
 }
 
-#attachment-popup .popup-content  {
+#attachment-popup .popup-content {
     width: 500px;
+}
+
+#attachment-popup textarea, #attachment-popup input {
+    width: 300px;
 }
 
 .popup-title {
@@ -57,12 +61,6 @@
     display: block;
     margin-left: 20px;
     margin-bottom: 10px;
-}
-
-.popup-window label input, .popup-window label textarea {
-    width: 50%;
-    float: right;
-    margin-right: 20px;
 }
 
 .popup-buttons {

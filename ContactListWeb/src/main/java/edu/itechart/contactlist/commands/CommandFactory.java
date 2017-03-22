@@ -20,7 +20,7 @@ public class CommandFactory {
                 throw new CommandException(e);
             }
         } else {
-            LOGGER.info("Default command SHOW_COMMAND_LIST");
+            LOGGER.info("Default command SHOW_CONTACT_LIST");
             return new ShowContactListCommand();
         }
     }

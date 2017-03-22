@@ -12,7 +12,7 @@ public class PhoneFactory extends AbstractEntityFactory<Phone> {
                 resultSet.getString("country_code"),
                 resultSet.getString("operator_code"),
                 resultSet.getString("number"),
-                resultSet.getString("phone_type").charAt(0),
+                resultSet.getInt("phone_type"),
                 resultSet.getString("comment"),
                 resultSet.getLong("contact_id"));
     }

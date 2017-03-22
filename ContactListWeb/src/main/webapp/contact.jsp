@@ -124,7 +124,9 @@
                             <td>
                                 <c:out value="${phone.countryCode} ${phone.operatorCode} ${phone.number}"/>
                             </td>
-                            <td></td>
+                            <td>
+                                <c:out value="${not empty phone.phoneType ? phoneTypes[phone.phoneType - 1].name : ''}"/>
+                            </td>
                             <td>
                                 <c:out value="${phone.comment}"/>
                             </td>
@@ -191,7 +193,12 @@
                 <input type="text" id="phone-number">
             </label>
             <label>Тип
-                <input type="text" id="phone-type">
+                <select class="select-field" id="phone-type">
+                    <option value="0">Не выбран</option>
+                    <c:forEach var="phoneType" items="${phoneTypes}">
+                        <option value="${phoneType.id}">${phoneType.name}</option>
+                    </c:forEach>
+                </select>
             </label>
             <label>Коментарий
                 <textarea rows="5" maxlength="255" id="phone-comment"></textarea>

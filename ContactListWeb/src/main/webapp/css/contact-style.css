@@ -1,5 +1,6 @@
 .contact-container {
     margin-left: 10px;
+    margin-bottom: 20px;
 }
 
 .contact-info {
@@ -70,7 +71,7 @@ input[type="text"], input[type="file"], textarea {
     text-align: center;
 }
 
-.popup-button {
+.popup-button, #save-contact-button {
     width: 120px;
     padding: 5px;
     display: inline-block;
@@ -79,4 +80,12 @@ input[type="text"], input[type="file"], textarea {
     background-color: #EEECEC;
     border: 2px solid lightgray;
     border-radius: 5px;
+}
+
+.popup-button:hover, #save-contact-button:hover {
+    background-color: #BDC0FA;
+}
+
+#save-contact-button {
+    margin: 20px 20px 10px 0;
 }

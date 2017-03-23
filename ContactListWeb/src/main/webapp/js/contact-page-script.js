@@ -7,6 +7,9 @@ function Phone() {
     this.comment = '';
 }
 
+var contactForm = document.getElementById('contact-form');
+var saveContactButton = document.getElementById('save-contact-button');
+
 var addPhoneButton = document.getElementById('add-phone-button');
 var editPhoneButton = document.getElementById('edit-phone-button');
 var deletePhoneButton = document.getElementById('delete-phone-button');
@@ -90,6 +93,40 @@ submitPhoneButton.onclick = function () {
     closeModalWindow(phonePopup);
 };
 
+saveContactButton.onclick = function () {
+    fillPhoneList('');
+    fillPhoneList('new-');
+};
+
+function fillPhoneList(prefix) {
+    var phones = document.getElementsByClassName(prefix + 'phone');
+    var phoneList = [];
+    for (var i = 0; i < phones.length; i++) {
+        var phone = new Phone();
+        phone.id = prefix ? phones[i].id.split('-')[2] : phones[i].id.split('-')[1];
+        var fullNumber = document.getElementById(prefix + 'phone-number-' + phone.id).innerHTML.trim();
+        phone.countryCode = fullNumber.split(' ')[0];
+        phone.operatorCode = fullNumber.split(' ')[1];
+        phone.number = fullNumber.split(' ')[2];
+        var type = document.getElementById(prefix + 'phone-type-' + phone.id).innerHTML.trim();
+        if (type) {
+            phone.type = document.getElementById(type).index.toString();
+        }
+        phone.comment = document.getElementById(prefix + 'phone-comment-' + phone.id).innerHTML.trim();
+        phoneList.push(phone);
+    }
+    var newChild = addItemsInHiddenInput(prefix + 'phones', JSON.stringify(phoneList));
+    contactForm.appendChild(newChild);
+}
+
+function addItemsInHiddenInput(name, items) {
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = name;
+    input.value = items;
+    return input;
+}
+
 function createNewPhone() {
     newPhoneId++;
     var phone = new Phone();
@@ -102,6 +139,7 @@ function createNewPhone() {
     var phoneBody = document.getElementById('phone-body');
     var tableRow = document.createElement('tr');
     tableRow.id = 'new-phone-' + phone.id;
+    tableRow.className = 'new-phone';
     var checkBoxCell = document.createElement('td');
     var input = document.createElement('input');
     input.type = 'checkbox';

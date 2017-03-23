@@ -1,16 +1,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:choose>
+    <c:when test="${empty contact}">
+        <c:set var="title" value="Создание контакта"/>
+        <c:set var="submitAction" value=""/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="title" value="Редактирование контакта"/>
+        <c:set var="submitAction" value=""/>
+    </c:otherwise>
+</c:choose>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Контакт</title>
+    <title><c:out value="${title}"/></title>
     <link rel="stylesheet" type="text/css" href="css/table-style.css">
     <link rel="stylesheet" type="text/css" href="css/contact-style.css">
     <link rel="stylesheet" type="text/css" href="css/nav-button-style.css">
 </head>
 <body>
-    <div class="contact-container">
+    <form method="post" id="contact-form" enctype="multipart/form-data">
         <div class="contact-info">
             <h3>Основная информация</h3>
             <label>
@@ -117,7 +127,7 @@
                 </thead>
                 <tbody id="phone-body">
                     <c:forEach var="phone" items="${contact.phones}">
-                        <tr id="phone-${phone.id}">
+                        <tr id="phone-${phone.id}" class="phone">
                             <td>
                                 <input type="checkbox" name="check-phone" value="${phone.id}">
                             </td>
@@ -177,7 +187,8 @@
                 </tbody>
             </table>
         </div>
-    </div>
+        <input type="button" id="save-contact-button" value="Сохранить">
+    </form>
     <div class="popup-window" id="phone-popup">
         <div class="popup-content">
             <div class="popup-title">
@@ -196,7 +207,7 @@
                 <select class="select-field" id="phone-type-select">
                     <option value="">Не выбран</option>
                     <c:forEach var="phoneType" items="${phoneTypes}">
-                        <option value="${phoneType.name}">${phoneType.name}</option>
+                        <option value="${phoneType.name}" id="${phoneType.name}">${phoneType.name}</option>
                     </c:forEach>
                 </select>
             </label>

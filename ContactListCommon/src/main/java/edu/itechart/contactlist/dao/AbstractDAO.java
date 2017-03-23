@@ -2,10 +2,12 @@ package edu.itechart.contactlist.dao;
 
 import edu.itechart.contactlist.connectionpool.ConnectionPool;
 import edu.itechart.contactlist.connectionpool.ConnectionPoolException;
-import edu.itechart.contactlist.connectionpool.ProxyConnection;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public abstract class AbstractDAO implements AutoCloseable {
-    protected ProxyConnection connection;
+    protected Connection connection;
 
     public AbstractDAO() throws DAOException {
         try {
@@ -17,6 +19,10 @@ public abstract class AbstractDAO implements AutoCloseable {
 
     @Override
     public void close() {
-        ConnectionPool.getInstance().releaseConnection(connection);
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

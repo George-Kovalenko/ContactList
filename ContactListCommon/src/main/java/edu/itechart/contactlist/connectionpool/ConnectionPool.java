@@ -3,13 +3,14 @@ package edu.itechart.contactlist.connectionpool;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Enumeration;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -17,19 +18,14 @@ public class ConnectionPool {
     private static ConnectionPool instance;
     private static ReentrantLock locking = new ReentrantLock();
     private static AtomicBoolean created = new AtomicBoolean(false);
-    private static final int POOL_CAPACITY = ConnectionConfiguration.getPoolCapacity();
-    private static final int TIME_WAIT = ConnectionConfiguration.getTimeWait();
-    private static ArrayBlockingQueue<ProxyConnection> connections;
+    private DataSource dataSource;
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
 
     private ConnectionPool() {
-        registerDriver();
-        String url = ConnectionConfiguration.getUrl();
-        String user = ConnectionConfiguration.getUser();
-        String password = ConnectionConfiguration.getPassword();
-        connections = new ArrayBlockingQueue<>(POOL_CAPACITY);
-        for (int i = 0; i < POOL_CAPACITY; i++) {
-            this.addConnectionInPool(url, user, password);
+        try {
+            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/contactlist");
+        } catch (NamingException e) {
+            LOGGER.error("Error when creating connection pool");
         }
     }
 
@@ -48,76 +44,35 @@ public class ConnectionPool {
         return instance;
     }
 
-    public ProxyConnection getConnection() throws ConnectionPoolException {
+    public Connection getConnection() throws ConnectionPoolException {
         try {
-            ProxyConnection connection = connections.poll(TIME_WAIT, TimeUnit.MILLISECONDS);
-            if (connection != null) {
-                return connection;
-            } else {
-                throw new ConnectionPoolException("Timeout waiting for connection");
-            }
-        } catch (InterruptedException e) {
-            LOGGER.error("Error when waiting for connection", e);
-            return null;
-        }
-    }
-
-    private void addConnectionInPool(String url, String user, String password) {
-        try {
-            Connection connection = DriverManager.getConnection(url, user, password);
-            ProxyConnection proxyConnection = new ProxyConnection(connection);
-            connections.add(proxyConnection);
+            return dataSource.getConnection();
         } catch (SQLException e) {
-            LOGGER.error("Couldn't connect to database", e);
+            throw new ConnectionPoolException("Couldn't get connection from pool", e);
         }
     }
 
-    private void registerDriver() {
+    public void releaseConnection(Connection connection) throws ConnectionPoolException {
         try {
-            Driver driver = new com.mysql.jdbc.Driver();
-            DriverManager.registerDriver(driver);
+            connection.close();
         } catch (SQLException e) {
-            LOGGER.error("Couldn't register driver", e);
+            throw new ConnectionPoolException("Couldn't release connection", e);
         }
     }
 
-    private void deregisterDriver() {
+    public void deregisterDrivers() {
         Enumeration<Driver> drivers = DriverManager.getDrivers();
         while (drivers.hasMoreElements()) {
             Driver driver = drivers.nextElement();
-            try {
-                DriverManager.deregisterDriver(driver);
-            } catch (SQLException e) {
-                LOGGER.error("Couldn't deregister driver " + driver.toString(), e);
-            }
-        }
-
-    }
-
-    public void releaseConnection(ProxyConnection connection) {
-        if (connection != null) {
-            try {
-                if (!connection.getAutoCommit()) {
-                    connection.rollback();
-                }
-                connections.add(connection);
-            } catch (SQLException e) {
-                LOGGER.error("Error when realising connection", e);
-            }
-        }
-    }
-
-    public void releasePool() {
-        while (!connections.isEmpty()) {
-            ProxyConnection connection;
-            if ((connection = connections.poll()) != null) {
+            ClassLoader driverClassLoader = driver.getClass().getClassLoader();
+            ClassLoader thisClassLoader = this.getClass().getClassLoader();
+            if (driverClassLoader != null && thisClassLoader != null) {
                 try {
-                    connection.trueClose();
+                    DriverManager.deregisterDriver(driver);
                 } catch (SQLException e) {
-                    LOGGER.error("Error when releasing pool", e);
+                    LOGGER.error("Error when deregister driver " + driver.toString());
                 }
             }
         }
-        deregisterDriver();
     }
 }

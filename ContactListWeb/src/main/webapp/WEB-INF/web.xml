@@ -6,9 +6,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
-    <listener>
-        <listener-class>edu.itechart.contactlist.listener.ControllerListener</listener-class>
-    </listener>
 
     <servlet>
         <servlet-name>Controller</servlet-name>
@@ -19,13 +16,27 @@
         <servlet-name>Controller</servlet-name>
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
+
+    <filter>
+        <filter-name>CharsetFilter</filter-name>
+        <filter-class>edu.itechart.contactlist.filter.CharsetFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CharsetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <listener>
+        <listener-class>edu.itechart.contactlist.listener.ControllerListener</listener-class>
+    </listener>
     
     <welcome-file-list>
         <welcome-file>controller</welcome-file>
     </welcome-file-list>
 
     <resource-ref>
-        <res-ref-name>jdbc/contactlist</res-ref-name>
+        <res-ref-name>jdbc/georgiy_kovalenko_contact_list</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>

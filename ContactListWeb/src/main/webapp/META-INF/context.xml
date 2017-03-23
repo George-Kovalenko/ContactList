@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
     <Resource
-        name="jdbc/contactlist"
+        name="jdbc/georgiy_kovalenko_contact_list"
         type="javax.sql.DataSource"
         auth="Container"
         maxTotal="30"
@@ -10,5 +10,5 @@
         username="root"
         password="admin"
         driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost:3306/contactlist"/>
+        url="jdbc:mysql://localhost:3306/georgiy_kovalenko_contact_list"/>
 </Context>

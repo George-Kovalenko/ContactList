@@ -23,7 +23,7 @@ public class ConnectionPool {
 
     private ConnectionPool() {
         try {
-            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/contactlist");
+            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/georgiy_kovalenko_contact_list");
         } catch (NamingException e) {
             LOGGER.error("Error when creating connection pool");
         }

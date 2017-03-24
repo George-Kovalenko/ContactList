@@ -1,8 +1,8 @@
 package edu.itechart.contactlist.commands;
 
-import edu.itechart.contactlist.dao.ContactDAO;
-import edu.itechart.contactlist.dao.DAOException;
 import edu.itechart.contactlist.entity.Contact;
+import edu.itechart.contactlist.service.ContactService;
+import edu.itechart.contactlist.service.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,10 +14,10 @@ public class ShowContactListCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        try (ContactDAO contactDAO = new ContactDAO()) {
-            ArrayList<Contact> contacts = contactDAO.findAll();
+        try {
+            ArrayList<Contact> contacts = ContactService.findAll();
             request.setAttribute(REQUEST_ATTR_CONTACTS, contacts);
-        } catch (DAOException e) {
+        } catch (ServiceException e) {
             throw new CommandException(e);
         }
         return URL_CONTACT_LIST;

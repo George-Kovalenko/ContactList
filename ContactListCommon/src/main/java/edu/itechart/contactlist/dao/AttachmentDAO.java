@@ -3,6 +3,7 @@ package edu.itechart.contactlist.dao;
 import edu.itechart.contactlist.entity.Attachment;
 import edu.itechart.contactlist.entityfactory.AttachmentFactory;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,8 +12,8 @@ import java.util.ArrayList;
 public class AttachmentDAO extends AbstractDAO {
     private static final String SELECT_BY_CONTACT_ID = "SELECT * FROM attachments WHERE contact_id=?";
 
-    public AttachmentDAO() throws DAOException {
-        super();
+    public AttachmentDAO(Connection connection) {
+        super(connection);
     }
 
     public ArrayList<Attachment> findByContactId(long id) throws DAOException {

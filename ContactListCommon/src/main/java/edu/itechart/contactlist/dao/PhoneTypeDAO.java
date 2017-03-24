@@ -2,6 +2,7 @@ package edu.itechart.contactlist.dao;
 
 import edu.itechart.contactlist.entity.PhoneType;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,8 +11,8 @@ import java.util.ArrayList;
 public class PhoneTypeDAO extends AbstractDAO {
     private static final String SELECT_ALL = "SELECT * FROM phone_type";
 
-    public PhoneTypeDAO() throws DAOException {
-        super();
+    public PhoneTypeDAO(Connection connection) {
+        super(connection);
     }
 
     public ArrayList<PhoneType> findAll() throws DAOException {

@@ -3,6 +3,7 @@ package edu.itechart.contactlist.dao;
 import edu.itechart.contactlist.entity.Phone;
 import edu.itechart.contactlist.entityfactory.PhoneFactory;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,8 +12,8 @@ import java.util.ArrayList;
 public class PhoneDAO extends AbstractDAO {
     private static final String SELECT_BY_CONTACT_ID = "SELECT * FROM phones WHERE contact_id=?";
 
-    public PhoneDAO() throws DAOException {
-        super();
+    public PhoneDAO(Connection connection) {
+        super(connection);
     }
 
     public ArrayList<Phone> findByContactId(long id) throws DAOException {

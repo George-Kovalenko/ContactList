@@ -1,12 +1,12 @@
 package edu.itechart.contactlist.commands;
 
-import edu.itechart.contactlist.dao.ContactDAO;
-import edu.itechart.contactlist.dao.DAOException;
-import edu.itechart.contactlist.dao.MaritalStatusDAO;
-import edu.itechart.contactlist.dao.PhoneTypeDAO;
 import edu.itechart.contactlist.entity.Contact;
 import edu.itechart.contactlist.entity.MaritalStatus;
 import edu.itechart.contactlist.entity.PhoneType;
+import edu.itechart.contactlist.service.ContactService;
+import edu.itechart.contactlist.service.MaritalStatusService;
+import edu.itechart.contactlist.service.PhoneTypeService;
+import edu.itechart.contactlist.service.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,17 +21,15 @@ public class ShowContactCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        try (ContactDAO contactDAO = new ContactDAO();
-             MaritalStatusDAO maritalStatusDAO = new MaritalStatusDAO();
-             PhoneTypeDAO phoneTypeDAO = new PhoneTypeDAO()) {
+        try {
             long id = Long.parseLong(request.getParameter(REQUEST_PARAM_NAME));
-            Contact contact = contactDAO.findById(id);
-            ArrayList<MaritalStatus> maritalStatuses = maritalStatusDAO.findAll();
-            ArrayList<PhoneType> phoneTypes = phoneTypeDAO.findAll();
+            Contact contact = ContactService.findById(id);
+            ArrayList<MaritalStatus> maritalStatuses = MaritalStatusService.findAll();
+            ArrayList<PhoneType> phoneTypes = PhoneTypeService.findAll();
             request.setAttribute(REQUEST_ATTR_CONTACTS, contact);
             request.setAttribute(REQUEST_ATTR_MARITAL_STATUSES, maritalStatuses);
             request.setAttribute(REQUEST_ATTR_PHONE_TYPES, phoneTypes);
-        } catch (DAOException e) {
+        } catch (ServiceException e) {
             throw new CommandException(e);
         }
         return URL_CONTACT;

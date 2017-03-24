@@ -1,9 +1,9 @@
 package edu.itechart.contactlist.commands;
 
-import edu.itechart.contactlist.dao.ContactDAO;
-import edu.itechart.contactlist.dao.DAOException;
 import edu.itechart.contactlist.entity.Contact;
 import edu.itechart.contactlist.handler.MainHandler;
+import edu.itechart.contactlist.service.ContactService;
+import edu.itechart.contactlist.service.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,11 +18,11 @@ public class UpdateContactCommand implements Command {
         int id = Integer.parseInt(request.getParameter(REQUEST_PARAM_ID));
         MainHandler mainHandler = new MainHandler();
         mainHandler.handleInputFields(request);
-        try (ContactDAO contactDAO = new ContactDAO()) {
+        try {
             Contact contact = (Contact) request.getAttribute(REQUEST_ATTR_CONTACT);
-            contactDAO.update(id, contact);
-        } catch (DAOException e) {
-            e.printStackTrace();
+            ContactService.update(contact);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
         }
         return URL_CONTACT + id;
     }

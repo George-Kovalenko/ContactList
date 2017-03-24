@@ -2,6 +2,7 @@ package edu.itechart.contactlist.dao;
 
 import edu.itechart.contactlist.entity.MaritalStatus;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,8 +11,8 @@ import java.util.ArrayList;
 public class MaritalStatusDAO extends AbstractDAO {
     private static final String SELECT_ALL = "SELECT * FROM marital_statuses";
 
-    public MaritalStatusDAO() throws DAOException {
-        super();
+    public MaritalStatusDAO(Connection connection) {
+        super(connection);
     }
 
     public ArrayList<MaritalStatus> findAll() throws DAOException {

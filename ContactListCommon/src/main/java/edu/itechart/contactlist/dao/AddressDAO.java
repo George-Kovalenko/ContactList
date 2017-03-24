@@ -3,6 +3,7 @@ package edu.itechart.contactlist.dao;
 import edu.itechart.contactlist.entity.Address;
 import edu.itechart.contactlist.entityfactory.AddressFactory;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,8 +11,8 @@ import java.sql.SQLException;
 public class AddressDAO extends AbstractDAO {
     private static final String SELECT_BY_ID = "SELECT * FROM addresses WHERE contacts_id=?";
 
-    public AddressDAO() throws DAOException {
-        super();
+    public AddressDAO(Connection connection) {
+        super(connection);
     }
 
     public Address findById(long id) throws DAOException {

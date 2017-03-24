@@ -32,7 +32,11 @@ public class Controller extends HttpServlet {
         try {
             Command command = CommandFactory.createCommand(req);
             String page = command.execute(req, resp);
-            getServletContext().getRequestDispatcher(page).forward(req, resp);
+            if (command.needsRedirect()) {
+                resp.sendRedirect(page);
+            } else {
+                getServletContext().getRequestDispatcher(page).forward(req, resp);
+            }
         } catch (CommandException e) {
             LOGGER.error(e);
         }

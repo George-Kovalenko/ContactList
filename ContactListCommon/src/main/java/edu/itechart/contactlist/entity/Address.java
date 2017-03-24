@@ -4,14 +4,14 @@ public class Address extends Entity {
     private String country;
     private String city;
     private String street;
-    private int houseNumber;
-    private int flatNumber;
+    private Integer houseNumber;
+    private Integer flatNumber;
     private String postcode;
 
     public Address() {
     }
 
-    public Address(long id, String country, String city, String street, int houseNumber, int flatNumber,
+    public Address(long id, String country, String city, String street, Integer houseNumber, Integer flatNumber,
                    String postcode) {
         super(id);
         this.country = country;
@@ -46,19 +46,19 @@ public class Address extends Entity {
         this.street = street;
     }
 
-    public int getHouseNumber() {
+    public Integer getHouseNumber() {
         return houseNumber;
     }
 
-    public void setHouseNumber(int houseNumber) {
+    public void setHouseNumber(Integer houseNumber) {
         this.houseNumber = houseNumber;
     }
 
-    public int getFlatNumber() {
+    public Integer getFlatNumber() {
         return flatNumber;
     }
 
-    public void setFlatNumber(int flatNumber) {
+    public void setFlatNumber(Integer flatNumber) {
         this.flatNumber = flatNumber;
     }
 

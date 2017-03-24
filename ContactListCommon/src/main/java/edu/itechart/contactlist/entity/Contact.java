@@ -10,7 +10,7 @@ public class Contact extends Entity {
     private Date birthDate;
     private String nationality;
     private String gender;
-    private int maritalStatus;
+    private Integer maritalStatus;
     private String website;
     private String email;
     private String job;
@@ -19,10 +19,13 @@ public class Contact extends Entity {
     private ArrayList<Attachment> attachments;
 
     public Contact() {
+        address = new Address();
+        phones = new ArrayList<>();
+        attachments = new ArrayList<>();
     }
 
     public Contact(long id, String firstName, String lastName, String middleName, Date birthDate, String nationality,
-                   String gender, int maritalStatus, String website, String email, String job) {
+                   String gender, Integer maritalStatus, String website, String email, String job) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,7 +40,7 @@ public class Contact extends Entity {
     }
 
     public Contact(long id, String firstName, String lastName, String middleName, Date birthDate, String nationality,
-                   String gender, int maritalStatus, String website, String email, String job, Address address,
+                   String gender, Integer maritalStatus, String website, String email, String job, Address address,
                    ArrayList<Phone> phones, ArrayList<Attachment> attachments) {
         super(id);
         this.firstName = firstName;
@@ -103,11 +106,11 @@ public class Contact extends Entity {
         this.gender = gender;
     }
 
-    public int getMaritalStatus() {
+    public Integer getMaritalStatus() {
         return maritalStatus;
     }
 
-    public void setMaritalStatus(int maritalStatus) {
+    public void setMaritalStatus(Integer maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
 

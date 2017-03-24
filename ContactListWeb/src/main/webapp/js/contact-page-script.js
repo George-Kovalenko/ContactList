@@ -96,6 +96,7 @@ submitPhoneButton.onclick = function () {
 saveContactButton.onclick = function () {
     fillPhoneList('');
     fillPhoneList('new-');
+    contactForm.submit();
 };
 
 function fillPhoneList(prefix) {
@@ -103,7 +104,7 @@ function fillPhoneList(prefix) {
     var phoneList = [];
     for (var i = 0; i < phones.length; i++) {
         var phone = new Phone();
-        phone.id = prefix ? phones[i].id.split('-')[2] : phones[i].id.split('-')[1];
+        phone.id = prefix ? phones[i].id.split('-')[2] : 0;
         var fullNumber = document.getElementById(prefix + 'phone-number-' + phone.id).innerHTML.trim();
         phone.countryCode = fullNumber.split(' ')[0];
         phone.operatorCode = fullNumber.split(' ')[1];

@@ -7,7 +7,7 @@
     </c:when>
     <c:otherwise>
         <c:set var="title" value="Редактирование контакта"/>
-        <c:set var="submitAction" value=""/>
+        <c:set var="submitAction" value="controller?command=update_contact&id=${contact.id}"/>
     </c:otherwise>
 </c:choose>
 <!DOCTYPE html>
@@ -20,24 +20,24 @@
     <link rel="stylesheet" type="text/css" href="css/nav-button-style.css">
 </head>
 <body>
-    <form method="post" id="contact-form" enctype="multipart/form-data">
+    <form method="post" id="contact-form" action="${submitAction}" enctype="multipart/form-data">
         <div class="contact-info">
             <h3>Основная информация</h3>
             <label>
                 Фамилия
-                <input type="text" value="${contact.lastName}">
+                <input type="text" name="last-name" value="${contact.lastName}">
             </label>
             <label>
                 Имя
-                <input type="text" value="${contact.firstName}">
+                <input type="text" name="first-name" value="${contact.firstName}">
             </label>
             <label>
                 Отчество
-                <input type="text" value="${contact.middleName}">
+                <input type="text" name="middle-name" value="${contact.middleName}">
             </label>
             <label>
                 Дата рождения
-                <input type="text" value="${contact.birthDate}">
+                <input type="text" name="birth-date" value="${contact.birthDate}">
             </label>
             <label>
                 Пол
@@ -49,11 +49,11 @@
             </label>
             <label>
                 Гражданство
-                <input type="text" value="${contact.nationality}">
+                <input type="text" name="nationality" value="${contact.nationality}">
             </label>
             <label>
                 Семейное положение
-                <select class="select-field">
+                <select class="select-field" name="marital-status">
                     <option ${empty contact or empty contact.maritalStatus ? 'selected' : ''} value="0">
                         Не выбрано
                     </option>
@@ -67,40 +67,40 @@
             </label>
             <label>
                 Website
-                <input type="text" value="${contact.website}">
+                <input type="text" name="website" value="${contact.website}">
             </label>
             <label>
                 Email
-                <input type="text" value="${contact.email}">
+                <input type="text" name="email" value="${contact.email}">
             </label>
             <label>
                 Текущее место работы
-                <input type="text" value="${contact.job}">
+                <input type="text" name="job" value="${contact.job}">
             </label>
             <h3>Адрес</h3>
             <label>
                 Страна
-                <input type="text" value="${contact.address.country}">
+                <input type="text" name="country" value="${contact.address.country}">
             </label>
             <label>
                 Город
-                <input type="text" value="${contact.address.city}">
+                <input type="text" name="city" value="${contact.address.city}">
             </label>
             <label>
                 Улица
-                <input type="text" value="${contact.address.street}">
+                <input type="text" name="street" value="${contact.address.street}">
             </label>
             <label>
                 Дом
-                <input type="text" value="${contact.address.houseNumber}">
+                <input type="text" name="house" value="${contact.address.houseNumber}">
             </label>
             <label>
                 Квартира
-                <input type="text" value="${contact.address.flatNumber}">
+                <input type="text" name="flat" value="${contact.address.flatNumber}">
             </label>
             <label>
                 Почтовый индекс
-                <input type="text" value="${contact.address.postcode}">
+                <input type="text" name="postcode" value="${contact.address.postcode}">
             </label>
         </div>
         <div class="phone-list">

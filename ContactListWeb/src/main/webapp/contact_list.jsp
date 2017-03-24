@@ -31,7 +31,7 @@
                         <input type="checkbox" name="check-${contact.id}" id="${contact.id}" value="${contact.id}">
                     </td>
                     <td>
-                        <a href="/controller?command=show_contact&contact_id=${contact.id}">
+                        <a href="controller?command=show_contact&contact_id=${contact.id}">
                             <c:out value="${contact.lastName} ${contact.firstName} ${contact.middleName}"/>
                         </a>
                     </td>

@@ -11,6 +11,12 @@ public enum CommandEnum {
         {
             command = new ShowContactCommand();
         }
+    },
+
+    UPDATE_CONTACT {
+        {
+            command = new UpdateContactCommand();
+        }
     };
 
     protected Command command;

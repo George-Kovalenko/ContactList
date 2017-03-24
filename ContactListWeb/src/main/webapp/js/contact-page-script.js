@@ -104,7 +104,8 @@ function fillPhoneList(prefix) {
     var phoneList = [];
     for (var i = 0; i < phones.length; i++) {
         var phone = new Phone();
-        phone.id = prefix ? phones[i].id.split('-')[2] : 0;
+        phone.id = prefix ? 0 : phones[i].id.split('-')[1];
+        console.log(phone.id);
         var fullNumber = document.getElementById(prefix + 'phone-number-' + phone.id).innerHTML.trim();
         phone.countryCode = fullNumber.split(' ')[0];
         phone.operatorCode = fullNumber.split(' ')[1];

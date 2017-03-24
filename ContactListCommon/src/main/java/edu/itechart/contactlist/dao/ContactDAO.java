@@ -13,7 +13,7 @@ public class ContactDAO extends AbstractDAO {
     private static final String SELECT_ALL = "SELECT * FROM contacts";
     private static final String SELECT_BY_ID = "SELECT * FROM contacts WHERE id=?";
     private static final String UPDATE_CONTACT = "UPDATE contacts SET first_name=?, last_name=?, middle_name=?, " +
-            "marital_status=?, nationality=? WHERE id=?";
+            "birth_date=?, nationality=?, gender=?, marital_status=?, website=?, email=?, job=? WHERE id=?";
 
     public ContactDAO(Connection connection) {
         super(connection);
@@ -60,17 +60,28 @@ public class ContactDAO extends AbstractDAO {
         }
     }
 
-    public void update(Contact contact) throws DAOException {
+    public void update(long id, Contact contact) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CONTACT)) {
-            preparedStatement.setString(1, contact.getFirstName());
-            preparedStatement.setString(2, contact.getLastName());
-            preparedStatement.setString(3, contact.getMiddleName());
-            preparedStatement.setInt(4, contact.getMaritalStatus());
-            preparedStatement.setString(5, contact.getNationality());
-            preparedStatement.setLong(6, contact.getId());
+            fillPreparedStatement(preparedStatement, contact);
+            preparedStatement.setLong(11, id);
             preparedStatement.executeUpdate();
+            AddressDAO addressDAO = new AddressDAO(connection);
+            addressDAO.update(id, contact.getAddress());
         } catch (SQLException e) {
             throw new DAOException("Error in ContactDAO.update()", e);
         }
+    }
+
+    private void fillPreparedStatement(PreparedStatement preparedStatement, Contact contact) throws SQLException {
+        preparedStatement.setString(1, contact.getFirstName());
+        preparedStatement.setString(2, contact.getLastName());
+        preparedStatement.setString(3, contact.getMiddleName());
+        preparedStatement.setDate(4, contact.getBirthDate());
+        preparedStatement.setString(5, contact.getNationality());
+        preparedStatement.setString(6, contact.getGender());
+        preparedStatement.setInt(7, contact.getMaritalStatus());
+        preparedStatement.setString(8, contact.getWebsite());
+        preparedStatement.setString(9, contact.getEmail());
+        preparedStatement.setString(10, contact.getJob());
     }
 }

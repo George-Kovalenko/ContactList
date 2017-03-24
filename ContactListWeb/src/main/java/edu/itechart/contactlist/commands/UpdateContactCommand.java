@@ -20,7 +20,7 @@ public class UpdateContactCommand implements Command {
         mainHandler.handleInputFields(request);
         try {
             Contact contact = (Contact) request.getAttribute(REQUEST_ATTR_CONTACT);
-            ContactService.update(contact);
+            ContactService.update(id, contact);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

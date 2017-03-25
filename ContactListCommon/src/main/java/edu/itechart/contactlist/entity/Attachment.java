@@ -1,17 +1,17 @@
 package edu.itechart.contactlist.entity;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class Attachment extends Entity {
     private String fileName;
-    private Timestamp uploadDate;
+    private Date uploadDate;
     private String comment;
     private long contactID;
 
     public Attachment() {
     }
 
-    public Attachment(long id, String fileName, Timestamp uploadDate, String comment, long contactID) {
+    public Attachment(long id, String fileName, Date uploadDate, String comment, long contactID) {
         super(id);
         this.fileName = fileName;
         this.uploadDate = uploadDate;
@@ -27,11 +27,11 @@ public class Attachment extends Entity {
         this.fileName = fileName;
     }
 
-    public Timestamp getUploadDate() {
+    public Date getUploadDate() {
         return uploadDate;
     }
 
-    public void setUploadDate(Timestamp uploadDate) {
+    public void setUploadDate(Date uploadDate) {
         this.uploadDate = uploadDate;
     }
 
@@ -49,5 +49,15 @@ public class Attachment extends Entity {
 
     public void setContactID(long contactID) {
         this.contactID = contactID;
+    }
+
+    @Override
+    public String toString() {
+        return "Attachment{" +
+                "fileName='" + fileName + '\'' +
+                ", uploadDate=" + uploadDate +
+                ", comment='" + comment + '\'' +
+                ", contactID=" + contactID +
+                "} " + super.toString();
     }
 }

@@ -27,6 +27,8 @@ public class FieldHandlerFactory {
         fields.put("postcode", new PostcodeFieldHandler());
         fields.put("phones", new PhonesFieldHandler());
         fields.put("new-phones", new NewPhonesFieldHandler());
+        fields.put("attachments", new AttachmentsFieldHandler());
+        fields.put("new-attachments", new NewAttachmentsFieldHandler());
     }
 
     public FieldHandler getFieldHandler(String key) {

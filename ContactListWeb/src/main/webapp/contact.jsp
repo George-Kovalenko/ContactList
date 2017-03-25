@@ -20,175 +20,178 @@
     <link rel="stylesheet" type="text/css" href="css/nav-button-style.css">
 </head>
 <body>
-    <form method="post" id="contact-form" action="${submitAction}" enctype="multipart/form-data">
-        <div class="contact-info">
-            <h3>Основная информация</h3>
-            <label>
-                Фамилия
-                <input type="text" name="last-name" value="${contact.lastName}">
-            </label>
-            <label>
-                Имя
-                <input type="text" name="first-name" value="${contact.firstName}">
-            </label>
-            <label>
-                Отчество
-                <input type="text" name="middle-name" value="${contact.middleName}">
-            </label>
-            <label>
-                Дата рождения
-                <input type="text" name="birth-date" value="${contact.birthDate}">
-            </label>
-            <label>
-                Пол
-                <select class="select-field">
-                    <option ${empty contact or empty contact.gender ? 'selected' : ''} value="x">Не выбран</option>
-                    <option ${not empty contact and contact.gender == 'm' ? 'selected' : ''} value="m">Мужской</option>
-                    <option ${not empty contact and contact.gender == 'f' ? 'selected' : ''} value="f">Женский</option>
-                </select>
-            </label>
-            <label>
-                Гражданство
-                <input type="text" name="nationality" value="${contact.nationality}">
-            </label>
-            <label>
-                Семейное положение
-                <select class="select-field" name="marital-status">
-                    <option ${empty contact or empty contact.maritalStatus ? 'selected' : ''} value="0">
-                        Не выбрано
-                    </option>
-                    <c:forEach var="maritalStatus" items="${maritalStatuses}">
-                        <option ${empty contact or contact.maritalStatus != maritalStatus.id ? '' : 'selected'}
-                                value="${maritalStatus.id}">
-                                ${maritalStatus.name}
+    <div class="contact-container">
+        <form method="post" id="contact-form" action="${submitAction}" enctype="multipart/form-data">
+            <div class="contact-info">
+                <h3>Основная информация</h3>
+                <label>
+                    Фамилия
+                    <input type="text" name="last-name" value="${contact.lastName}">
+                </label>
+                <label>
+                    Имя
+                    <input type="text" name="first-name" value="${contact.firstName}">
+                </label>
+                <label>
+                    Отчество
+                    <input type="text" name="middle-name" value="${contact.middleName}">
+                </label>
+                <label>
+                    Дата рождения
+                    <input type="text" name="birth-date" value="${contact.birthDate}">
+                </label>
+                <label>
+                    Пол
+                    <select class="select-field">
+                        <option ${empty contact or empty contact.gender ? 'selected' : ''} value="x">Не выбран</option>
+                        <option ${not empty contact and contact.gender == 'm' ? 'selected' : ''} value="m">Мужской</option>
+                        <option ${not empty contact and contact.gender == 'f' ? 'selected' : ''} value="f">Женский</option>
+                    </select>
+                </label>
+                <label>
+                    Гражданство
+                    <input type="text" name="nationality" value="${contact.nationality}">
+                </label>
+                <label>
+                    Семейное положение
+                    <select class="select-field" name="marital-status">
+                        <option ${empty contact or empty contact.maritalStatus ? 'selected' : ''} value="0">
+                            Не выбрано
                         </option>
-                    </c:forEach>
-                </select>
-            </label>
-            <label>
-                Website
-                <input type="text" name="website" value="${contact.website}">
-            </label>
-            <label>
-                Email
-                <input type="text" name="email" value="${contact.email}">
-            </label>
-            <label>
-                Текущее место работы
-                <input type="text" name="job" value="${contact.job}">
-            </label>
-            <h3>Адрес</h3>
-            <label>
-                Страна
-                <input type="text" name="country" value="${contact.address.country}">
-            </label>
-            <label>
-                Город
-                <input type="text" name="city" value="${contact.address.city}">
-            </label>
-            <label>
-                Улица
-                <input type="text" name="street" value="${contact.address.street}">
-            </label>
-            <label>
-                Дом
-                <input type="text" name="house" value="${contact.address.houseNumber}">
-            </label>
-            <label>
-                Квартира
-                <input type="text" name="flat" value="${contact.address.flatNumber}">
-            </label>
-            <label>
-                Почтовый индекс
-                <input type="text" name="postcode" value="${contact.address.postcode}">
-            </label>
-        </div>
-        <div class="phone-list">
-            <table>
-                <div class="nav-buttons">
-                    <div class="nav-button add" title="add" id="add-phone-button"></div>
-                    <div class="nav-button edit" title="edit" id="edit-phone-button"></div>
-                    <div class="nav-button delete" title="delete" id="delete-phone-button"></div>
-                </div>
-                <h3>
-                    Список телефонов
-                </h3>
-                <col class="column-1">
-                <col class="column-2">
-                <col class="column-3">
-                <col class="column-4">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Номер телефона</th>
-                    <th>Тип телефона</th>
-                    <th>Комментарий</th>
-                </tr>
-                </thead>
-                <tbody id="phone-body">
-                    <c:forEach var="phone" items="${contact.phones}">
-                        <tr id="phone-${phone.id}" class="phone">
-                            <td>
-                                <input type="checkbox" name="check-phone" value="${phone.id}">
-                            </td>
-                            <td id="phone-number-${phone.id}">
-                                <c:out value="${phone.countryCode} ${phone.operatorCode} ${phone.number}"/>
-                            </td>
-                            <td id="phone-type-${phone.id}">
-                                <c:out value="${not empty phone.phoneType ? phoneTypes[phone.phoneType - 1].name : ''}"/>
-                            </td>
-                            <td id="phone-comment-${phone.id}">
-                                <c:out value="${phone.comment}"/>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
-        <div class="attachment-list">
-            <table>
-                <div class="nav-buttons">
-                    <div class="nav-button add" title="add" id="add-attachment-button"></div>
-                    <div class="nav-button edit" title="edit" id="edit-attachment-button"></div>
-                    <div class="nav-button delete" title="delete" id="delete-attachment-button"></div>
-                </div>
-                <h3>
-                    Список присоединений
-                </h3>
-                <col class="column-1">
-                <col class="column-2">
-                <col class="column-3">
-                <col class="column-4">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Имя файла</th>
-                    <th>Дата присоединения</th>
-                    <th>Комментарий</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="attachment" items="${contact.attachments}">
-                        <tr>
-                            <td>
-                                <input type="checkbox" name="check-attachment-${attachment.id}" id="${attachment.id}">
-                            </td>
-                            <td>
-                                <c:out value="${attachment.fileName}"/>
-                            </td>
-                            <td>
-                                <c:out value="${attachment.uploadDate}"/>
-                            </td>
-                            <td>
-                                <c:out value="${attachment.comment}"/>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
-        <input type="button" id="save-contact-button" value="Сохранить">
-    </form>
+                        <c:forEach var="maritalStatus" items="${maritalStatuses}">
+                            <option ${empty contact or contact.maritalStatus != maritalStatus.id ? '' : 'selected'}
+                                    value="${maritalStatus.id}">
+                                    ${maritalStatus.name}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </label>
+                <label>
+                    Website
+                    <input type="text" name="website" value="${contact.website}">
+                </label>
+                <label>
+                    Email
+                    <input type="text" name="email" value="${contact.email}">
+                </label>
+                <label>
+                    Текущее место работы
+                    <input type="text" name="job" value="${contact.job}">
+                </label>
+                <h3>Адрес</h3>
+                <label>
+                    Страна
+                    <input type="text" name="country" value="${contact.address.country}">
+                </label>
+                <label>
+                    Город
+                    <input type="text" name="city" value="${contact.address.city}">
+                </label>
+                <label>
+                    Улица
+                    <input type="text" name="street" value="${contact.address.street}">
+                </label>
+                <label>
+                    Дом
+                    <input type="text" name="house" value="${contact.address.houseNumber}">
+                </label>
+                <label>
+                    Квартира
+                    <input type="text" name="flat" value="${contact.address.flatNumber}">
+                </label>
+                <label>
+                    Почтовый индекс
+                    <input type="text" name="postcode" value="${contact.address.postcode}">
+                </label>
+            </div>
+            <div class="phone-list">
+                <table>
+                    <div class="nav-buttons">
+                        <div class="nav-button add" title="add" id="add-phone-button"></div>
+                        <div class="nav-button edit" title="edit" id="edit-phone-button"></div>
+                        <div class="nav-button delete" title="delete" id="delete-phone-button"></div>
+                    </div>
+                    <h3>
+                        Список телефонов
+                    </h3>
+                    <col class="column-1">
+                    <col class="column-2">
+                    <col class="column-3">
+                    <col class="column-4">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Номер телефона</th>
+                        <th>Тип телефона</th>
+                        <th>Комментарий</th>
+                    </tr>
+                    </thead>
+                    <tbody id="phone-body">
+                        <c:forEach var="phone" items="${contact.phones}">
+                            <tr id="phone-${phone.id}" class="phone">
+                                <td>
+                                    <input type="checkbox" name="check-phone" value="${phone.id}">
+                                </td>
+                                <td id="phone-number-${phone.id}">
+                                    <c:out value="${phone.countryCode} ${phone.operatorCode} ${phone.number}"/>
+                                </td>
+                                <td id="phone-type-${phone.id}">
+                                    <c:out value="${not empty phone.phoneType ? phoneTypes[phone.phoneType - 1].name : ''}"/>
+                                </td>
+                                <td id="phone-comment-${phone.id}">
+                                    <c:out value="${phone.comment}"/>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="attachment-list">
+                <table>
+                    <div class="nav-buttons">
+                        <div class="nav-button add" title="add" id="add-attachment-button"></div>
+                        <div class="nav-button edit" title="edit" id="edit-attachment-button"></div>
+                        <div class="nav-button delete" title="delete" id="delete-attachment-button"></div>
+                    </div>
+                    <h3>
+                        Список присоединений
+                    </h3>
+                    <col class="column-1">
+                    <col class="column-2">
+                    <col class="column-3">
+                    <col class="column-4">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Имя файла</th>
+                        <th>Дата присоединения</th>
+                        <th>Комментарий</th>
+                    </tr>
+                    </thead>
+                    <tbody id="attachment-body">
+                        <c:forEach var="attachment" items="${contact.attachments}">
+                            <tr id="attachment-${attachment.id}" class="attachment">
+                                <td>
+                                    <input type="checkbox" name="check-attachment" value="${attachment.id}">
+                                </td>
+                                <td id="attachment-file-name-${attachment.id}">
+                                    <c:out value="${attachment.fileName}"/>
+                                </td>
+                                <td id="attachment-upload-date-${attachment.id}">
+                                    <c:out value="${attachment.uploadDate}"/>
+                                </td>
+                                <td id="attachment-comment-${attachment.id}">
+                                    <c:out value="${attachment.comment}"/>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div id="attachment-input-fields"></div>
+            <input type="button" id="save-contact-button" value="Сохранить">
+        </form>
+    </div>
     <div class="popup-window" id="phone-popup">
         <div class="popup-content">
             <div class="popup-title">
@@ -225,7 +228,7 @@
             <div class="popup-title">
                 Редактирование присоединений
             </div>
-            <label>Имя файла
+            <label id="path-to-file">Имя файла
                 <input type="file" id="file-path">
             </label>
             <label>Комментарий

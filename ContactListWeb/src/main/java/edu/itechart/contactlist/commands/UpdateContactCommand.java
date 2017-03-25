@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UpdateContactCommand implements Command {
     private static final String REQUEST_PARAM_ID = "id";
     private static final String REQUEST_ATTR_CONTACT = "contact";
-    private static final String URL_CONTACT= "/controller?command=show_contact&contact_id=";
+    private static final String URL_CONTACT = "/controller?command=show_contact&contact_id=";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

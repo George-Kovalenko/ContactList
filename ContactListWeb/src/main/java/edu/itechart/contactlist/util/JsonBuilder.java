@@ -1,11 +1,13 @@
 package edu.itechart.contactlist.util;
 
+import edu.itechart.contactlist.entity.Attachment;
 import edu.itechart.contactlist.entity.Phone;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class JsonBuilder {
@@ -30,5 +32,26 @@ public class JsonBuilder {
             e.printStackTrace();
         }
         return phones;
+    }
+
+    public ArrayList<Attachment> getAttachmentList(String jsonAttachment) {
+        ArrayList<Attachment> attachments = new ArrayList<>();
+        JSONParser parser = new JSONParser();
+        try {
+            JSONArray array = (JSONArray) parser.parse(jsonAttachment);
+            for (Object object : array) {
+                JSONObject jsonObject = (JSONObject) object;
+                Attachment attachment = new Attachment();
+                attachment.setId((Long.parseLong(jsonObject.get("id").toString())));
+                attachment.setFileName((String) jsonObject.get("fileName"));
+                attachment.setUploadDate(Date.valueOf(jsonObject.get("uploadDate").toString()));
+                attachment.setComment((String) jsonObject.get("comment"));
+                attachment.setContactID(Long.parseLong(jsonObject.get("contactId").toString()));
+                attachments.add(attachment);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return attachments;
     }
 }

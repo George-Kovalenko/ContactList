@@ -69,4 +69,48 @@ public class Phone extends Entity {
     public void setContactID(long contactID) {
         this.contactID = contactID;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Phone)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Phone phone = (Phone) o;
+        if (getPhoneType() != phone.getPhoneType()) {
+            return false;
+        }
+        if (getContactID() != phone.getContactID()) {
+            return false;
+        }
+        if (getCountryCode() != null ? !getCountryCode().equals(phone.getCountryCode()) :
+                phone.getCountryCode() != null) {
+            return false;
+        }
+        if (getOperatorCode() != null ? !getOperatorCode().equals(phone.getOperatorCode()) :
+                phone.getOperatorCode() != null) {
+            return false;
+        }
+        if (getNumber() != null ? !getNumber().equals(phone.getNumber()) : phone.getNumber() != null) {
+            return false;
+        }
+        return getComment() != null ? getComment().equals(phone.getComment()) : phone.getComment() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (getCountryCode() != null ? getCountryCode().hashCode() : 0);
+        result = 31 * result + (getOperatorCode() != null ? getOperatorCode().hashCode() : 0);
+        result = 31 * result + (getNumber() != null ? getNumber().hashCode() : 0);
+        result = 31 * result + getPhoneType();
+        result = 31 * result + (getComment() != null ? getComment().hashCode() : 0);
+        result = 31 * result + (int) (getContactID() ^ (getContactID() >>> 32));
+        return result;
+    }
 }

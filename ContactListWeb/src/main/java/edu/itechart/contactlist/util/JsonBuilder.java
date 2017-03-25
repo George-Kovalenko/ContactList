@@ -23,6 +23,7 @@ public class JsonBuilder {
                 phone.setNumber((String) jsonObject.get("number"));
                 phone.setPhoneType(Integer.parseInt(jsonObject.get("type").toString()));
                 phone.setComment((String) jsonObject.get("comment"));
+                phone.setContactID(Long.parseLong(jsonObject.get("contactId").toString()));
                 phones.add(phone);
             }
         } catch (ParseException e) {

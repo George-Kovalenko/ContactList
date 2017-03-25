@@ -5,6 +5,7 @@ function Phone() {
     this.number = '';
     this.type = '';
     this.comment = '';
+    this.contactId = 0;
 }
 
 var contactForm = document.getElementById('contact-form');
@@ -104,17 +105,18 @@ function fillPhoneList(prefix) {
     var phoneList = [];
     for (var i = 0; i < phones.length; i++) {
         var phone = new Phone();
-        phone.id = prefix ? 0 : phones[i].id.split('-')[1];
-        console.log(phone.id);
-        var fullNumber = document.getElementById(prefix + 'phone-number-' + phone.id).innerHTML.trim();
-        phone.countryCode = fullNumber.split(' ')[0];
-        phone.operatorCode = fullNumber.split(' ')[1];
-        phone.number = fullNumber.split(' ')[2];
-        var type = document.getElementById(prefix + 'phone-type-' + phone.id).innerHTML.trim();
+        var id = prefix ? phones[i].id.split('-')[2] : phones[i].id.split('-')[1];
+        var fullNumber = document.getElementById(prefix + 'phone-number-' + id).innerHTML.trim();
+        phone.countryCode = fullNumber.split(' ', 3)[0];
+        phone.operatorCode = fullNumber.split(' ', 3)[1];
+        phone.number = fullNumber.split(' ', 3)[2];
+        var type = document.getElementById(prefix + 'phone-type-' + id).innerHTML.trim();
         if (type) {
             phone.type = document.getElementById(type).index.toString();
         }
-        phone.comment = document.getElementById(prefix + 'phone-comment-' + phone.id).innerHTML.trim();
+        phone.comment = document.getElementById(prefix + 'phone-comment-' + id).innerHTML.trim();
+        phone.id = prefix ? 0 : id;
+        phone.contactId = contactForm.action.split('=', 3)[2];
         phoneList.push(phone);
     }
     var newChild = addItemsInHiddenInput(prefix + 'phones', JSON.stringify(phoneList));

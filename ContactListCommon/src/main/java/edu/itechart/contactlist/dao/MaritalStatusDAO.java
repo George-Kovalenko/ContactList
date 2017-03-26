@@ -8,13 +8,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class MaritalStatusDAO extends AbstractDAO {
+public class MaritalStatusDAO extends AbstractDAO<MaritalStatus> {
     private static final String SELECT_ALL = "SELECT * FROM marital_statuses";
 
     public MaritalStatusDAO(Connection connection) {
         super(connection);
     }
 
+    @Override
     public ArrayList<MaritalStatus> findAll() throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -28,5 +29,22 @@ public class MaritalStatusDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException("Error in MaritalStatusDAO.findAll()", e);
         }
+    }
+
+    @Override
+    public MaritalStatus findById(long id) throws DAOException {
+        return null;
+    }
+
+    @Override
+    public void insert(MaritalStatus entity) throws DAOException {
+    }
+
+    @Override
+    public void delete(long id) throws DAOException {
+    }
+
+    @Override
+    public void update(long id, MaritalStatus entity) throws DAOException {
     }
 }

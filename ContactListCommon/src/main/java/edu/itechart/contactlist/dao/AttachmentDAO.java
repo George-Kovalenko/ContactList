@@ -9,8 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class AttachmentDAO extends AbstractDAO {
+public class AttachmentDAO extends AbstractDAO<Attachment> {
     private static final String SELECT_BY_CONTACT_ID = "SELECT * FROM attachments WHERE contact_id=?";
+    private static final String UPDATE_ATTACHMENT = "UPDATE attachments SET file_name=?, comment=? WHERE id=?";
+    private static final String INSERT_ATTACHMENT = "INSERT INTO attachments (file_name, upload_date, comment, " +
+            "contact_id) VALUES(?, ?, ?, ?)";
+    private static final String DELETE_ATTACHMENT = "DELETE FROM attachments WHERE id=?";
 
     public AttachmentDAO(Connection connection) {
         super(connection);
@@ -28,7 +32,52 @@ public class AttachmentDAO extends AbstractDAO {
             }
             return attachments;
         } catch (SQLException e) {
-            throw new DAOException("Error in AttachmentDAO.findByContactId", e);
+            throw new DAOException("Error in AttachmentDAO.findByContactId()", e);
         }
+    }
+
+    @Override
+    public void insert(Attachment attachment) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ATTACHMENT)) {
+            preparedStatement.setString(1, attachment.getFileName());
+            preparedStatement.setDate(2, attachment.getUploadDate());
+            preparedStatement.setString(3, attachment.getComment());
+            preparedStatement.setLong(4, attachment.getContactID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error in AttachmentDAO.insert()", e);
+        }
+    }
+
+    @Override
+    public void update(long id, Attachment attachment) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ATTACHMENT)) {
+            preparedStatement.setString(1, attachment.getFileName());
+            preparedStatement.setString(2, attachment.getComment());
+            preparedStatement.setLong(3, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error in AttachmentDAO.update()", e);
+        }
+    }
+
+    @Override
+    public void delete(long id) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ATTACHMENT)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error in AttachmentDAO.delete()", e);
+        }
+    }
+
+    @Override
+    public ArrayList<Attachment> findAll() throws DAOException {
+        return null;
+    }
+
+    @Override
+    public Attachment findById(long id) throws DAOException {
+        return null;
     }
 }

@@ -7,8 +7,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class AddressDAO extends AbstractDAO {
+public class AddressDAO extends AbstractDAO<Address> {
     private static final String SELECT_BY_ID = "SELECT * FROM addresses WHERE contacts_id=?";
     private static final String UPDATE_ADDRESS = "UPDATE addresses SET country=?, city=?, street=?, house_number=?," +
             "flat_number=?, postcode=? WHERE contacts_id=?";
@@ -17,6 +18,7 @@ public class AddressDAO extends AbstractDAO {
         super(connection);
     }
 
+    @Override
     public Address findById(long id) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
             preparedStatement.setLong(1,  id);
@@ -31,6 +33,7 @@ public class AddressDAO extends AbstractDAO {
         }
     }
 
+    @Override
     public void update(long id, Address address) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ADDRESS)) {
             fillPreparedStatement(preparedStatement, address);
@@ -39,6 +42,19 @@ public class AddressDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException("Error in AddressDAO.update()", e);
         }
+    }
+
+    @Override
+    public ArrayList<Address> findAll() throws DAOException {
+        return null;
+    }
+
+    @Override
+    public void insert(Address entity) throws DAOException {
+    }
+
+    @Override
+    public void delete(long id) throws DAOException {
     }
 
     private void fillPreparedStatement(PreparedStatement preparedStatement, Address address) throws SQLException {

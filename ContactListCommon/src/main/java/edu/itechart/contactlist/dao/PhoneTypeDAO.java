@@ -8,13 +8,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class PhoneTypeDAO extends AbstractDAO {
+public class PhoneTypeDAO extends AbstractDAO<PhoneType> {
     private static final String SELECT_ALL = "SELECT * FROM phone_type";
 
     public PhoneTypeDAO(Connection connection) {
         super(connection);
     }
 
+    @Override
     public ArrayList<PhoneType> findAll() throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
             ArrayList<PhoneType> phoneTypes = new ArrayList<>();
@@ -28,5 +29,22 @@ public class PhoneTypeDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException("Error in PhoneTypeDAO.findAll()", e);
         }
+    }
+
+    @Override
+    public PhoneType findById(long id) throws DAOException {
+        return null;
+    }
+
+    @Override
+    public void insert(PhoneType entity) throws DAOException {
+    }
+
+    @Override
+    public void delete(long id) throws DAOException {
+    }
+
+    @Override
+    public void update(long id, PhoneType entity) throws DAOException {
     }
 }

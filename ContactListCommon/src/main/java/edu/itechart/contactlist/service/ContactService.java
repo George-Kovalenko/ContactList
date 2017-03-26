@@ -5,6 +5,7 @@ import edu.itechart.contactlist.connectionpool.ConnectionPoolException;
 import edu.itechart.contactlist.dao.ContactDAO;
 import edu.itechart.contactlist.dao.DAOException;
 import edu.itechart.contactlist.entity.Contact;
+import org.apache.commons.fileupload.FileItem;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -29,14 +30,15 @@ public class ContactService {
         }
     }
 
-    public static void update(long id, Contact contact) throws ServiceException {
+    public static void update(long id, Contact contact, ArrayList<FileItem> fileItems) throws ServiceException {
         try (Connection connection = ConnectionPool.getInstance().getConnection()) {
             ContactDAO contactDAO = new ContactDAO(connection);
             connection.setAutoCommit(false);
             try {
                 contactDAO.update(id, contact);
+                AttachmentWriterService.writeAttachments(id, fileItems);
                 connection.commit();
-            } catch (DAOException e) {
+            } catch (ServiceException | DAOException e) {
                 connection.rollback();
                 throw new ServiceException(e);
             } finally {

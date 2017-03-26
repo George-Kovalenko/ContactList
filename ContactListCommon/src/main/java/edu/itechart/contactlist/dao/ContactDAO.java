@@ -2,7 +2,6 @@ package edu.itechart.contactlist.dao;
 
 import edu.itechart.contactlist.entity.Contact;
 import edu.itechart.contactlist.entity.Entity;
-import edu.itechart.contactlist.entity.Phone;
 import edu.itechart.contactlist.entityfactory.ContactFactory;
 
 import java.sql.Connection;
@@ -11,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ContactDAO extends AbstractDAO {
+public class ContactDAO extends AbstractDAO<Contact> {
     private static final String SELECT_ALL = "SELECT * FROM contacts";
     private static final String SELECT_BY_ID = "SELECT * FROM contacts WHERE id=?";
     private static final String UPDATE_CONTACT = "UPDATE contacts SET first_name=?, last_name=?, middle_name=?, " +
@@ -21,6 +20,7 @@ public class ContactDAO extends AbstractDAO {
         super(connection);
     }
 
+    @Override
     public ArrayList<Contact> findAll() throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
             AddressDAO addressDAO = new AddressDAO(connection);
@@ -42,6 +42,7 @@ public class ContactDAO extends AbstractDAO {
         }
     }
 
+    @Override
     public Contact findById(long id) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
             AddressDAO addressDAO = new AddressDAO(connection);
@@ -62,6 +63,7 @@ public class ContactDAO extends AbstractDAO {
         }
     }
 
+    @Override
     public void update(long id, Contact contact) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CONTACT)) {
             fillPreparedStatement(preparedStatement, contact);
@@ -69,40 +71,50 @@ public class ContactDAO extends AbstractDAO {
             preparedStatement.executeUpdate();
             AddressDAO addressDAO = new AddressDAO(connection);
             addressDAO.update(id, contact.getAddress());
-            updatePhones(id, contact.getPhones());
+            PhoneDAO phoneDAO = new PhoneDAO(connection);
+            updateEntityList(contact.getPhones(), phoneDAO.findByContactId(id), phoneDAO);
+            AttachmentDAO attachmentDAO = new AttachmentDAO(connection);
+            updateEntityList(contact.getAttachments(), attachmentDAO.findByContactId(id), attachmentDAO);
         } catch (DAOException | SQLException e) {
             throw new DAOException("Error in ContactDAO.update()", e);
         }
     }
 
-    private void updatePhones(long contactId, ArrayList<Phone> phones) throws DAOException {
-        PhoneDAO phoneDAO = new PhoneDAO(connection);
-        ArrayList<Phone> oldPhones = phoneDAO.findByContactId(contactId);
-        ArrayList<Phone> phonesForInsert = new ArrayList<>();
-        ArrayList<Long> phoneIndexes = new ArrayList<>();
-        for (Phone phone : phones) {
-            if (phone.getId() == 0) {
-                phonesForInsert.add(phone);
+    @Override
+    public void insert(Contact entity) throws DAOException {
+    }
+
+    @Override
+    public void delete(long id) throws DAOException {
+    }
+
+    private <T extends Entity> void updateEntityList(ArrayList<T> list, ArrayList<T> oldList, AbstractDAO<T> dao)
+            throws DAOException {
+        ArrayList<T> entityForInsert = new ArrayList<>();
+        ArrayList<Long> entityIndexes = new ArrayList<>();
+        for (T entity : list) {
+            if (entity.getId() == 0) {
+                entityForInsert.add(entity);
             } else {
-                phoneIndexes.add(phone.getId());
+                entityIndexes.add(entity.getId());
             }
         }
-        phones.removeAll(phonesForInsert);
-        ArrayList<Phone> phonesForUpdate = new ArrayList<>(phones);
-        phonesForUpdate.removeAll(oldPhones);
+        list.removeAll(entityForInsert);
+        ArrayList<T> entityForUpdate = new ArrayList<>(list);
+        entityForUpdate.removeAll(oldList);
         ArrayList<Long> indexesForDelete = new ArrayList<>();
-        for (Phone phone : oldPhones) {
-            indexesForDelete.add(phone.getId());
+        for (T entity : oldList) {
+            indexesForDelete.add(entity.getId());
         }
-        indexesForDelete.removeIf(phoneIndexes::contains);
-        for (Phone phone : phonesForInsert) {
-            phoneDAO.insert(phone);
+        indexesForDelete.removeIf(entityIndexes::contains);
+        for (T entity : entityForInsert) {
+            dao.insert(entity);
         }
-        for (Phone phone : phonesForUpdate) {
-            phoneDAO.update(phone.getId(), phone);
+        for (T entity : entityForUpdate) {
+            dao.update(entity.getId(), entity);
         }
         for (Long id : indexesForDelete) {
-            phoneDAO.delete(id);
+            dao.delete(id);
         }
     }
 

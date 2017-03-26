@@ -231,8 +231,7 @@ var editAttachmentId = 0;
 
 addAttachmentButton.onclick = function () {
     isAttachmentEdit = false;
-    filePath.value = filePath.defaultValue;
-    filePath.style.display = 'block';
+    document.getElementById('file-path').style.display = 'block';
     attachmentComment.value = '';
     openModalWindow(attachmentPopup);
 };
@@ -242,6 +241,7 @@ deleteAttachmentButton.onclick = function () {
     deleteItemsFromPage(checkedAttachments, 'attachment-');
     var newCheckedAttachments = getCheckedItems('check-new-attachment');
     deleteItemsFromPage(newCheckedAttachments, 'new-attachment-');
+    deleteItemsFromPage(newCheckedAttachments, 'new-attachment-input-');
 };
 
 editAttachmentButton.onclick = function () {
@@ -249,12 +249,11 @@ editAttachmentButton.onclick = function () {
     var checkedAttachments = getCheckedItems('check-attachment');
     if (checkedAttachments.length > 0) {
         editAttachmentId = checkedAttachments[0];
-        console.log(editAttachmentId);
         appendAttachmentPopupFields(editAttachmentId, '');
         openModalWindow(attachmentPopup);
     } else {
         var checkedNewAttachments = getCheckedItems('check-new-attachment');
-        if (checkedAttachments.length > 0) {
+        if (checkedNewAttachments.length > 0) {
             isNewAttachmentEdit = true;
             editAttachmentId = checkedNewAttachments[0];
             appendAttachmentPopupFields(editAttachmentId, 'new-');
@@ -280,7 +279,7 @@ function createNewAttachment() {
     newAttachmentId++;
     var attachment = new Attachment();
     attachment.id = newAttachmentId;
-    var fileName = filePath.value.split('\\');
+    var fileName = document.getElementById('file-path').value.split('\\');
     attachment.fileName = fileName[fileName.length - 1];
     attachment.comment = attachmentComment.value;
     attachment.uploadDate = getDateTime();
@@ -317,7 +316,6 @@ function addFilePathInHiddenField(attachmentInput) {
     newAttachmentFileInput.id = 'new-attachment-input-' + newAttachmentId;
     newAttachmentFileInput.name = 'new-attachment-input-' + newAttachmentId;
     newAttachmentFileInput.style.display = 'none';
-    console.log(newAttachmentFileInput.value);
     var attachmentList = document.getElementById('attachment-input-fields');
     attachmentList.appendChild(newAttachmentFileInput);
     var fileInput = document.createElement('input');

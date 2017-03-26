@@ -30,6 +30,26 @@ public class ContactService {
         }
     }
 
+    public static void insert(Contact contact, ArrayList<FileItem> fileItems) throws  ServiceException {
+        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
+            ContactDAO contactDAO = new ContactDAO(connection);
+            connection.setAutoCommit(false);
+            try {
+                contactDAO.insert(contact);
+                long id = contactDAO.getLastId();
+                AttachmentWriterService.writeAttachments(id, fileItems);
+                connection.commit();
+            } catch (DAOException e) {
+                connection.rollback();
+                throw new ServiceException(e);
+            } finally {
+                connection.setAutoCommit(true);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     public static void update(long id, Contact contact, ArrayList<FileItem> fileItems) throws ServiceException {
         try (Connection connection = ConnectionPool.getInstance().getConnection()) {
             ContactDAO contactDAO = new ContactDAO(connection);

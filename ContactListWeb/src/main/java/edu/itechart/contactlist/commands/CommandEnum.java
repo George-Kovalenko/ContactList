@@ -13,6 +13,12 @@ public enum CommandEnum {
         }
     },
 
+    CREATE_CONTACT {
+        {
+            command = new CreateContactCommand();
+        }
+    },
+
     UPDATE_CONTACT {
         {
             command = new UpdateContactCommand();

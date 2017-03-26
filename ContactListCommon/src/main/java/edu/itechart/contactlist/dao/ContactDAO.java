@@ -13,8 +13,12 @@ import java.util.ArrayList;
 public class ContactDAO extends AbstractDAO<Contact> {
     private static final String SELECT_ALL = "SELECT * FROM contacts";
     private static final String SELECT_BY_ID = "SELECT * FROM contacts WHERE id=?";
+    private static final String INSERT_CONTACT = "INSERT INTO contacts (first_name, last_name, middle_name, " +
+            "birth_date, nationality, gender, marital_status, website, email, job) " +
+            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_CONTACT = "UPDATE contacts SET first_name=?, last_name=?, middle_name=?, " +
             "birth_date=?, nationality=?, gender=?, marital_status=?, website=?, email=?, job=? WHERE id=?";
+    private static final String GET_LAST_ID = "SELECT last_insert_id() AS last_id FROM contacts";
 
     public ContactDAO(Connection connection) {
         super(connection);
@@ -81,12 +85,50 @@ public class ContactDAO extends AbstractDAO<Contact> {
     }
 
     @Override
-    public void insert(Contact entity) throws DAOException {
+    public void insert(Contact contact) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CONTACT)) {
+            fillPreparedStatement(preparedStatement, contact);
+            preparedStatement.executeUpdate();
+            long id = getLastId();
+            AddressDAO addressDAO = new AddressDAO(connection);
+            contact.getAddress().setId(id);
+            addressDAO.insert(contact.getAddress());
+            contact.getPhones().forEach(item -> item.setContactID(id));
+            PhoneDAO phoneDAO = new PhoneDAO(connection);
+            insertEntityList(contact.getPhones(), phoneDAO);
+            contact.getAttachments().forEach(item -> item.setContactID(id));
+            AttachmentDAO attachmentDAO = new AttachmentDAO(connection);
+            insertEntityList(contact.getAttachments(), attachmentDAO);
+        } catch (DAOException | SQLException e) {
+            throw new DAOException("Error in ContactDAO.insert()", e);
+        }
     }
 
     @Override
     public void delete(long id) throws DAOException {
     }
+
+    public long getLastId() throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_LAST_ID)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            long id = 0;
+            if (resultSet.next()) {
+                id = resultSet.getLong("last_id");
+            }
+            return id;
+        } catch (SQLException e) {
+            throw new DAOException("Error in ContactDAO.getLastId()", e);
+        }
+    }
+
+
+    private <T extends Entity> void insertEntityList(ArrayList<T> list, AbstractDAO<T> dao)
+            throws DAOException {
+        for (T entity : list) {
+            dao.insert(entity);
+        }
+    }
+
 
     private <T extends Entity> void updateEntityList(ArrayList<T> list, ArrayList<T> oldList, AbstractDAO<T> dao)
             throws DAOException {

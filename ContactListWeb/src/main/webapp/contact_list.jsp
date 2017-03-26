@@ -6,9 +6,16 @@
     <meta charset="utf-8">
     <title>Контакты</title>
     <link type="text/css" rel="stylesheet" href="css/table-style.css">
+    <link type="text/css" rel="stylesheet" href="css/nav-button-style.css">
 </head>
 <body>
     <div class="contact-list">
+        <div class="nav-buttons">
+            <a class="nav-button add" title="add" id="add-contact-button" href="controller?command=show_contact"></a>
+            <a class="nav-button delete" title="delete" id="delete-contact-button"></a>
+            <a class="nav-button search" title="search" id="search-contact-button"></a>
+            <a class="nav-button mail" title="mail" id="send-mail-button"></a>
+        </div>
         <table>
             <col class="column-1">
             <col class="column-2">

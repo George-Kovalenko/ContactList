@@ -22,11 +22,13 @@ public class ShowContactCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         try {
-            long id = Long.parseLong(request.getParameter(REQUEST_PARAM_NAME));
-            Contact contact = ContactService.findById(id);
+            if (request.getParameter(REQUEST_PARAM_NAME) != null) {
+                long id = Long.parseLong(request.getParameter(REQUEST_PARAM_NAME));
+                Contact contact = ContactService.findById(id);
+                request.setAttribute(REQUEST_ATTR_CONTACTS, contact);
+            }
             ArrayList<MaritalStatus> maritalStatuses = MaritalStatusService.findAll();
             ArrayList<PhoneType> phoneTypes = PhoneTypeService.findAll();
-            request.setAttribute(REQUEST_ATTR_CONTACTS, contact);
             request.setAttribute(REQUEST_ATTR_MARITAL_STATUSES, maritalStatuses);
             request.setAttribute(REQUEST_ATTR_PHONE_TYPES, phoneTypes);
         } catch (ServiceException e) {

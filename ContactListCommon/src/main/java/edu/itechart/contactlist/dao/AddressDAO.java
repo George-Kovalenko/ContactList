@@ -13,6 +13,8 @@ public class AddressDAO extends AbstractDAO<Address> {
     private static final String SELECT_BY_ID = "SELECT * FROM addresses WHERE contacts_id=?";
     private static final String UPDATE_ADDRESS = "UPDATE addresses SET country=?, city=?, street=?, house_number=?," +
             "flat_number=?, postcode=? WHERE contacts_id=?";
+    private static final String INSERT_ADDRESS = "INSERT INTO addresses (country, city, street, house_number, " +
+            "flat_number, postcode, contacts_id) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
     public AddressDAO(Connection connection) {
         super(connection);
@@ -50,7 +52,14 @@ public class AddressDAO extends AbstractDAO<Address> {
     }
 
     @Override
-    public void insert(Address entity) throws DAOException {
+    public void insert(Address address) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ADDRESS)) {
+            fillPreparedStatement(preparedStatement, address);
+            preparedStatement.setLong(7, address.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error in AddressDAO.insert()", e);
+        }
     }
 
     @Override

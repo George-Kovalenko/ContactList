@@ -118,7 +118,7 @@ function fillPhoneList(prefix) {
         }
         phone.comment = document.getElementById(prefix + 'phone-comment-' + id).innerHTML.trim();
         phone.id = prefix ? 0 : id;
-        phone.contactId = contactForm.action.split('=', 3)[2];
+        phone.contactId = contactForm.action.split('=').length == 2 ? 0 : contactForm.action.split('=')[2];
         phoneList.push(phone);
     }
     var newChild = addItemsInHiddenInput(prefix + 'phones', JSON.stringify(phoneList));
@@ -355,7 +355,7 @@ function fillAttachmentList(prefix) {
         attachment.uploadDate = document.getElementById(prefix + 'attachment-upload-date-' + id).innerHTML.trim();
         attachment.comment = document.getElementById(prefix + 'attachment-comment-' + id).innerHTML.trim();
         attachment.id = prefix ? 0 : id;
-        attachment.contactId = contactForm.action.split('=', 3)[2];
+        attachment.contactId = contactForm.action.split('=').length == 2 ? 0 : contactForm.action.split('=')[2];
         attachmentList.push(attachment);
     }
     var newChild = addItemsInHiddenInput(prefix + 'attachments', JSON.stringify(attachmentList));

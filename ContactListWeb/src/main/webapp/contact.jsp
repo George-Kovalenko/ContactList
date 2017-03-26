@@ -3,7 +3,7 @@
 <c:choose>
     <c:when test="${empty contact}">
         <c:set var="title" value="Создание контакта"/>
-        <c:set var="submitAction" value=""/>
+        <c:set var="submitAction" value="controller?command=create_contact"/>
     </c:when>
     <c:otherwise>
         <c:set var="title" value="Редактирование контакта"/>

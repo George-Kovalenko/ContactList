@@ -16,6 +16,7 @@ public class PhoneDAO extends AbstractDAO<Phone> {
     private static final String INSERT_PHONE = "INSERT INTO phones (country_code, operator_code, number, phone_type, " +
             "comment, contact_id) VALUES(?, ?, ?, ?, ?, ?)";
     private static final String DELETE_PHONE = "DELETE FROM phones WHERE id=?";
+    private static final String DELETE_BY_CONTACT_ID = "DELETE FROM phones WHERE contact_id=?";
 
     public PhoneDAO(Connection connection) {
         super(connection);
@@ -77,6 +78,15 @@ public class PhoneDAO extends AbstractDAO<Phone> {
     @Override
     public Phone findById(long id) throws DAOException {
         return null;
+    }
+
+    public void deleteByContactId(long contactId) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_CONTACT_ID)) {
+            preparedStatement.setLong(1, contactId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error in PhoneDAO.deleteByContactId()", e);
+        }
     }
 
     private void fillPreparedStatement(PreparedStatement preparedStatement, Phone phone) throws SQLException {

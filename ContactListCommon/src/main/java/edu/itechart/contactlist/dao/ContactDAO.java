@@ -2,6 +2,7 @@ package edu.itechart.contactlist.dao;
 
 import edu.itechart.contactlist.entity.Contact;
 import edu.itechart.contactlist.entity.Entity;
+import edu.itechart.contactlist.entity.Phone;
 import edu.itechart.contactlist.entityfactory.ContactFactory;
 
 import java.sql.Connection;
@@ -18,6 +19,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
             "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_CONTACT = "UPDATE contacts SET first_name=?, last_name=?, middle_name=?, " +
             "birth_date=?, nationality=?, gender=?, marital_status=?, website=?, email=?, job=? WHERE id=?";
+    private static final String DELETE_CONTACT = "DELETE FROM contacts WHERE id=?";
     private static final String GET_LAST_ID = "SELECT last_insert_id() AS last_id FROM contacts";
 
     public ContactDAO(Connection connection) {
@@ -106,6 +108,18 @@ public class ContactDAO extends AbstractDAO<Contact> {
 
     @Override
     public void delete(long id) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CONTACT)) {
+            AddressDAO addressDAO = new AddressDAO(connection);
+            addressDAO.delete(id);
+            PhoneDAO phoneDAO = new PhoneDAO(connection);
+            phoneDAO.deleteByContactId(id);
+            AttachmentDAO attachmentDAO = new AttachmentDAO(connection);
+            attachmentDAO.deleteByContactId(id);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error in ContactDAO.delete()", e);
+        }
     }
 
     public long getLastId() throws DAOException {

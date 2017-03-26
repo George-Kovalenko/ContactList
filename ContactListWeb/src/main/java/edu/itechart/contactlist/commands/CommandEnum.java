@@ -23,6 +23,12 @@ public enum CommandEnum {
         {
             command = new UpdateContactCommand();
         }
+    },
+
+    DELETE_CONTACT {
+        {
+            command = new DeleteContactCommand();
+        }
     };
 
     protected Command command;

@@ -15,6 +15,7 @@ public class AddressDAO extends AbstractDAO<Address> {
             "flat_number=?, postcode=? WHERE contacts_id=?";
     private static final String INSERT_ADDRESS = "INSERT INTO addresses (country, city, street, house_number, " +
             "flat_number, postcode, contacts_id) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private static final String DELETE_ADDRESS = "DELETE FROM addresses WHERE contacts_id=?";
 
     public AddressDAO(Connection connection) {
         super(connection);
@@ -64,6 +65,12 @@ public class AddressDAO extends AbstractDAO<Address> {
 
     @Override
     public void delete(long id) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ADDRESS)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error in AddressDAO.delete()", e);
+        }
     }
 
     private void fillPreparedStatement(PreparedStatement preparedStatement, Address address) throws SQLException {

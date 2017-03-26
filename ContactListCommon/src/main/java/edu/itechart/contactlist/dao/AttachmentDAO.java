@@ -15,6 +15,7 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
     private static final String INSERT_ATTACHMENT = "INSERT INTO attachments (file_name, upload_date, comment, " +
             "contact_id) VALUES(?, ?, ?, ?)";
     private static final String DELETE_ATTACHMENT = "DELETE FROM attachments WHERE id=?";
+    private static final String DELETE_BY_CONTACT_ID = "DELETE FROM attachments WHERE contact_id=?";
 
     public AttachmentDAO(Connection connection) {
         super(connection);
@@ -79,5 +80,14 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
     @Override
     public Attachment findById(long id) throws DAOException {
         return null;
+    }
+
+    public void deleteByContactId(long contactId) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_CONTACT_ID)) {
+            preparedStatement.setLong(1, contactId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error in AttachmentDAO.delete()", e);
+        }
     }
 }

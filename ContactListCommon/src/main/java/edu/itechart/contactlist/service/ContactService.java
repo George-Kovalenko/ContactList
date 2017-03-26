@@ -68,4 +68,22 @@ public class ContactService {
             throw new ServiceException(e);
         }
     }
+
+    public static void delete(long id) throws ServiceException {
+        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
+            ContactDAO contactDAO = new ContactDAO(connection);
+            connection.setAutoCommit(false);
+            try {
+                contactDAO.delete(id);
+                connection.commit();
+            } catch (DAOException e) {
+                connection.rollback();
+                throw new ServiceException(e);
+            } finally {
+                connection.setAutoCommit(true);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

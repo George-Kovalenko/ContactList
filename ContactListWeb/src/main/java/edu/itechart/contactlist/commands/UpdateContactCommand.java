@@ -18,7 +18,7 @@ public class UpdateContactCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        int id = Integer.parseInt(request.getParameter(REQUEST_PARAM_ID));
+        long id = Long.parseLong(request.getParameter(REQUEST_PARAM_ID));
         MainHandler mainHandler = new MainHandler();
         mainHandler.handleInputFields(request);
         try {

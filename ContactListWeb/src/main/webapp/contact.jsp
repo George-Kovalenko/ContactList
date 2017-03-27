@@ -23,6 +23,8 @@
     <div class="contact-container">
         <form method="post" id="contact-form" action="${submitAction}" enctype="multipart/form-data">
             <div class="contact-info">
+                <div class="contact-photo" id="contact-photo"></div>
+                <div class="photo-input-field"></div>
                 <h3>Основная информация</h3>
                 <label>
                     Фамилия
@@ -191,6 +193,18 @@
             <div id="attachment-input-fields"></div>
             <input type="button" id="save-contact-button" value="Сохранить">
         </form>
+    </div>
+    <div class="popup-window" id="photo-popup">
+        <div class="popup-content">
+            <div class="popup-title">
+                Выбор фотографии
+            </div>
+            <input type="file" id="photo-path" accept="image/jpeg, image/png">
+            <div class="popup-buttons">
+                <div class="popup-button" id="submit-photo-button">Сохранить</div>
+                <div class="popup-button" id="cancel-photo-button">Отмена</div>
+            </div>
+        </div>
     </div>
     <div class="popup-window" id="phone-popup">
         <div class="popup-content">

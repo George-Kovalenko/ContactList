@@ -221,7 +221,6 @@ var attachmentPopup = document.getElementById('attachment-popup');
 var submitAttachmentButton = document.getElementById('submit-attachment-button');
 var cancelAttachmentButton = document.getElementById('cancel-attachment-button');
 
-var filePath = document.getElementById('file-path');
 var attachmentComment = document.getElementById('attachment-comment');
 
 var isAttachmentEdit = false;
@@ -361,3 +360,15 @@ function fillAttachmentList(prefix) {
     var newChild = addItemsInHiddenInput(prefix + 'attachments', JSON.stringify(attachmentList));
     contactForm.appendChild(newChild);
 }
+
+var contactPhoto = document.getElementById('contact-photo');
+var photoPopup = document.getElementById('photo-popup');
+var cancelPhotoButton = document.getElementById('cancel-photo-button');
+
+contactPhoto.onclick = function () {
+    openModalWindow(photoPopup);
+};
+
+cancelPhotoButton.onclick = function () {
+    closeModalWindow(photoPopup);
+};

@@ -38,6 +38,9 @@ public class MainHandler {
                     attachmentForUpload.add(item);
                 } else if (StringUtils.equals(item.getFieldName(), "photo-field")) {
                     request.setAttribute("photoForUpload", item);
+                } else if (StringUtils.equals(item.getFieldName(), "photo-field-delete")) {
+                    item.setFieldName("delete");
+                    request.setAttribute("photoForUpload", item);
                 }
             }
             request.setAttribute("contact", contact);

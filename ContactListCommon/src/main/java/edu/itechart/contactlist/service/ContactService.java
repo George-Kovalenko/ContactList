@@ -5,6 +5,7 @@ import edu.itechart.contactlist.connectionpool.ConnectionPoolException;
 import edu.itechart.contactlist.dao.*;
 import edu.itechart.contactlist.entity.*;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -86,10 +87,17 @@ public class ContactService {
                 PhoneDAO phoneDAO = new PhoneDAO(connection);
                 updateEntityList(contact.getPhones(), phoneDAO.findByContactId(id), phoneDAO);
                 AttachmentDAO attachmentDAO = new AttachmentDAO(connection);
-                ArrayList<Attachment> attachmentsForInsert = updateEntityList(contact.getAttachments(),
-                        attachmentDAO.findByContactId(id), attachmentDAO);
+                ArrayList<Attachment> oldAttachments = attachmentDAO.findByContactId(id);
+                ArrayList<Attachment> attachmentsForInsert = updateEntityList(contact.getAttachments(), oldAttachments,
+                        attachmentDAO);
                 AttachmentFileService.writeAttachments(attachmentsForInsert, fileItems);
-                AttachmentFileService.writePhoto(id, photo);
+                oldAttachments.forEach(item -> AttachmentFileService.removeFile(item.getContactID(), item.getId(),
+                        AttachmentFileService.PATH_TO_ATTACHMENTS));
+                if (photo.getSize() != 0) {
+                    AttachmentFileService.writePhoto(id, photo);
+                } else if (StringUtils.equals(photo.getFieldName(), "delete")) {
+                    AttachmentFileService.removeFile(id, id, AttachmentFileService.PATH_TO_PHOTO);
+                }
                 connection.commit();
             } catch (DAOException | ServiceException e) {
                 connection.rollback();
@@ -115,6 +123,7 @@ public class ContactService {
                 ContactDAO contactDAO = new ContactDAO(connection);
                 contactDAO.delete(id);
                 connection.commit();
+                AttachmentFileService.removeAllFiles(id);
             } catch (DAOException e) {
                 connection.rollback();
                 throw new ServiceException(e);
@@ -153,6 +162,7 @@ public class ContactService {
             indexesForDelete.add(entity.getId());
         }
         indexesForDelete.removeIf(entitiesIndexes::contains);
+        oldList.removeIf(item -> !indexesForDelete.contains(item.getId()));
         for (T entity : entitiesForInsert) {
             dao.insert(entity);
         }

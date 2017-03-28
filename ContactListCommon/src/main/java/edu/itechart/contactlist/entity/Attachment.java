@@ -52,12 +52,36 @@ public class Attachment extends Entity {
     }
 
     @Override
-    public String toString() {
-        return "Attachment{" +
-                "fileName='" + fileName + '\'' +
-                ", uploadDate=" + uploadDate +
-                ", comment='" + comment + '\'' +
-                ", contactID=" + contactID +
-                "} " + super.toString();
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Attachment)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Attachment that = (Attachment) o;
+        if (getContactID() != that.getContactID()) {
+            return false;
+        }
+        if (getFileName() != null ? !getFileName().equals(that.getFileName()) : that.getFileName() != null) {
+            return false;
+        }
+        if (getUploadDate() != null ? !getUploadDate().equals(that.getUploadDate()) : that.getUploadDate() != null) {
+            return false;
+        }
+        return getComment() != null ? getComment().equals(that.getComment()) : that.getComment() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (getFileName() != null ? getFileName().hashCode() : 0);
+        result = 31 * result + (getUploadDate() != null ? getUploadDate().hashCode() : 0);
+        result = 31 * result + (getComment() != null ? getComment().hashCode() : 0);
+        result = 31 * result + (int) (getContactID() ^ (getContactID() >>> 32));
+        return result;
     }
 }

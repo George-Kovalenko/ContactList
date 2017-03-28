@@ -376,6 +376,7 @@ var photoPath = document.getElementById('photo-path');
 var photoPopup = document.getElementById('photo-popup');
 var submitPhotoButton = document.getElementById('submit-photo-button');
 var cancelPhotoButton = document.getElementById('cancel-photo-button');
+var deletePhotoButton = document.getElementById('delete-photo-button');
 
 contactPhoto.onclick = function () {
     photoPath.value = '';
@@ -406,5 +407,12 @@ submitPhotoButton.onclick = function () {
         photoPath.accept = 'image/jpeg, image/png';
         document.getElementById('photo-path-field').appendChild(photoPath);
     }
+    closeModalWindow(photoPopup);
+};
+
+deletePhotoButton.onclick = function () {
+    var photoInputField = document.getElementById('photo-input-field');
+    photoInputField.name = 'photo-field-delete';
+    contactPhoto.src = 'icons/default_contact_icon.jpeg';
     closeModalWindow(photoPopup);
 };

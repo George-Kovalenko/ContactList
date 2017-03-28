@@ -13,8 +13,8 @@ import java.util.ResourceBundle;
 
 public class AttachmentFileService {
     private static final ResourceBundle resourceBundle = ResourceBundle.getBundle("directories");
-    private static final String PATH_TO_ATTACHMENTS = resourceBundle.getString("attachments");
-    private static final String PATH_TO_PHOTO = resourceBundle.getString("photos");
+    public static final String PATH_TO_ATTACHMENTS = resourceBundle.getString("attachments");
+    public static final String PATH_TO_PHOTO = resourceBundle.getString("photos");
 
     public static void writeAttachments(ArrayList<Attachment> attachments, ArrayList<FileItem> attachmentFiles)
             throws ServiceException {
@@ -65,8 +65,36 @@ public class AttachmentFileService {
         return content;
     }
 
+    public static void removeFile(long contactId, long attachmentId, String path) {
+        String filePath = path + contactId + File.separator + attachmentId;
+        File file = new File(filePath);
+        if (file.exists()) {
+            file.delete();
+        }
+    }
+
+    public static void removeAllFiles(long contactId) {
+        String attachmentsPath = PATH_TO_ATTACHMENTS + contactId;
+        removeFilesInDirectory(attachmentsPath);
+        String photoPath = PATH_TO_PHOTO + contactId;
+        removeFilesInDirectory(photoPath);
+    }
+
+    private static void removeFilesInDirectory(String path) {
+        File dir = new File(path);
+        if (dir.exists() && dir.isDirectory()) {
+            File[] files = dir.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    file.delete();
+                }
+            }
+            dir.delete();
+        }
+    }
+
     private static String getDirectory(String path, long id) {
-        String dirPath = path + Long.toString(id) + File.separator;
+        String dirPath = path + id + File.separator;
         File dir = new File(dirPath);
         if (!dir.exists()) {
             dir.mkdir();

@@ -34,11 +34,4 @@ public abstract class Entity {
     public int hashCode() {
         return (int) (getId() ^ (getId() >>> 32));
     }
-
-    @Override
-    public String toString() {
-        return "Entity{" +
-                "id=" + id +
-                '}';
-    }
 }

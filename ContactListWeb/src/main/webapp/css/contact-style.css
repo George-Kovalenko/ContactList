@@ -52,13 +52,13 @@ input[type="text"], input[type="file"], textarea {
 }
 
 #photo-popup .popup-content {
-    width: 300px;
+    width: 450px;
     height: 110px;
     padding: 10px;
 }
 
 #photo-popup input {
-    width: 270px;
+    width: 420px;
 }
 
 .popup-title {

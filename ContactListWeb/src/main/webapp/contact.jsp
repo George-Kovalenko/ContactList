@@ -207,7 +207,7 @@
     <div class="popup-window" id="photo-popup">
         <div class="popup-content">
             <div class="popup-title">
-                Выбор фотографии
+                Редактирование фотографии
             </div>
             <div id="photo-path-field">
                 <input type="file" id="photo-path" accept="image/jpeg, image/png">
@@ -215,6 +215,7 @@
             <div class="popup-buttons">
                 <div class="popup-button" id="submit-photo-button">Сохранить</div>
                 <div class="popup-button" id="cancel-photo-button">Отмена</div>
+                <div class="popup-button" id="delete-photo-button">Удалить</div>
             </div>
         </div>
     </div>

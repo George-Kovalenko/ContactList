@@ -4,7 +4,6 @@ import edu.itechart.contactlist.entity.Contact;
 import edu.itechart.contactlist.handler.fieldhandlers.FieldHandler;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.StringUtils;
@@ -39,7 +38,6 @@ public class MainHandler {
                 } else if (StringUtils.equals(item.getFieldName(), "photo-field")) {
                     request.setAttribute("photoForUpload", item);
                 } else if (StringUtils.equals(item.getFieldName(), "photo-field-delete")) {
-                    item.setFieldName("delete");
                     request.setAttribute("photoForUpload", item);
                 }
             }

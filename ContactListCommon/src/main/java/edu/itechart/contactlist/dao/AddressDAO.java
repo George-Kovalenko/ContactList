@@ -24,7 +24,7 @@ public class AddressDAO extends AbstractDAO<Address> {
     @Override
     public Address findById(long id) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
-            preparedStatement.setLong(1,  id);
+            preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             Address address = new Address();
             if (resultSet.next()) {

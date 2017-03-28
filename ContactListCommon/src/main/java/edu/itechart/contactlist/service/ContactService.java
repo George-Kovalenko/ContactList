@@ -95,7 +95,7 @@ public class ContactService {
                         AttachmentFileService.PATH_TO_ATTACHMENTS));
                 if (photo.getSize() != 0) {
                     AttachmentFileService.writePhoto(id, photo);
-                } else if (StringUtils.equals(photo.getFieldName(), "delete")) {
+                } else if (StringUtils.equals(photo.getFieldName(), "photo-field-delete")) {
                     AttachmentFileService.removeFile(id, id, AttachmentFileService.PATH_TO_PHOTO);
                 }
                 connection.commit();

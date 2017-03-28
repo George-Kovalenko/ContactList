@@ -13,8 +13,12 @@ public abstract class AbstractDAO<Type extends Entity> {
     }
 
     public abstract ArrayList<Type> findAll() throws DAOException;
+
     public abstract Type findById(long id) throws DAOException;
+
     public abstract void insert(Type entity) throws DAOException;
+
     public abstract void delete(long id) throws DAOException;
+
     public abstract void update(long id, Type entity) throws DAOException;
 }

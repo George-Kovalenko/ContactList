@@ -28,7 +28,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
 
     @Override
     public ArrayList<Contact> findAll() throws DAOException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             ArrayList<Contact> contacts = new ArrayList<>();
             ContactFactory contactFactory = new ContactFactory();

@@ -60,9 +60,9 @@ public class ContactService {
                 contact.getAttachments().forEach(item -> item.setContactID(id));
                 AttachmentDAO attachmentDAO = new AttachmentDAO(connection);
                 insertEntityList(contact.getAttachments(), attachmentDAO);
-                AttachmentWriterService.writeAttachments(id, fileItems);
+                AttachmentFileService.writeAttachments(contact.getAttachments(), fileItems);
                 connection.commit();
-            } catch (DAOException e) {
+            } catch (DAOException | ServiceException e) {
                 connection.rollback();
                 throw new ServiceException(e);
             } finally {
@@ -84,10 +84,11 @@ public class ContactService {
                 PhoneDAO phoneDAO = new PhoneDAO(connection);
                 updateEntityList(contact.getPhones(), phoneDAO.findByContactId(id), phoneDAO);
                 AttachmentDAO attachmentDAO = new AttachmentDAO(connection);
-                updateEntityList(contact.getAttachments(), attachmentDAO.findByContactId(id), attachmentDAO);
-                AttachmentWriterService.writeAttachments(id, fileItems);
+                ArrayList<Attachment> attachmentsForInsert = updateEntityList(contact.getAttachments(),
+                        attachmentDAO.findByContactId(id), attachmentDAO);
+                AttachmentFileService.writeAttachments(attachmentsForInsert, fileItems);
                 connection.commit();
-            } catch (ServiceException | DAOException e) {
+            } catch (DAOException | ServiceException e) {
                 connection.rollback();
                 throw new ServiceException(e);
             } finally {
@@ -130,7 +131,7 @@ public class ContactService {
     }
 
 
-    private static <T extends Entity> void updateEntityList(ArrayList<T> list, ArrayList<T> oldList, AbstractDAO<T> dao)
+    private static <T extends Entity> ArrayList<T> updateEntityList(ArrayList<T> list, ArrayList<T> oldList, AbstractDAO<T> dao)
             throws DAOException {
         ArrayList<T> entitiesForInsert = new ArrayList<>();
         ArrayList<Long> entitiesIndexes = new ArrayList<>();
@@ -158,5 +159,6 @@ public class ContactService {
         for (Long id : indexesForDelete) {
             dao.delete(id);
         }
+        return entitiesForInsert;
     }
 }

@@ -4,8 +4,10 @@ import edu.itechart.contactlist.entity.Contact;
 import edu.itechart.contactlist.handler.fieldhandlers.FieldHandler;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -32,8 +34,10 @@ public class MainHandler {
                     if (fieldHandler != null) {
                         fieldHandler.handleInputField(contact, item.getString("UTF-8"));
                     }
-                } else if (item.getFieldName().contains("new-attachment-input-")) {
+                } else if (StringUtils.startsWith(item.getFieldName(), "new-attachment-input-")) {
                     attachmentForUpload.add(item);
+                } else if (StringUtils.equals(item.getFieldName(), "photo-field")) {
+                    request.setAttribute("photoForUpload", item);
                 }
             }
             request.setAttribute("contact", contact);

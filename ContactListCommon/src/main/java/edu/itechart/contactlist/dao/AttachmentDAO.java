@@ -3,10 +3,7 @@ package edu.itechart.contactlist.dao;
 import edu.itechart.contactlist.entity.Attachment;
 import edu.itechart.contactlist.entityfactory.AttachmentFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class AttachmentDAO extends AbstractDAO<Attachment> {
@@ -39,12 +36,19 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
 
     @Override
     public void insert(Attachment attachment) throws DAOException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ATTACHMENT)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ATTACHMENT,
+                Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, attachment.getFileName());
             preparedStatement.setDate(2, attachment.getUploadDate());
             preparedStatement.setString(3, attachment.getComment());
             preparedStatement.setLong(4, attachment.getContactID());
             preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                attachment.setId(resultSet.getLong(1));
+            } else {
+                throw new DAOException("Inserting attachment failed, no ID obtained");
+            }
         } catch (SQLException e) {
             throw new DAOException("Error in AttachmentDAO.insert()", e);
         }

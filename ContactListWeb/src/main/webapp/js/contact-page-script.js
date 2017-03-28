@@ -222,6 +222,7 @@ var submitAttachmentButton = document.getElementById('submit-attachment-button')
 var cancelAttachmentButton = document.getElementById('cancel-attachment-button');
 
 var attachmentComment = document.getElementById('attachment-comment');
+var editFileExtension = '';
 
 var isAttachmentEdit = false;
 var isNewAttachmentEdit = false;
@@ -230,7 +231,8 @@ var editAttachmentId = 0;
 
 addAttachmentButton.onclick = function () {
     isAttachmentEdit = false;
-    document.getElementById('file-path').style.display = 'block';
+    document.getElementById('file-path').type = 'file';
+    document.getElementById('file-path').value = '';
     attachmentComment.value = '';
     openModalWindow(attachmentPopup);
 };
@@ -245,6 +247,7 @@ deleteAttachmentButton.onclick = function () {
 
 editAttachmentButton.onclick = function () {
     isAttachmentEdit = true;
+    document.getElementById('file-path').value = '';
     var checkedAttachments = getCheckedItems('check-attachment');
     if (checkedAttachments.length > 0) {
         editAttachmentId = checkedAttachments[0];
@@ -324,7 +327,12 @@ function addFilePathInHiddenField(attachmentInput) {
 }
 
 function appendAttachmentPopupFields(attachmentId, prefix) {
-    document.getElementById('file-path').style.display = 'none';
+    document.getElementById('file-path').type = 'text';
+    var fileName = document.getElementById(prefix + 'attachment-file-name-' + attachmentId).innerHTML.trim();
+    var name = fileName.split('.');
+    editFileExtension = '.' + name[name.length - 1];
+    document.getElementById('file-path').value = name.length == 1 ? fileName :
+        fileName.substring(0, fileName.lastIndexOf(editFileExtension));
     attachmentComment.value = document.getElementById(prefix + 'attachment-comment-' + attachmentId).innerHTML.trim();
 }
 
@@ -334,6 +342,8 @@ function editAttachment() {
         prefix = 'new-';
         isNewAttachmentEdit = false;
     }
+    var attachmentNameCell = document.getElementById(prefix + 'attachment-file-name-' + editAttachmentId);
+    attachmentNameCell.innerHTML = document.getElementById('file-path').value + editFileExtension;
     var attachmentCommentCell = document.getElementById(prefix + 'attachment-comment-' + editAttachmentId);
     attachmentCommentCell.innerHTML = attachmentComment.value;
 }
@@ -362,13 +372,39 @@ function fillAttachmentList(prefix) {
 }
 
 var contactPhoto = document.getElementById('contact-photo');
+var photoPath = document.getElementById('photo-path');
 var photoPopup = document.getElementById('photo-popup');
+var submitPhotoButton = document.getElementById('submit-photo-button');
 var cancelPhotoButton = document.getElementById('cancel-photo-button');
 
 contactPhoto.onclick = function () {
+    photoPath.value = "";
     openModalWindow(photoPopup);
 };
 
 cancelPhotoButton.onclick = function () {
+    closeModalWindow(photoPopup);
+};
+
+submitPhotoButton.onclick = function () {
+    var fileReader = new FileReader;
+    fileReader.onload = function () {
+        contactPhoto.style.backgroundImage = 'url(' +  this.result + ')';
+    };
+    var image = photoPath.files[0];
+    if (image) {
+        fileReader.readAsDataURL(image);
+        var photoInputField = document.getElementById('photo-input-field');
+        photoInputField.parentNode.removeChild(photoInputField);
+        photoPath.name = 'photo-field';
+        photoPath.id = 'photo-input-field';
+        photoPath.style.display = 'none';
+        contactPhoto.appendChild(photoPath);
+        photoPath = document.createElement('input');
+        photoPath.type = 'file';
+        photoPath.id = 'photo-path';
+        photoPath.accept = 'image/jpeg, image/png';
+        document.getElementById('photo-path-field').appendChild(photoPath);
+    }
     closeModalWindow(photoPopup);
 };

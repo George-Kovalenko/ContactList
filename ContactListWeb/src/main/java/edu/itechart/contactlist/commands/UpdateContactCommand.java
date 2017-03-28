@@ -25,7 +25,8 @@ public class UpdateContactCommand implements Command {
         try {
             Contact contact = (Contact) request.getAttribute(REQUEST_ATTR_CONTACT);
             ArrayList<FileItem> fileItems = (ArrayList<FileItem>) request.getAttribute(REQUEST_ATTR_ATTACHMENTS);
-            ContactService.update(id, contact, fileItems);
+            FileItem photo = (FileItem) request.getAttribute(REQUEST_ATTR_PHOTO);
+            ContactService.update(id, contact, fileItems, photo);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

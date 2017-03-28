@@ -44,7 +44,7 @@ public class ContactService {
         }
     }
 
-    public static void insert(Contact contact, ArrayList<FileItem> fileItems) throws ServiceException {
+    public static void insert(Contact contact, ArrayList<FileItem> fileItems, FileItem photo) throws ServiceException {
         try (Connection connection = ConnectionPool.getInstance().getConnection()) {
             connection.setAutoCommit(false);
             try {
@@ -61,6 +61,7 @@ public class ContactService {
                 AttachmentDAO attachmentDAO = new AttachmentDAO(connection);
                 insertEntityList(contact.getAttachments(), attachmentDAO);
                 AttachmentFileService.writeAttachments(contact.getAttachments(), fileItems);
+                AttachmentFileService.writePhoto(contact.getId(), photo);
                 connection.commit();
             } catch (DAOException | ServiceException e) {
                 connection.rollback();
@@ -73,7 +74,8 @@ public class ContactService {
         }
     }
 
-    public static void update(long id, Contact contact, ArrayList<FileItem> fileItems) throws ServiceException {
+    public static void update(long id, Contact contact, ArrayList<FileItem> fileItems, FileItem photo)
+            throws ServiceException {
         try (Connection connection = ConnectionPool.getInstance().getConnection()) {
             connection.setAutoCommit(false);
             try {
@@ -87,6 +89,7 @@ public class ContactService {
                 ArrayList<Attachment> attachmentsForInsert = updateEntityList(contact.getAttachments(),
                         attachmentDAO.findByContactId(id), attachmentDAO);
                 AttachmentFileService.writeAttachments(attachmentsForInsert, fileItems);
+                AttachmentFileService.writePhoto(id, photo);
                 connection.commit();
             } catch (DAOException | ServiceException e) {
                 connection.rollback();
@@ -131,8 +134,8 @@ public class ContactService {
     }
 
 
-    private static <T extends Entity> ArrayList<T> updateEntityList(ArrayList<T> list, ArrayList<T> oldList, AbstractDAO<T> dao)
-            throws DAOException {
+    private static <T extends Entity> ArrayList<T> updateEntityList(ArrayList<T> list, ArrayList<T> oldList,
+                                                                    AbstractDAO<T> dao) throws DAOException {
         ArrayList<T> entitiesForInsert = new ArrayList<>();
         ArrayList<Long> entitiesIndexes = new ArrayList<>();
         for (T entity : list) {

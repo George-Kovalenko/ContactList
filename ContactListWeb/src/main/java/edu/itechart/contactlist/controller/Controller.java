@@ -3,6 +3,7 @@ package edu.itechart.contactlist.controller;
 import edu.itechart.contactlist.commands.Command;
 import edu.itechart.contactlist.commands.CommandException;
 import edu.itechart.contactlist.commands.CommandFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -34,7 +35,7 @@ public class Controller extends HttpServlet {
             String page = command.execute(req, resp);
             if (command.needsRedirect()) {
                 resp.sendRedirect(page);
-            } else {
+            } else if (StringUtils.isNotEmpty(page)) {
                 getServletContext().getRequestDispatcher(page).forward(req, resp);
             }
         } catch (CommandException e) {

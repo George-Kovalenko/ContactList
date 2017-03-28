@@ -371,14 +371,14 @@ function fillAttachmentList(prefix) {
     contactForm.appendChild(newChild);
 }
 
-var contactPhoto = document.getElementById('contact-photo');
+var contactPhoto = document.getElementById('contact-photo-image');
 var photoPath = document.getElementById('photo-path');
 var photoPopup = document.getElementById('photo-popup');
 var submitPhotoButton = document.getElementById('submit-photo-button');
 var cancelPhotoButton = document.getElementById('cancel-photo-button');
 
 contactPhoto.onclick = function () {
-    photoPath.value = "";
+    photoPath.value = '';
     openModalWindow(photoPopup);
 };
 
@@ -389,7 +389,7 @@ cancelPhotoButton.onclick = function () {
 submitPhotoButton.onclick = function () {
     var fileReader = new FileReader;
     fileReader.onload = function () {
-        contactPhoto.style.backgroundImage = 'url(' +  this.result + ')';
+        contactPhoto.src = this.result;
     };
     var image = photoPath.files[0];
     if (image) {

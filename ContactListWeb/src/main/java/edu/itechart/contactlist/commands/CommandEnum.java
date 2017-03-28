@@ -29,6 +29,12 @@ public enum CommandEnum {
         {
             command = new DeleteContactCommand();
         }
+    },
+
+    GET_PHOTO {
+        {
+            command = new GetPhotoCommand();
+        }
     };
 
     protected Command command;

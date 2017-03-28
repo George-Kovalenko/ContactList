@@ -3,10 +3,7 @@ package edu.itechart.contactlist.commands;
 import edu.itechart.contactlist.entity.Contact;
 import edu.itechart.contactlist.entity.MaritalStatus;
 import edu.itechart.contactlist.entity.PhoneType;
-import edu.itechart.contactlist.service.ContactService;
-import edu.itechart.contactlist.service.MaritalStatusService;
-import edu.itechart.contactlist.service.PhoneTypeService;
-import edu.itechart.contactlist.service.ServiceException;
+import edu.itechart.contactlist.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +14,7 @@ public class ShowContactCommand implements Command {
     private static final String REQUEST_ATTR_CONTACTS = "contact";
     private static final String REQUEST_ATTR_MARITAL_STATUSES = "maritalStatuses";
     private static final String REQUEST_ATTR_PHONE_TYPES = "phoneTypes";
+    private static final String REQUEST_ATTR_PHOTO = "photo";
     private static final String URL_CONTACT = "/contact.jsp";
 
     @Override
@@ -25,7 +23,9 @@ public class ShowContactCommand implements Command {
             if (request.getParameter(REQUEST_PARAM_NAME) != null) {
                 long id = Long.parseLong(request.getParameter(REQUEST_PARAM_NAME));
                 Contact contact = ContactService.findById(id);
+                String pathToPhoto = AttachmentFileService.getPathToPhoto(id);
                 request.setAttribute(REQUEST_ATTR_CONTACTS, contact);
+                request.setAttribute(REQUEST_ATTR_PHOTO, pathToPhoto);
             }
             ArrayList<MaritalStatus> maritalStatuses = MaritalStatusService.findAll();
             ArrayList<PhoneType> phoneTypes = PhoneTypeService.findAll();

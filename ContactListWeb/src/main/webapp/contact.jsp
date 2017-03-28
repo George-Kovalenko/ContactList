@@ -10,6 +10,14 @@
         <c:set var="submitAction" value="controller?command=update_contact&id=${contact.id}"/>
     </c:otherwise>
 </c:choose>
+<c:choose>
+    <c:when test="${not empty photo}">
+        <c:set var="photoPath" value="controller?command=get_photo&path=${photo}"/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="photoPath" value="icons/default_contact_icon.jpeg"/>
+    </c:otherwise>
+</c:choose>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +32,7 @@
         <form method="post" id="contact-form" action="${submitAction}" enctype="multipart/form-data">
             <div class="contact-info">
                 <div class="contact-photo" id="contact-photo">
+                    <img src="${photoPath}" alt="contact photo" id="contact-photo-image" class="contact-photo-image">
                     <input type="file" name="photo-field" id="photo-input-field" style="display: none;">
                 </div>
                 <h3>Основная информация</h3>

@@ -101,12 +101,15 @@ input[type="text"], input[type="file"], textarea {
 }
 
 .contact-photo {
+    width: 220px;
+    height: 220px;
+}
+
+.contact-photo-image {
     cursor: pointer;
-    width: 200px;
-    height: 200px;
+    max-width: 200px;
+    max-height: 200px;
     margin: 10px;
-    background: url('../icons/default_contact_icon.jpeg');
-    background-size: 200px 200px;
 }
 
 #photo-popup .popup-buttons {

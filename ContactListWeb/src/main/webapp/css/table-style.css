@@ -60,3 +60,7 @@ caption {
 .attachment-list .column-3 {
 	width: 15%;
 }
+
+.attachment-list td:last-child, .attachment-list th:last-child {
+	text-align: center;
+}

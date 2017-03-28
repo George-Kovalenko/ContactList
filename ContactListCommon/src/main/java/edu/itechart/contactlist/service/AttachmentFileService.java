@@ -44,8 +44,15 @@ public class AttachmentFileService {
     }
 
     public static String getPathToPhoto(long contactId) {
-        String path = getDirectory(PATH_TO_PHOTO, contactId);
-        path += contactId;
+        String path = PATH_TO_PHOTO + contactId + File.separator + contactId;
+        if (new File(path).exists()) {
+            return path;
+        }
+        return StringUtils.EMPTY;
+    }
+
+    public static String getPathToAttachment(long contactId, long attachmentId) {
+        String path = PATH_TO_ATTACHMENTS + contactId + File.separator + attachmentId;
         if (new File(path).exists()) {
             return path;
         }

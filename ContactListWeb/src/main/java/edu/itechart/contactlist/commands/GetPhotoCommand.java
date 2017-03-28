@@ -2,6 +2,7 @@ package edu.itechart.contactlist.commands;
 
 import edu.itechart.contactlist.service.AttachmentFileService;
 import edu.itechart.contactlist.service.ServiceException;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,6 @@ public class GetPhotoCommand implements Command {
         } catch (IOException e) {
             throw new CommandException("Couldn't write content to response", e);
         }
-        return null;
+        return StringUtils.EMPTY;
     }
 }

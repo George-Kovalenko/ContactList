@@ -304,10 +304,13 @@ function createNewAttachment() {
     var commentCell = document.createElement('td');
     commentCell.id = 'new-attachment-comment-' + attachment.id;
     commentCell.appendChild(document.createTextNode(attachment.comment));
+    var downloadCell = document.createElement('td');
+    downloadCell.id = 'new-attachment-download-link-' + attachment.id;
     tableRow.appendChild(checkBoxCell);
     tableRow.appendChild(fileNameCell);
     tableRow.appendChild(uploadDateCell);
     tableRow.appendChild(commentCell);
+    tableRow.appendChild(downloadCell);
     attachmentBody.appendChild(tableRow);
     var attachmentInput = document.getElementById('file-path');
     addFilePathInHiddenField(attachmentInput);

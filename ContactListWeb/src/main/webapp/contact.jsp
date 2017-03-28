@@ -172,12 +172,14 @@
                     <col class="column-2">
                     <col class="column-3">
                     <col class="column-4">
+                    <col class="column-1">
                     <thead>
                     <tr>
                         <th></th>
                         <th>Имя файла</th>
                         <th>Дата присоединения</th>
                         <th>Комментарий</th>
+                        <th>Скачать</th>
                     </tr>
                     </thead>
                     <tbody id="attachment-body">
@@ -194,6 +196,10 @@
                                 </td>
                                 <td id="attachment-comment-${attachment.id}">
                                     <c:out value="${attachment.comment}"/>
+                                </td>
+                                <td id="attachment-download-link-${attachment.id}">
+                                    <a class="nav-button download"
+                                       href="controller?command=download_attachment&id=${attachment.id}"></a>
                                 </td>
                             </tr>
                         </c:forEach>

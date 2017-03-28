@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class AttachmentDAO extends AbstractDAO<Attachment> {
     private static final String SELECT_BY_CONTACT_ID = "SELECT * FROM attachments WHERE contact_id=?";
+    private static final String SELECT_BY_ID = "SELECT * FROM attachments WHERE id=?";
     private static final String UPDATE_ATTACHMENT = "UPDATE attachments SET file_name=?, comment=? WHERE id=?";
     private static final String INSERT_ATTACHMENT = "INSERT INTO attachments (file_name, upload_date, comment, " +
             "contact_id) VALUES(?, ?, ?, ?)";
@@ -83,7 +84,17 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
 
     @Override
     public Attachment findById(long id) throws DAOException {
-        return null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            Attachment attachment = new Attachment();
+            if (resultSet.next()) {
+                attachment = new AttachmentFactory().createInstanceFromResultSet(resultSet);
+            }
+            return attachment;
+        } catch (SQLException e) {
+            throw new DAOException("Error in AttachmentDAO.findById()", e);
+        }
     }
 
     public void deleteByContactId(long contactId) throws DAOException {

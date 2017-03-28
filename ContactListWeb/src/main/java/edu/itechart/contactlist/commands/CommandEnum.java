@@ -35,6 +35,12 @@ public enum CommandEnum {
         {
             command = new GetPhotoCommand();
         }
+    },
+
+    DOWNLOAD_ATTACHMENT {
+        {
+            command = new DownloadAttachmentCommand();
+        }
     };
 
     protected Command command;

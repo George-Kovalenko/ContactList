@@ -30,3 +30,8 @@
 .mail {
     background: url('../icons/mail.png');
 }
+
+.download {
+    margin: 0;
+    background: url('../icons/download.png');
+}

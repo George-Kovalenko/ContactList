@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="contact-container">
-        <form method="post" id="contact-search" action="" enctype="text/plain">
+        <form method="post" id="contact-search" action="controller?command=search_contacts">
             <div class="contact-info">
                 <h3>Основная информация</h3>
                 <label>
@@ -78,7 +78,7 @@
                     <input type="text" name="postcode">
                 </label>
             </div>
-            <input type="button" id="search-contact-button" value="Поиск">
+            <input type="submit" id="search-contact-button" value="Поиск">
         </form>
     </div>
 </body>

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class CreateContactCommand implements Command {
     private static final String REQUEST_ATTR_CONTACT = "contact";
     private static final String REQUEST_ATTR_ATTACHMENTS = "attachmentsForUpload";
-    private static final String REQUESt_ATTR_PHOTO = "photoForUpload";
+    private static final String REQUEST_ATTR_PHOTO = "photoForUpload";
     private static final String URL_CONTACT_LIST = "/controller?command=show_contact_list";
 
     @Override
@@ -23,7 +23,7 @@ public class CreateContactCommand implements Command {
         try {
             Contact contact = (Contact) request.getAttribute(REQUEST_ATTR_CONTACT);
             ArrayList<FileItem> fileItems = (ArrayList<FileItem>) request.getAttribute(REQUEST_ATTR_ATTACHMENTS);
-            FileItem photo = (FileItem) request.getAttribute(REQUESt_ATTR_PHOTO);
+            FileItem photo = (FileItem) request.getAttribute(REQUEST_ATTR_PHOTO);
             ContactService.insert(contact, fileItems, photo);
         } catch (ServiceException e) {
             throw new CommandException(e);

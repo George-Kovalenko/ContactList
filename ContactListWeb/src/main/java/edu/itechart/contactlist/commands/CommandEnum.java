@@ -47,6 +47,12 @@ public enum CommandEnum {
         {
             command = new ShowContactSearchPageCommand();
         }
+    },
+
+    SEARCH_CONTACTS {
+        {
+            command = new SearchContactsCommand();
+        }
     };
 
     protected Command command;

@@ -1,9 +1,11 @@
 package edu.itechart.contactlist.dao;
 
+import edu.itechart.contactlist.entity.Address;
 import edu.itechart.contactlist.entity.Contact;
-import edu.itechart.contactlist.entity.Entity;
-import edu.itechart.contactlist.entity.Phone;
+import edu.itechart.contactlist.entity.SearchParameters;
+import edu.itechart.contactlist.entityfactory.AddressFactory;
 import edu.itechart.contactlist.entityfactory.ContactFactory;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,6 +23,8 @@ public class ContactDAO extends AbstractDAO<Contact> {
             "birth_date=?, nationality=?, gender=?, marital_status=?, website=?, email=?, job=? WHERE id=?";
     private static final String DELETE_CONTACT = "DELETE FROM contacts WHERE id=?";
     private static final String GET_LAST_ID = "SELECT last_insert_id() AS last_id FROM contacts";
+    private static final String PARAM_QUERY = "SELECT * FROM contacts " +
+            "LEFT JOIN addresses ON addresses.contacts_id = contacts.id WHERE TRUE";
 
     public ContactDAO(Connection connection) {
         super(connection);
@@ -101,6 +105,25 @@ public class ContactDAO extends AbstractDAO<Contact> {
         }
     }
 
+    public ArrayList<Contact> findAllByParameters(SearchParameters searchParameters) throws DAOException {
+        String query = buildParamQuery(searchParameters, PARAM_QUERY);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ArrayList<Contact> contacts = new ArrayList<>();
+            ContactFactory contactFactory = new ContactFactory();
+            AddressFactory addressFactory = new AddressFactory();
+            while (resultSet.next()) {
+                Contact contact = contactFactory.createInstanceFromResultSet(resultSet);
+                Address address = addressFactory.createInstanceFromResultSet(resultSet);
+                contact.setAddress(address);
+                contacts.add(contact);
+            }
+            return contacts;
+        } catch (SQLException e) {
+            throw new DAOException("Error in ContactDAO.findByParameters()", e);
+        }
+    }
+
     private void fillPreparedStatement(PreparedStatement preparedStatement, Contact contact) throws SQLException {
         preparedStatement.setString(1, contact.getFirstName());
         preparedStatement.setString(2, contact.getLastName());
@@ -112,5 +135,38 @@ public class ContactDAO extends AbstractDAO<Contact> {
         preparedStatement.setString(8, contact.getWebsite());
         preparedStatement.setString(9, contact.getEmail());
         preparedStatement.setString(10, contact.getJob());
+    }
+
+    private String buildParamQuery(SearchParameters parameters, String query) {
+        query += createSearchStringPart("first_name", parameters.getFirstName());
+        query += createSearchStringPart("last_name", parameters.getLastName());
+        query += createSearchStringPart("middle_name", parameters.getMiddleName());
+        query += createSearchStringPart("nationality", parameters.getNationality());
+        query += createSearchGenderPart(parameters.getGender());
+        query += createSearchIntPart("marital_status", parameters.getMaritalStatus());
+        query += createSearchStringPart("country", parameters.getCountry());
+        query += createSearchStringPart("city", parameters.getCity());
+        query += createSearchStringPart("street", parameters.getStreet());
+        query += createSearchIntPart("house_number", parameters.getHouseNumber());
+        query += createSearchIntPart("flat_number", parameters.getFlatNumber());
+        query += createSearchStringPart("postcode", parameters.getPostcode());
+        return query;
+    }
+
+    private String createSearchStringPart(String paramName, String paramValue) {
+        return StringUtils.isNotEmpty(paramValue) ? String.format(" AND %s LIKE '%s'", paramName, paramValue)
+                : StringUtils.EMPTY;
+    }
+
+    private String createSearchGenderPart(String gender) {
+        return StringUtils.equalsAny(gender, "f", "m") ? createSearchStringPart("gender", gender)
+                : StringUtils.EMPTY;
+    }
+
+    private String createSearchIntPart(String paramName, Integer number) {
+        if (number != null && number != 0) {
+            return createSearchStringPart(paramName, number.toString());
+        }
+        return StringUtils.EMPTY;
     }
 }

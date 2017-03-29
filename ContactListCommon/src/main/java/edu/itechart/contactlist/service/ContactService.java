@@ -31,15 +31,19 @@ public class ContactService {
         try (Connection connection = ConnectionPool.getInstance().getConnection()) {
             ArrayList<Contact> contacts = new ContactDAO(connection).findAll();
             AddressDAO addressDAO = new AddressDAO(connection);
-            PhoneDAO phoneDAO = new PhoneDAO(connection);
-            AttachmentDAO attachmentDAO = new AttachmentDAO(connection);
             for (Contact contact : contacts) {
                 long id = contact.getId();
                 contact.setAddress(addressDAO.findById(id));
-                contact.setPhones(phoneDAO.findByContactId(id));
-                contact.setAttachments(attachmentDAO.findByContactId(id));
             }
             return contacts;
+        } catch (SQLException | ConnectionPoolException | DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public static ArrayList<Contact> findAllByParameters(SearchParameters searchParameters) throws ServiceException {
+        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
+            return new ContactDAO(connection).findAllByParameters(searchParameters);
         } catch (SQLException | ConnectionPoolException | DAOException e) {
             throw new ServiceException(e);
         }

@@ -1,3 +1,9 @@
+var homeButton = document.getElementById('home-button');
+
+homeButton.onclick = function () {
+    window.location.href = 'controller?command=show_contact_list';
+};
+
 var Phone = function () {
     this.id = 0;
     this.countryCode = '';

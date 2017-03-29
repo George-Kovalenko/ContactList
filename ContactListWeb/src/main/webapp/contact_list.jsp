@@ -16,6 +16,7 @@
             <a class="nav-button search" title="search" id="search-contact-button"
                href="controller?command=show_contact_search_page"></a>
             <a class="nav-button mail" title="mail" id="send-mail-button"></a>
+            <a class="nav-button home" title="home" id="home-button" href="controller?command=show_contact_list"></a>
         </div>
         <form id="contact-list-form" method="post">
             <table>

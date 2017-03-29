@@ -207,7 +207,8 @@
                 </table>
             </div>
             <div id="attachment-input-fields"></div>
-            <input type="button" id="save-contact-button" value="Сохранить">
+            <input type="button" class="button-style" id="save-contact-button" value="Сохранить">
+            <input type="button" class="button-style" id="home-button" value="Домой">
         </form>
     </div>
     <div class="popup-window" id="photo-popup">
@@ -219,9 +220,9 @@
                 <input type="file" id="photo-path" accept="image/jpeg, image/png">
             </div>
             <div class="popup-buttons">
-                <div class="popup-button" id="submit-photo-button">Сохранить</div>
-                <div class="popup-button" id="cancel-photo-button">Отмена</div>
-                <div class="popup-button" id="delete-photo-button">Удалить</div>
+                <div class="button-style" id="submit-photo-button">Сохранить</div>
+                <div class="button-style" id="cancel-photo-button">Отмена</div>
+                <div class="button-style" id="delete-photo-button">Удалить</div>
             </div>
         </div>
     </div>
@@ -251,8 +252,8 @@
                 <textarea rows="5" maxlength="255" id="phone-comment"></textarea>
             </label>
             <div class="popup-buttons">
-                <div class="popup-button" id="submit-phone-button">Сохранить</div>
-                <div class="popup-button" id="cancel-phone-button">Отмена</div>
+                <div class="button-style" id="submit-phone-button">Сохранить</div>
+                <div class="button-style" id="cancel-phone-button">Отмена</div>
             </div>
         </div>
     </div>
@@ -268,8 +269,8 @@
                 <textarea rows="5" maxlength="255" id="attachment-comment"></textarea>
             </label>
             <div class="popup-buttons">
-                <div class="popup-button" id="submit-attachment-button">Сохранить</div>
-                <div class="popup-button" id="cancel-attachment-button">Отмена</div>
+                <div class="button-style" id="submit-attachment-button">Сохранить</div>
+                <div class="button-style" id="cancel-attachment-button">Отмена</div>
             </div>
         </div>
     </div>

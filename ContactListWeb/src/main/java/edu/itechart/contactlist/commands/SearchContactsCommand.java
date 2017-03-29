@@ -26,7 +26,7 @@ public class SearchContactsCommand implements Command {
         String maritalStatus = request.getParameter("marital-status");
         searchParameters.setMaritalStatus(StringUtils.isNotEmpty(maritalStatus) ? Integer.parseInt(maritalStatus) : 0);
         String birthDate = request.getParameter("birth-date");
-        searchParameters.setBirthDate(Date.valueOf(birthDate));
+        searchParameters.setBirthDate(StringUtils.isNoneEmpty(birthDate) ? Date.valueOf(birthDate) : null);
         DateSearchType dateSearchType = DateSearchType.valueOf(request.getParameter("date-params").toUpperCase());
         searchParameters.setDateSearchType(dateSearchType);
         searchParameters.setCountry(request.getParameter("country"));

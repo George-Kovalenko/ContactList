@@ -35,3 +35,7 @@
     margin: 0;
     background: url('../icons/download.png');
 }
+
+.home {
+    background: url('../icons/home.png');
+}

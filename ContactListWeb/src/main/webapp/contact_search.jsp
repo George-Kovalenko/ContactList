@@ -87,8 +87,10 @@
                     <input type="text" name="postcode">
                 </label>
             </div>
-            <input type="submit" id="search-contact-button" value="Поиск">
+            <input type="submit" class="button-style" id="search-contact-button" value="Поиск">
+            <input type="button" class="button-style" id="back-button" value="Назад">
         </form>
     </div>
+    <script type="text/javascript" src="js/contact-search-script.js"></script>
 </body>
 </html>

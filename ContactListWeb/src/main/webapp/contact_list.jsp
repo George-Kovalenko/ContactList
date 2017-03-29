@@ -13,7 +13,8 @@
         <div class="nav-buttons">
             <a class="nav-button add" title="add" id="add-contact-button" href="controller?command=show_contact"></a>
             <a class="nav-button delete" title="delete" id="delete-contact-button"></a>
-            <a class="nav-button search" title="search" id="search-contact-button"></a>
+            <a class="nav-button search" title="search" id="search-contact-button"
+               href="controller?command=show_contact_search_page"></a>
             <a class="nav-button mail" title="mail" id="send-mail-button"></a>
         </div>
         <form id="contact-list-form" method="post">

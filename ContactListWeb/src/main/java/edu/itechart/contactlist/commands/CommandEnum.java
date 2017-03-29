@@ -41,6 +41,12 @@ public enum CommandEnum {
         {
             command = new DownloadAttachmentCommand();
         }
+    },
+
+    SHOW_CONTACT_SEARCH_PAGE {
+        {
+            command = new ShowContactSearchPageCommand();
+        }
     };
 
     protected Command command;

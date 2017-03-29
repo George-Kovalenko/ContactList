@@ -22,6 +22,10 @@ input[type="text"], input[type="file"], textarea {
     width: 184px;
 }
 
+#contact-search .select-field {
+    width: 180px;
+}
+
 .popup-window {
     position: fixed;
     display: none;
@@ -81,7 +85,7 @@ input[type="text"], input[type="file"], textarea {
     text-align: center;
 }
 
-.popup-button, #save-contact-button {
+.popup-button, #save-contact-button, #search-contact-button {
     width: 120px;
     padding: 5px;
     display: inline-block;
@@ -92,11 +96,11 @@ input[type="text"], input[type="file"], textarea {
     border-radius: 5px;
 }
 
-.popup-button:hover, #save-contact-button:hover {
+.popup-button:hover, #save-contact-button:hover, #search-contact-button:hover {
     background-color: #BDC0FA;
 }
 
-#save-contact-button {
+#save-contact-button, #search-contact-button {
     margin: 20px 20px 10px 0;
 }
 

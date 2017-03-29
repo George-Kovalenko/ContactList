@@ -7,6 +7,7 @@ public class SearchParameters {
     private String lastName;
     private String middleName;
     private Date birthDate;
+    private DateSearchType dateSearchType;
     private String nationality;
     private String gender;
     private Integer maritalStatus;
@@ -50,6 +51,14 @@ public class SearchParameters {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public DateSearchType getDateSearchType() {
+        return dateSearchType;
+    }
+
+    public void setDateSearchType(DateSearchType dateSearchType) {
+        this.dateSearchType = dateSearchType;
     }
 
     public String getNationality() {

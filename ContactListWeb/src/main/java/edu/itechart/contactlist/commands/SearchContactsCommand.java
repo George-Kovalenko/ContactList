@@ -1,6 +1,7 @@
 package edu.itechart.contactlist.commands;
 
 import edu.itechart.contactlist.entity.Contact;
+import edu.itechart.contactlist.entity.DateSearchType;
 import edu.itechart.contactlist.entity.SearchParameters;
 import edu.itechart.contactlist.service.ContactService;
 import edu.itechart.contactlist.service.ServiceException;
@@ -8,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class SearchContactsCommand implements Command {
@@ -23,6 +25,10 @@ public class SearchContactsCommand implements Command {
         searchParameters.setGender(request.getParameter("gender"));
         String maritalStatus = request.getParameter("marital-status");
         searchParameters.setMaritalStatus(StringUtils.isNotEmpty(maritalStatus) ? Integer.parseInt(maritalStatus) : 0);
+        String birthDate = request.getParameter("birth-date");
+        searchParameters.setBirthDate(Date.valueOf(birthDate));
+        DateSearchType dateSearchType = DateSearchType.valueOf(request.getParameter("date-params").toUpperCase());
+        searchParameters.setDateSearchType(dateSearchType);
         searchParameters.setCountry(request.getParameter("country"));
         searchParameters.setCity(request.getParameter("city"));
         searchParameters.setStreet(request.getParameter("street"));

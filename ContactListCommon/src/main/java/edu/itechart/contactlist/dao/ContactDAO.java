@@ -2,15 +2,13 @@ package edu.itechart.contactlist.dao;
 
 import edu.itechart.contactlist.entity.Address;
 import edu.itechart.contactlist.entity.Contact;
+import edu.itechart.contactlist.entity.DateSearchType;
 import edu.itechart.contactlist.entity.SearchParameters;
 import edu.itechart.contactlist.entityfactory.AddressFactory;
 import edu.itechart.contactlist.entityfactory.ContactFactory;
 import org.apache.commons.lang3.StringUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ContactDAO extends AbstractDAO<Contact> {
@@ -144,6 +142,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
         query += createSearchStringPart("nationality", parameters.getNationality());
         query += createSearchGenderPart(parameters.getGender());
         query += createSearchIntPart("marital_status", parameters.getMaritalStatus());
+        query += createSearchDatePart(parameters.getBirthDate(), parameters.getDateSearchType());
         query += createSearchStringPart("country", parameters.getCountry());
         query += createSearchStringPart("city", parameters.getCity());
         query += createSearchStringPart("street", parameters.getStreet());
@@ -166,6 +165,26 @@ public class ContactDAO extends AbstractDAO<Contact> {
     private String createSearchIntPart(String paramName, Integer number) {
         if (number != null && number != 0) {
             return createSearchStringPart(paramName, number.toString());
+        }
+        return StringUtils.EMPTY;
+    }
+
+    private String createSearchDatePart(Date date, DateSearchType dateSearchType) {
+        if (date != null) {
+            String queryPart = " AND birth_date ";
+            switch (dateSearchType) {
+                case OLDER:
+                    queryPart += "< ";
+                    break;
+                case YOUNGER:
+                    queryPart += "> ";
+                    break;
+                case EQUALS:
+                    queryPart += "= ";
+                    break;
+            }
+            queryPart += String.format("'%s'", date.toString());
+            return queryPart;
         }
         return StringUtils.EMPTY;
     }

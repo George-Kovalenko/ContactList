@@ -24,10 +24,6 @@
                     <input type="text" name="middle-name">
                 </label>
                 <label>
-                    Дата рождения
-                    <input type="text" name="birth-date">
-                </label>
-                <label>
                     Пол
                     <select class="select-field" name="gender">
                         <option value="x">Не выбран</option>
@@ -51,6 +47,19 @@
                             </option>
                         </c:forEach>
                     </select>
+                </label>
+                <h3>Дата рождения</h3>
+                <label>
+                    Тип поиска
+                    <select class="select-field" name="date-params">
+                        <option value="equals">Точная дата</option>
+                        <option value="younger">Младше</option>
+                        <option value="older">Старше</option>
+                    </select>
+                </label>
+                <label>
+                    Дата рождения
+                    <input type="text" name="birth-date">
                 </label>
                 <h3>Адрес</h3>
                 <label>

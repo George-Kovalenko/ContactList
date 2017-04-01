@@ -7,7 +7,6 @@ public class HouseFieldHandler implements FieldHandler {
     @Override
     public void handleInputField(Contact contact, String field) {
         Address address = contact.getAddress();
-        Integer houseNumber = Integer.parseInt(field);
-        address.setHouseNumber(houseNumber);
+        address.setHouseNumber(field);
     }
 }

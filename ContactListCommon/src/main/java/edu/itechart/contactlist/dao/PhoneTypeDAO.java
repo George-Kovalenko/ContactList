@@ -21,7 +21,7 @@ public class PhoneTypeDAO extends AbstractDAO<PhoneType> {
             ArrayList<PhoneType> phoneTypes = new ArrayList<>();
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                PhoneType phoneType = new PhoneType(resultSet.getLong("id"),
+                PhoneType phoneType = new PhoneType(resultSet.getLong("id_phone_type"),
                         resultSet.getString("name"));
                 phoneTypes.add(phoneType);
             }

@@ -2,6 +2,7 @@ package edu.itechart.contactlist.dao;
 
 import edu.itechart.contactlist.entity.Phone;
 import edu.itechart.contactlist.entityfactory.PhoneFactory;
+import edu.itechart.contactlist.util.StatementUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,7 +43,7 @@ public class PhoneDAO extends AbstractDAO<Phone> {
     public void insert(Phone phone) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PHONE)) {
             fillPreparedStatement(preparedStatement, phone);
-            preparedStatement.setLong(6, phone.getContactID());
+            StatementUtils.setLongValue(preparedStatement, 6, phone.getContactID());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Error in PhoneDAO.insert()", e);
@@ -89,11 +90,11 @@ public class PhoneDAO extends AbstractDAO<Phone> {
         }
     }
 
-    private void fillPreparedStatement(PreparedStatement preparedStatement, Phone phone) throws SQLException {
-        preparedStatement.setString(1, phone.getCountryCode());
-        preparedStatement.setString(2, phone.getOperatorCode());
-        preparedStatement.setString(3, phone.getNumber());
-        preparedStatement.setInt(4, phone.getPhoneType());
-        preparedStatement.setString(5, phone.getComment());
+    private void fillPreparedStatement(PreparedStatement statement, Phone phone) throws SQLException {
+        StatementUtils.setStringValue(statement, 1, phone.getCountryCode());
+        StatementUtils.setStringValue(statement, 2, phone.getOperatorCode());
+        StatementUtils.setStringValue(statement, 3, phone.getNumber());
+        StatementUtils.setIntValue(statement, 4, phone.getPhoneType());
+        StatementUtils.setStringValue(statement, 5, phone.getComment());
     }
 }

@@ -14,8 +14,8 @@ public class SearchParameters {
     private String country;
     private String city;
     private String street;
-    private Integer houseNumber;
-    private Integer flatNumber;
+    private String houseNumber;
+    private String flatNumber;
     private String postcode;
 
     public SearchParameters() {
@@ -109,19 +109,19 @@ public class SearchParameters {
         this.street = street;
     }
 
-    public Integer getHouseNumber() {
+    public String getHouseNumber() {
         return houseNumber;
     }
 
-    public void setHouseNumber(Integer houseNumber) {
+    public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
     }
 
-    public Integer getFlatNumber() {
+    public String getFlatNumber() {
         return flatNumber;
     }
 
-    public void setFlatNumber(Integer flatNumber) {
+    public void setFlatNumber(String flatNumber) {
         this.flatNumber = flatNumber;
     }
 

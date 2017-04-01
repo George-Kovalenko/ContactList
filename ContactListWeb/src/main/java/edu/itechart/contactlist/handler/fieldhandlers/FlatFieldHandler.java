@@ -7,7 +7,6 @@ public class FlatFieldHandler implements FieldHandler {
     @Override
     public void handleInputField(Contact contact, String field) {
         Address address = contact.getAddress();
-        Integer flatNumber = Integer.parseInt(field);
-        address.setFlatNumber(flatNumber);
+        address.setFlatNumber(field);
     }
 }

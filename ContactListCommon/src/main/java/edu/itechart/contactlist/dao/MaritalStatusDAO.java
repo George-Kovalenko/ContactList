@@ -21,7 +21,7 @@ public class MaritalStatusDAO extends AbstractDAO<MaritalStatus> {
             ResultSet resultSet = preparedStatement.executeQuery();
             ArrayList<MaritalStatus> maritalStatuses = new ArrayList<>();
             while (resultSet.next()) {
-                MaritalStatus maritalStatus = new MaritalStatus(resultSet.getLong("id"),
+                MaritalStatus maritalStatus = new MaritalStatus(resultSet.getLong("id_marital_status"),
                         resultSet.getString("name"));
                 maritalStatuses.add(maritalStatus);
             }

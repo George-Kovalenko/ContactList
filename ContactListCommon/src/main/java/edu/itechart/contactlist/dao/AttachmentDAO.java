@@ -2,6 +2,7 @@ package edu.itechart.contactlist.dao;
 
 import edu.itechart.contactlist.entity.Attachment;
 import edu.itechart.contactlist.entityfactory.AttachmentFactory;
+import edu.itechart.contactlist.util.StatementUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -39,10 +40,10 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
     public void insert(Attachment attachment) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_ATTACHMENT,
                 Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, attachment.getFileName());
-            preparedStatement.setDate(2, attachment.getUploadDate());
-            preparedStatement.setString(3, attachment.getComment());
-            preparedStatement.setLong(4, attachment.getContactID());
+            StatementUtils.setStringValue(preparedStatement, 1, attachment.getFileName());
+            StatementUtils.setDateValue(preparedStatement, 2, attachment.getUploadDate());
+            StatementUtils.setStringValue(preparedStatement, 3, attachment.getComment());
+            StatementUtils.setLongValue(preparedStatement, 4, attachment.getContactID());
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -58,8 +59,8 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
     @Override
     public void update(long id, Attachment attachment) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ATTACHMENT)) {
-            preparedStatement.setString(1, attachment.getFileName());
-            preparedStatement.setString(2, attachment.getComment());
+            StatementUtils.setStringValue(preparedStatement, 1, attachment.getFileName());
+            StatementUtils.setStringValue(preparedStatement, 2, attachment.getComment());
             preparedStatement.setLong(3, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

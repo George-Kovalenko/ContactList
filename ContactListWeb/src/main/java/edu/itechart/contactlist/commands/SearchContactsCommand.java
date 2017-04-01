@@ -26,16 +26,14 @@ public class SearchContactsCommand implements Command {
         String maritalStatus = request.getParameter("marital-status");
         searchParameters.setMaritalStatus(StringUtils.isNotEmpty(maritalStatus) ? Integer.parseInt(maritalStatus) : 0);
         String birthDate = request.getParameter("birth-date");
-        searchParameters.setBirthDate(StringUtils.isNoneEmpty(birthDate) ? Date.valueOf(birthDate) : null);
+        searchParameters.setBirthDate(StringUtils.isNotEmpty(birthDate) ? Date.valueOf(birthDate) : null);
         DateSearchType dateSearchType = DateSearchType.valueOf(request.getParameter("date-params").toUpperCase());
         searchParameters.setDateSearchType(dateSearchType);
         searchParameters.setCountry(request.getParameter("country"));
         searchParameters.setCity(request.getParameter("city"));
         searchParameters.setStreet(request.getParameter("street"));
-        String houseNumber = request.getParameter("house");
-        searchParameters.setHouseNumber(StringUtils.isNoneEmpty(houseNumber) ? Integer.parseInt(houseNumber) : 0);
-        String flatNumber = request.getParameter("flat");
-        searchParameters.setFlatNumber(StringUtils.isNotEmpty(flatNumber) ? Integer.parseInt(flatNumber) : 0);
+        searchParameters.setHouseNumber(request.getParameter("house"));
+        searchParameters.setFlatNumber(request.getParameter("flat"));
         searchParameters.setPostcode(request.getParameter("postcode"));
         try {
             ArrayList<Contact> contacts = ContactService.findAllByParameters(searchParameters);

@@ -6,6 +6,7 @@ import edu.itechart.contactlist.entity.DateSearchType;
 import edu.itechart.contactlist.entity.SearchParameters;
 import edu.itechart.contactlist.entityfactory.AddressFactory;
 import edu.itechart.contactlist.entityfactory.ContactFactory;
+import edu.itechart.contactlist.util.StatementUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.*;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 public class ContactDAO extends AbstractDAO<Contact> {
     private static final String SELECT_ALL = "SELECT * FROM contacts";
+    private static final String SELECT_CERTAIN_COUNT_BY_OFFSET = "SELECT * FROM contacts LIMIT ? OFFSET ?";
     private static final String SELECT_BY_ID = "SELECT * FROM contacts WHERE id=?";
     private static final String INSERT_CONTACT = "INSERT INTO contacts (first_name, last_name, middle_name, " +
             "birth_date, nationality, gender, marital_status, website, email, job) " +
@@ -23,6 +25,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
     private static final String GET_LAST_ID = "SELECT last_insert_id() AS last_id FROM contacts";
     private static final String PARAM_QUERY = "SELECT * FROM contacts " +
             "LEFT JOIN addresses ON addresses.contacts_id = contacts.id WHERE TRUE";
+    private static final String GET_CONTACT_COUNT = "SELECT COUNT(*) AS count FROM contacts";
 
     public ContactDAO(Connection connection) {
         super(connection);
@@ -76,6 +79,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
             fillPreparedStatement(preparedStatement, contact);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new DAOException("Error in ContactDAO.insert()", e);
         }
     }
@@ -122,17 +126,47 @@ public class ContactDAO extends AbstractDAO<Contact> {
         }
     }
 
-    private void fillPreparedStatement(PreparedStatement preparedStatement, Contact contact) throws SQLException {
-        preparedStatement.setString(1, contact.getFirstName());
-        preparedStatement.setString(2, contact.getLastName());
-        preparedStatement.setString(3, contact.getMiddleName());
-        preparedStatement.setDate(4, contact.getBirthDate());
-        preparedStatement.setString(5, contact.getNationality());
-        preparedStatement.setString(6, contact.getGender());
-        preparedStatement.setInt(7, contact.getMaritalStatus());
-        preparedStatement.setString(8, contact.getWebsite());
-        preparedStatement.setString(9, contact.getEmail());
-        preparedStatement.setString(10, contact.getJob());
+    public int getContactCount() throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_CONTACT_COUNT)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int count = 0;
+            if (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+            return count;
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    public ArrayList<Contact> findCertainCountsByOffset(long offset, long limit) throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CERTAIN_COUNT_BY_OFFSET)) {
+            preparedStatement.setLong(1, limit);
+            preparedStatement.setLong(2, offset);
+            ArrayList<Contact> contacts = new ArrayList<>();
+            ContactFactory contactFactory = new ContactFactory();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Contact contact = contactFactory.createInstanceFromResultSet(resultSet);
+                contacts.add(contact);
+            }
+            return contacts;
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    private void fillPreparedStatement(PreparedStatement statement, Contact contact) throws SQLException {
+        StatementUtils.setStringValue(statement, 1, contact.getFirstName());
+        StatementUtils.setStringValue(statement, 2, contact.getLastName());
+        StatementUtils.setStringValue(statement, 3, contact.getMiddleName());
+        StatementUtils.setDateValue(statement, 4, contact.getBirthDate());
+        StatementUtils.setStringValue(statement, 5, contact.getNationality());
+        StatementUtils.setStringValue(statement, 6, contact.getGender());
+        StatementUtils.setIntValue(statement, 7, contact.getMaritalStatus());
+        StatementUtils.setStringValue(statement, 8, contact.getWebsite());
+        StatementUtils.setStringValue(statement, 9, contact.getEmail());
+        StatementUtils.setStringValue(statement, 10, contact.getJob());
     }
 
     private String buildParamQuery(SearchParameters parameters, String query) {
@@ -146,8 +180,8 @@ public class ContactDAO extends AbstractDAO<Contact> {
         query += createSearchStringPart("country", parameters.getCountry());
         query += createSearchStringPart("city", parameters.getCity());
         query += createSearchStringPart("street", parameters.getStreet());
-        query += createSearchIntPart("house_number", parameters.getHouseNumber());
-        query += createSearchIntPart("flat_number", parameters.getFlatNumber());
+        query += createSearchStringPart("house_number", parameters.getHouseNumber());
+        query += createSearchStringPart("flat_number", parameters.getFlatNumber());
         query += createSearchStringPart("postcode", parameters.getPostcode());
         return query;
     }

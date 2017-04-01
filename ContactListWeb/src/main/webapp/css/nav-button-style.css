@@ -39,3 +39,41 @@
 .home {
     background: url('../icons/home.png');
 }
+
+.pagination {
+    margin: 10px 0 10px 20px;
+    vertical-align: top;
+    display: inline-block;
+}
+
+.page {
+    font-size: 16px;
+    padding: 2px 4px;
+    background-color: #ECEDFD;
+    color: black;
+    text-decoration: none;
+}
+
+.first-page, .last-page {
+    background-color: #DADCFB;
+}
+
+.page:hover {
+    background-color: #C6D2F1;
+}
+
+.active-page {
+    background-color: #FEE6C7 !important;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+li {
+    list-style: none;
+    display: inline-block;
+    border: 1px solid black
+}

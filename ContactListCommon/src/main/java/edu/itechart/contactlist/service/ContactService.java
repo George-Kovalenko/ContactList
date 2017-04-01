@@ -139,6 +139,28 @@ public class ContactService {
         }
     }
 
+    public static int getContactCount() throws ServiceException {
+        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
+            return new ContactDAO(connection).getContactCount();
+        } catch (SQLException | ConnectionPoolException | DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public static ArrayList<Contact> findByOffset(long offset, long limit) throws ServiceException {
+        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
+            ArrayList<Contact> contacts = new ContactDAO(connection).findCertainCountsByOffset(offset, limit);
+            AddressDAO addressDAO = new AddressDAO(connection);
+            for (Contact contact : contacts) {
+                long id = contact.getId();
+                contact.setAddress(addressDAO.findById(id));
+            }
+            return contacts;
+        } catch (SQLException | ConnectionPoolException | DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     private static <T extends Entity> void insertEntityList(ArrayList<T> list, AbstractDAO<T> dao)
             throws DAOException {
         for (T entity : list) {

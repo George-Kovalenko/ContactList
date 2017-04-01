@@ -2,6 +2,7 @@ package edu.itechart.contactlist.dao;
 
 import edu.itechart.contactlist.entity.Address;
 import edu.itechart.contactlist.entityfactory.AddressFactory;
+import edu.itechart.contactlist.util.StatementUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,12 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AddressDAO extends AbstractDAO<Address> {
-    private static final String SELECT_BY_ID = "SELECT * FROM addresses WHERE contacts_id=?";
+    private static final String SELECT_BY_ID = "SELECT * FROM addresses WHERE contact_id=?";
     private static final String UPDATE_ADDRESS = "UPDATE addresses SET country=?, city=?, street=?, house_number=?," +
-            "flat_number=?, postcode=? WHERE contacts_id=?";
+            "flat_number=?, postcode=? WHERE contact_id=?";
     private static final String INSERT_ADDRESS = "INSERT INTO addresses (country, city, street, house_number, " +
-            "flat_number, postcode, contacts_id) VALUES(?, ?, ?, ?, ?, ?, ?)";
-    private static final String DELETE_ADDRESS = "DELETE FROM addresses WHERE contacts_id=?";
+            "flat_number, postcode, contact_id) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private static final String DELETE_ADDRESS = "DELETE FROM addresses WHERE contact_id=?";
 
     public AddressDAO(Connection connection) {
         super(connection);
@@ -73,12 +74,12 @@ public class AddressDAO extends AbstractDAO<Address> {
         }
     }
 
-    private void fillPreparedStatement(PreparedStatement preparedStatement, Address address) throws SQLException {
-        preparedStatement.setString(1, address.getCountry());
-        preparedStatement.setString(2, address.getCity());
-        preparedStatement.setString(3, address.getStreet());
-        preparedStatement.setInt(4, address.getHouseNumber());
-        preparedStatement.setInt(5, address.getFlatNumber());
-        preparedStatement.setString(6, address.getPostcode());
+    private void fillPreparedStatement(PreparedStatement statement, Address address) throws SQLException {
+        StatementUtils.setStringValue(statement, 1, address.getCountry());
+        StatementUtils.setStringValue(statement, 2, address.getCity());
+        StatementUtils.setStringValue(statement, 3, address.getStreet());
+        StatementUtils.setStringValue(statement, 4, address.getHouseNumber());
+        StatementUtils.setStringValue(statement, 5, address.getFlatNumber());
+        StatementUtils.setStringValue(statement, 6, address.getPostcode());
     }
 }

@@ -53,6 +53,12 @@ public enum CommandEnum {
         {
             command = new SearchContactsCommand();
         }
+    },
+
+    SHOW_EMAIL_PAGE {
+        {
+            command = new ShowEmailPageCommand();
+        }
     };
 
     protected Command command;

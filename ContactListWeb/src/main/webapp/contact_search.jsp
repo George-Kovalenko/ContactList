@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Поиск контактов</title>
-    <link rel="stylesheet" type="text/css" href="css/contact-style.css">
+    <link rel="stylesheet" href="css/contact-style.css">
 </head>
 <body>
     <div class="contact-container">
@@ -91,6 +91,6 @@
             <input type="button" class="button-style" id="back-button" value="Назад">
         </form>
     </div>
-    <script type="text/javascript" src="js/contact-search-script.js"></script>
+    <script src="js/back-button-script.js"></script>
 </body>
 </html>

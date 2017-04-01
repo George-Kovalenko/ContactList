@@ -1,0 +1,31 @@
+body {
+    font-size: 18px;
+}
+
+.email-container {
+    width: 100%;
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
+
+.email-info {
+    width: 40%;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+#email-text, #email-subject, #email-template {
+    display: block;
+    width: 90%;
+    float: none;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#send-email-button {
+    margin: 20px 20px 10px 0;
+}

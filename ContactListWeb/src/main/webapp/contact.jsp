@@ -23,9 +23,9 @@
 <head>
     <meta charset="utf-8">
     <title><c:out value="${title}"/></title>
-    <link rel="stylesheet" type="text/css" href="css/table-style.css">
-    <link rel="stylesheet" type="text/css" href="css/contact-style.css">
-    <link rel="stylesheet" type="text/css" href="css/nav-button-style.css">
+    <link rel="stylesheet" href="css/table-style.css">
+    <link rel="stylesheet" href="css/contact-style.css">
+    <link rel="stylesheet" href="css/nav-button-style.css">
 </head>
 <body>
     <div class="contact-container">
@@ -208,7 +208,7 @@
             </div>
             <div id="attachment-input-fields"></div>
             <input type="button" class="button-style" id="save-contact-button" value="Сохранить">
-            <input type="button" class="button-style" id="home-button" value="Домой">
+            <input type="button" class="button-style" id="back-button" value="Домой">
         </form>
     </div>
     <div class="popup-window" id="photo-popup">
@@ -274,6 +274,7 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="js/contact-page-script.js"></script>
+    <script src="js/contact-page-script.js"></script>
+    <script src="js/back-button-script.js"></script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package edu.itechart.contactlist.commands;
 import edu.itechart.contactlist.entity.Contact;
 import edu.itechart.contactlist.service.ContactService;
 import edu.itechart.contactlist.service.ServiceException;
+import edu.itechart.contactlist.util.email.EmailTemplateManager;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 
 public class ShowEmailPageCommand implements Command {
     private static final String REQUEST_PARAM_NAME = "check-contact";
+    private static final String REQUEST_ATTR_RECIPIENTS = "recipients";
+    private static final String REQUEST_ATTR_TEMPLATES = "templates";
     private static final String URL_EMAIL_PAGE = "/email_page.jsp";
 
     @Override
@@ -27,7 +30,10 @@ public class ShowEmailPageCommand implements Command {
                     }
                 }
             }
-            request.setAttribute("recipients", recipients);
+            EmailTemplateManager emailTemplateManager = new EmailTemplateManager();
+            ArrayList<String> templates = emailTemplateManager.getAllTemplates();
+            request.setAttribute(REQUEST_ATTR_RECIPIENTS, recipients);
+            request.setAttribute(REQUEST_ATTR_TEMPLATES, templates);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

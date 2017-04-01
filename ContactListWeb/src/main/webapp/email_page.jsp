@@ -29,18 +29,24 @@
                 <label>
                     Шаблон
                     <select name="email-template" id="email-template">
-                        <option>Не выбран</option>
+                        <option value="">Не выбран</option>
+                        <c:forEach var="template" items="${templates}" varStatus="loop">
+                            <option value="${template}">
+                                Шаблон №${loop.index + 1}
+                            </option>
+                        </c:forEach>
                     </select>
                 </label>
                 <label>
                     Текст
                     <textarea name="email-text" id="email-text" rows="7" maxlength="254"></textarea>
                 </label>
-                <input type="submit" class="button-style" id="send-email-button" value="Отправить">
+                <input type="button" class="button-style" id="send-email-button" value="Отправить">
                 <input type="button" class="button-style" id="back-button" value="Назад">
             </div>
         </form>
     </div>
     <script src="js/back-button-script.js"></script>
+    <script src="js/email-page-script.js"></script>
 </body>
 </html>

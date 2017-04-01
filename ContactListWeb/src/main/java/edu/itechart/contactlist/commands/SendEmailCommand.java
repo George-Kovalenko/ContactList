@@ -4,6 +4,7 @@ import edu.itechart.contactlist.entity.Contact;
 import edu.itechart.contactlist.service.ContactService;
 import edu.itechart.contactlist.service.ServiceException;
 import edu.itechart.contactlist.util.email.EmailManager;
+import edu.itechart.contactlist.util.email.EmailTemplateManager;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.mail.MessagingException;
@@ -15,6 +16,7 @@ public class SendEmailCommand implements Command {
     private static final String PARAM_SUBJECT = "email-subject";
     private static final String PARAM_TEXT = "email-text";
     private static final String PARAM_RECIPIENTS = "recipient-id";
+    private static final String PARAM_TEMPLATE_INDEX = "template-index";
     private static final String URL_CONTACT_LIST = "controller";
 
     @Override
@@ -22,10 +24,19 @@ public class SendEmailCommand implements Command {
         try {
             String subject = request.getParameter(PARAM_SUBJECT);
             String text = request.getParameter(PARAM_TEXT);
+            int templateIndex = Integer.parseInt(request.getParameter(PARAM_TEMPLATE_INDEX));
             ArrayList<Contact> recipients = getAllRecipients(request);
             EmailManager emailManager = new EmailManager();
-            for (Contact recipient : recipients) {
-                emailManager.sendMail(recipient.getEmail(), subject, text);
+            if (templateIndex > 0) {
+                EmailTemplateManager emailTemplateManager = new EmailTemplateManager();
+                for (Contact recipient : recipients) {
+                    text = emailTemplateManager.makeEmailText(templateIndex, recipient.getFirstName());
+                    emailManager.sendMail(recipient.getEmail(), subject, text);
+                }
+            } else {
+                for (Contact recipient : recipients) {
+                    emailManager.sendMail(recipient.getEmail(), subject, text);
+                }
             }
         } catch (MessagingException | ServiceException e) {
             throw new CommandException(e);

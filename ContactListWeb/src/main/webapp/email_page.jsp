@@ -9,10 +9,18 @@
 </head>
 <body>
     <div class="email-container">
-        <form method="post" id="send-email" action="">
+        <form method="post" id="send-email" action="controller?command=send_email">
             <div class="email-info">
                 <label>
                     Получатели
+                    <ul>
+                        <c:forEach var="recipient" items="${recipients}">
+                            <li>
+                                <c:out value="${recipient.email}"/>
+                            </li>
+                            <input type="hidden" value="${recipient.id}" name="recipient-id">
+                        </c:forEach>
+                    </ul>
                 </label>
                 <label>
                     Тема

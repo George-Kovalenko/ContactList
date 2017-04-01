@@ -59,6 +59,12 @@ public enum CommandEnum {
         {
             command = new ShowEmailPageCommand();
         }
+    },
+
+    SEND_EMAIL {
+        {
+            command = new SendEmailCommand();
+        }
     };
 
     protected Command command;

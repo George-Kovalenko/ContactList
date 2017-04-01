@@ -2,6 +2,21 @@ body {
     font-size: 18px;
 }
 
+ul {
+    display: inline;
+    margin-bottom: 10px;
+}
+
+li {
+    list-style-type: none;
+    padding: 2px;
+    display: inline;
+    margin-right: 5px;
+    background-color: #E5E5E6;
+    border: 1px solid #DDDDDF;
+    border-radius: 5px;
+}
+
 .email-container {
     width: 100%;
     margin-left: 10px;

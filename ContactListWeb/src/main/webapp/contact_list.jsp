@@ -15,7 +15,7 @@
             <a class="nav-button delete" title="delete" id="delete-contact-button"></a>
             <a class="nav-button search" title="search" id="search-contact-button"
                href="controller?command=show_contact_search_page"></a>
-            <a class="nav-button mail" title="mail" id="send-mail-button" href="controller?command=show_email_page"></a>
+            <a class="nav-button mail" title="mail" id="send-mail-button"></a>
             <a class="nav-button home" title="home" id="home-button" href="controller?command=show_contact_list&page=1"></a>
         </div>
         <c:if test="${not empty pagination and not empty contacts}">

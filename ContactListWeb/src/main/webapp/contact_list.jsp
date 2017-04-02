@@ -103,11 +103,22 @@
                             <c:out value="${contact.birthDate}"/>
                         </td>
                         <td>
-                            <c:out value="${contact.address.country}, г.
-                                          ${contact.address.city}, ул.
-                                          ${contact.address.street}, д.
-                                          ${contact.address.houseNumber}, кв.
-                                          ${contact.address.flatNumber}"/>
+                            <c:set var="address" value="${contact.address}"/>
+                            <c:if test="${not empty address.country}">
+                                <c:out value="${address.country} "/>
+                            </c:if>
+                            <c:if test="${not empty address.city}">
+                                <c:out value="г. ${address.city} " />
+                            </c:if>
+                            <c:if test="${not empty address.street}">
+                                <c:out value="ул. ${address.street} " />
+                            </c:if>
+                            <c:if test="${not empty address.houseNumber}">
+                                <c:out value="д. ${address.houseNumber} " />
+                            </c:if>
+                            <c:if test="${not empty address.flatNumber}">
+                                <c:out value="кв. ${address.flatNumber}" />
+                            </c:if>
                         </td>
                         <td>
                             <c:out value="${contact.job}"/>

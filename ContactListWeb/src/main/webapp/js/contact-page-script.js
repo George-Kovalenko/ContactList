@@ -441,7 +441,7 @@ function addErrorMessage(message) {
 
 var firstName = document.getElementById('first-name');
 firstName.onkeyup = function () {
-    if (checkInputField(this, 30, true, containsLettersHyphen.name) == '') {
+    if (checkTextInputField(this, 30, true, containsLettersHyphen.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -450,7 +450,7 @@ firstName.onkeyup = function () {
 
 var lastName = document.getElementById('last-name');
 lastName.onkeyup = function () {
-    if (checkInputField(this, 30, true, containsLettersHyphen.name) == '') {
+    if (checkTextInputField(this, 30, true, containsLettersHyphen.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -459,16 +459,31 @@ lastName.onkeyup = function () {
 
 var middleName = document.getElementById('middle-name');
 middleName.onkeyup = function () {
-    if (checkInputField(this, 30, false, containsLettersHyphen.name) == '') {
+    if (checkTextInputField(this, 30, false, containsLettersHyphen.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
     }
 };
 
+var day = document.getElementById('day');
+day.onkeyup = function () {
+    checkDateInput();
+};
+
+var month = document.getElementById('month');
+month.onkeyup = function () {
+    checkDateInput();
+};
+
+var year = document.getElementById('year');
+year.onkeyup = function () {
+    checkDateInput();
+}
+
 var nationality = document.getElementById('nationality');
 nationality.onkeyup = function () {
-    if (checkInputField(this, 45, false, containsLettersHyphenSpace.name) == '') {
+    if (checkTextInputField(this, 45, false, containsLettersHyphenSpace.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -477,7 +492,7 @@ nationality.onkeyup = function () {
 
 var website = document.getElementById('website');
 website.onkeyup = function () {
-    if (checkInputField(this, 45, false, checkWebsite.name) == '') {
+    if (checkTextInputField(this, 45, false, checkWebsite.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -486,7 +501,7 @@ website.onkeyup = function () {
 
 var email = document.getElementById('email');
 email.onkeyup = function () {
-    if (checkInputField(this, 45, false, checkEmail.name) == '') {
+    if (checkTextInputField(this, 45, false, checkEmail.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -495,7 +510,7 @@ email.onkeyup = function () {
 
 var job = document.getElementById('job');
 job.onkeyup = function () {
-    if (checkInputField(this, 100, false) == '') {
+    if (checkTextInputField(this, 100, false) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -504,7 +519,7 @@ job.onkeyup = function () {
 
 var country = document.getElementById('country');
 country.onkeyup = function () {
-    if (checkInputField(this, 30, false, containsLettersHyphenSpace.name) == '') {
+    if (checkTextInputField(this, 30, false, containsLettersHyphenSpace.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -513,7 +528,7 @@ country.onkeyup = function () {
 
 var city = document.getElementById('city');
 city.onkeyup = function () {
-    if (checkInputField(this, 30, false, containsLettersHyphenSpace.name) == '') {
+    if (checkTextInputField(this, 30, false, containsLettersHyphenSpace.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -522,7 +537,7 @@ city.onkeyup = function () {
 
 var street = document.getElementById('street');
 street.onkeyup = function () {
-    if (checkInputField(this, 30, false, containsLettersDigitsHyphenSpace.name) == '') {
+    if (checkTextInputField(this, 30, false, containsLettersDigitsHyphenSpace.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -531,7 +546,7 @@ street.onkeyup = function () {
 
 var house = document.getElementById('house');
 house.onkeyup = function () {
-    if (checkInputField(this, 10, false, containsDigits.name) == '') {
+    if (checkTextInputField(this, 10, false, containsDigits.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -540,7 +555,7 @@ house.onkeyup = function () {
 
 var flat = document.getElementById('flat');
 flat.onkeyup = function () {
-    if (checkInputField(this, 10, false, containsDigits.name) == '') {
+    if (checkTextInputField(this, 10, false, containsDigits.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -549,7 +564,7 @@ flat.onkeyup = function () {
 
 var postcode = document.getElementById('postcode');
 postcode.onkeyup = function () {
-    if (checkInputField(this, 8, false, containsDigits.name) == '') {
+    if (checkTextInputField(this, 8, false, containsDigits.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -559,43 +574,46 @@ postcode.onkeyup = function () {
 function checkInputFieldsBeforeSubmit() {
     var errorMessages = [];
     var message;
-    if ((message = checkInputField(firstName, 30, true, containsLettersHyphen.name)) != '') {
+    if ((message = checkTextInputField(firstName, 30, true, containsLettersHyphen.name)) != '') {
         errorMessages.push(message);
     }
-    if ((message = checkInputField(lastName, 30, true, containsLettersHyphen.name)) != '') {
+    if ((message = checkTextInputField(lastName, 30, true, containsLettersHyphen.name)) != '') {
         errorMessages.push(message);
     }
-    if ((message = checkInputField(middleName, 30, false, containsLettersHyphen.name)) != '') {
+    if ((message = checkTextInputField(middleName, 30, false, containsLettersHyphen.name)) != '') {
         errorMessages.push(message);
     }
-    if ((message = checkInputField(nationality, 45, false, containsLettersHyphenSpace.name)) != '') {
+    if ((message = checkDateInput()) != '') {
         errorMessages.push(message);
     }
-    if ((message = checkInputField(job, 100, false)) != '') {
+    if ((message = checkTextInputField(nationality, 45, false, containsLettersHyphenSpace.name)) != '') {
         errorMessages.push(message);
     }
-    if ((message = checkInputField(website, 45, false, checkWebsite.name))) {
+    if ((message = checkTextInputField(job, 100, false)) != '') {
         errorMessages.push(message);
     }
-    if ((message = checkInputField(email, 45, false, checkEmail.name))) {
+    if ((message = checkTextInputField(website, 45, false, checkWebsite.name))) {
         errorMessages.push(message);
     }
-    if ((message = checkInputField(country, 45, false, containsLettersHyphenSpace.name)) != '') {
+    if ((message = checkTextInputField(email, 45, false, checkEmail.name))) {
         errorMessages.push(message);
     }
-    if ((message = checkInputField(city, 45, false, containsLettersHyphenSpace.name)) != '') {
+    if ((message = checkTextInputField(country, 45, false, containsLettersHyphenSpace.name)) != '') {
         errorMessages.push(message);
     }
-    if ((message = checkInputField(street, 45, false, containsLettersDigitsHyphenSpace.name)) != '') {
+    if ((message = checkTextInputField(city, 45, false, containsLettersHyphenSpace.name)) != '') {
         errorMessages.push(message);
     }
-    if ((message = checkInputField(house, 10, false, containsDigits.name)) != '') {
+    if ((message = checkTextInputField(street, 45, false, containsLettersDigitsHyphenSpace.name)) != '') {
         errorMessages.push(message);
     }
-    if ((message = checkInputField(flat, 10, false, containsDigits.name)) != '') {
+    if ((message = checkTextInputField(house, 10, false, containsDigits.name)) != '') {
         errorMessages.push(message);
     }
-    if ((message = checkInputField(postcode, 8, false, containsDigits.name)) != '') {
+    if ((message = checkTextInputField(flat, 10, false, containsDigits.name)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkTextInputField(postcode, 8, false, containsDigits.name)) != '') {
         errorMessages.push(message);
     }
     errorMessages.forEach(function (item, i) {
@@ -604,7 +622,7 @@ function checkInputFieldsBeforeSubmit() {
     return errorMessages.length != 0;
 }
 
-function checkInputField(inputField, maxLength, required, checkFunction) {
+function checkTextInputField(inputField, maxLength, required, checkFunction) {
     var text = inputField.value;
     var displayFieldName = inputField.parentNode.textContent.trim();
     if (required) {
@@ -659,6 +677,50 @@ function checkInputField(inputField, maxLength, required, checkFunction) {
     return '';
 }
 
+function checkDigitsInputField(inputField, min, max, required) {
+    var length = inputField.value.trim().length;
+    if (required && length < 1) {
+        return false;
+    }
+    if (!required && length === 0) {
+        return true;
+    }
+    if (containsDigits(inputField.value)) {
+        if (inputField.value >= min && inputField.value <= max) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function checkDateInput() {
+    var dayCorrect, monthCorrect, yearCorrect;
+    var message = '';
+    if (day.value.length > 0 || month.value.length > 0 || year.value.length > 0) {
+        dayCorrect = checkDigitsInputField(day, 1, 31, true);
+        monthCorrect = checkDigitsInputField(month, 1, 12, true);
+        yearCorrect = checkDigitsInputField(year, 1930, new Date().getFullYear(), true);
+        highlightInput(day, dayCorrect);
+        highlightInput(month, monthCorrect);
+        highlightInput(year, yearCorrect);
+        if (!dayCorrect) {
+            message += 'Поле "День" некорректно заполнено.<br>';
+        }
+        if (!monthCorrect) {
+            message += 'Поле "Месяц" некорректно заполнено.<br>';
+        }
+        if (!yearCorrect) {
+            message += 'Поле "Год" некорректно заполнено.<br>';
+        }
+        return message;
+    } else {
+        highlightInput(day, true);
+        highlightInput(month, true);
+        highlightInput(year, true);
+    }
+    return message;
+}
+
 function checkEmail(inputElement) {
     var regex = /^[\w]{1}[\w\.]*@[\w]+\.[a-z]{2,4}$/i;
     return regex.test(inputElement.value);
@@ -711,7 +773,7 @@ function containsOnlyCharsIgnoreCase(value, chars) {
 }
 
 function highlightInput(inputElement, isCorrect) {
-    if(isCorrect) {
+    if (isCorrect) {
         inputElement.style.borderColor = 'initial';
     } else {
         inputElement.style.borderColor = 'red';

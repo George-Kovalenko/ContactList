@@ -50,7 +50,9 @@
                 </label>
                 <label>
                     Дата рождения
-                    <input type="text" name="birth-date" value="${contact.birthDate}">
+                    <input type="text" id="year" class="birth-date" name="birth-date-year" placeholder="Год" value="${year}">
+                    <input type="text" id="month" class="birth-date" name="birth-date-month" placeholder="Месяц" value="${month}">
+                    <input type="text" id="day" class="birth-date" name="birth-date-day" placeholder="День" value="${day}">
                 </label>
                 <label>
                     Пол

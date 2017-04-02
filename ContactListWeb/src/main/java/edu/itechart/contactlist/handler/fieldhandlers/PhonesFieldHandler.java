@@ -10,8 +10,6 @@ public class PhonesFieldHandler implements FieldHandler {
     @Override
     public void handleInputField(Contact contact, String field) {
         ArrayList<Phone> phones = new JsonBuilder().getPhoneList(field);
-        if (phones != null) {
-            contact.setPhones(phones);
-        }
+        contact.getPhones().addAll(phones);
     }
 }

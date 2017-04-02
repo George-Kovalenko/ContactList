@@ -132,3 +132,17 @@ input[type="text"], input[type="file"], textarea {
 #error-message {
     padding-left: 20px;
 }
+
+.birth-date {
+    display: inline-block;
+    float: right;
+    margin-left: 10px;
+}
+
+#year {
+    width: 55px;
+}
+
+#day, #month {
+    width: 50px;
+}

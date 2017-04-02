@@ -10,6 +10,6 @@ public class AttachmentsFieldHandler implements FieldHandler {
     @Override
     public void handleInputField(Contact contact, String field) {
         ArrayList<Attachment> attachments = new JsonBuilder().getAttachmentList(field);
-        contact.setAttachments(attachments);
+        contact.getAttachments().addAll(attachments);
     }
 }

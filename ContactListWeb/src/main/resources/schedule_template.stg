@@ -1,0 +1,11 @@
+startLine() ::= <<
+Сегодня день рождения празднуют:
+>>
+
+contact(first_name, last_name) ::= <<
+<last_name> <first_name>
+>>
+
+noBirthday() ::= <<
+Сегодня никто не празднует день рождения.
+>>

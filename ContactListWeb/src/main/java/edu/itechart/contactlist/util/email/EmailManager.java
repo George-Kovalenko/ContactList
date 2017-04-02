@@ -11,7 +11,7 @@ public class EmailManager {
             ResourceBundle.getBundle("emailconfig").getObject("sender_name").toString();
     private static String senderPassword =
             ResourceBundle.getBundle("emailconfig").getObject("sender_password").toString();
-    public Session session;
+    private Session session;
 
     public EmailManager() {
         Properties properties = new Properties();

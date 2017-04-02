@@ -161,6 +161,14 @@ public class ContactService {
         }
     }
 
+    public static ArrayList<Contact> findByBirthDate() throws ServiceException {
+        try (Connection connection = ConnectionPool.getInstance().getConnection()) {
+            return new ContactDAO(connection).findByBirthDate();
+        } catch (SQLException | ConnectionPoolException | DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     private static <T extends Entity> void insertEntityList(ArrayList<T> list, AbstractDAO<T> dao)
             throws DAOException {
         for (T entity : list) {

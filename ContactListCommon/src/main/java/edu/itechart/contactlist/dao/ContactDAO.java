@@ -16,6 +16,8 @@ public class ContactDAO extends AbstractDAO<Contact> {
     private static final String SELECT_ALL = "SELECT * FROM contacts";
     private static final String SELECT_CERTAIN_COUNT_BY_OFFSET = "SELECT * FROM contacts LIMIT ? OFFSET ?";
     private static final String SELECT_BY_ID = "SELECT * FROM contacts WHERE id=?";
+    private static final String SELECT_BY_BIRTHDATE ="SELECT * FROM contacts WHERE MONTH(birth_date)=MONTH(CURDATE()) " +
+            "AND DAY(birth_date)=DAY(CURDATE())";
     private static final String INSERT_CONTACT = "INSERT INTO contacts (first_name, last_name, middle_name, " +
             "birth_date, nationality, gender, marital_status, website, email, job) " +
             "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -143,6 +145,21 @@ public class ContactDAO extends AbstractDAO<Contact> {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CERTAIN_COUNT_BY_OFFSET)) {
             preparedStatement.setLong(1, limit);
             preparedStatement.setLong(2, offset);
+            ArrayList<Contact> contacts = new ArrayList<>();
+            ContactFactory contactFactory = new ContactFactory();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Contact contact = contactFactory.createInstanceFromResultSet(resultSet);
+                contacts.add(contact);
+            }
+            return contacts;
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    public ArrayList<Contact> findByBirthDate() throws DAOException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_BIRTHDATE)) {
             ArrayList<Contact> contacts = new ArrayList<>();
             ContactFactory contactFactory = new ContactFactory();
             ResultSet resultSet = preparedStatement.executeQuery();

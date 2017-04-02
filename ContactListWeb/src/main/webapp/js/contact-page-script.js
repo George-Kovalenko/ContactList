@@ -519,7 +519,7 @@ job.onkeyup = function () {
 
 var country = document.getElementById('country');
 country.onkeyup = function () {
-    if (checkTextInputField(this, 30, false, containsLettersHyphenSpace.name) == '') {
+    if (checkTextInputField(this, 45, false, containsLettersHyphenSpace.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -528,7 +528,7 @@ country.onkeyup = function () {
 
 var city = document.getElementById('city');
 city.onkeyup = function () {
-    if (checkTextInputField(this, 30, false, containsLettersHyphenSpace.name) == '') {
+    if (checkTextInputField(this, 45, false, containsLettersHyphenSpace.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -537,7 +537,7 @@ city.onkeyup = function () {
 
 var street = document.getElementById('street');
 street.onkeyup = function () {
-    if (checkTextInputField(this, 30, false, containsLettersDigitsHyphenSpace.name) == '') {
+    if (checkTextInputField(this, 45, false, containsLettersDigitsHyphenSpace.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -564,7 +564,7 @@ flat.onkeyup = function () {
 
 var postcode = document.getElementById('postcode');
 postcode.onkeyup = function () {
-    if (checkTextInputField(this, 8, false, containsDigits.name) == '') {
+    if (checkTextInputField(this, 10, false, containsDigits.name) == '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -613,10 +613,10 @@ function checkInputFieldsBeforeSubmit() {
     if ((message = checkTextInputField(flat, 10, false, containsDigits.name)) != '') {
         errorMessages.push(message);
     }
-    if ((message = checkTextInputField(postcode, 8, false, containsDigits.name)) != '') {
+    if ((message = checkTextInputField(postcode, 10, false, containsDigits.name)) != '') {
         errorMessages.push(message);
     }
-    errorMessages.forEach(function (item, i) {
+    errorMessages.forEach(function (item) {
         addErrorMessage(item);
     });
     return errorMessages.length != 0;

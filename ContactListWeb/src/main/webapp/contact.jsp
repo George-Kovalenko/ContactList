@@ -37,16 +37,16 @@
                 </div>
                 <h3>Основная информация</h3>
                 <label>
-                    Фамилия
-                    <input type="text" name="last-name" value="${contact.lastName}">
+                    Фамилия*
+                    <input id="last-name" type="text" name="last-name" value="${contact.lastName}">
                 </label>
                 <label>
-                    Имя
-                    <input type="text" name="first-name" value="${contact.firstName}">
+                    Имя*
+                    <input id="first-name" type="text" name="first-name" value="${contact.firstName}">
                 </label>
                 <label>
                     Отчество
-                    <input type="text" name="middle-name" value="${contact.middleName}">
+                    <input id="middle-name" type="text" name="middle-name" value="${contact.middleName}">
                 </label>
                 <label>
                     Дата рождения
@@ -62,7 +62,7 @@
                 </label>
                 <label>
                     Гражданство
-                    <input type="text" name="nationality" value="${contact.nationality}">
+                    <input id="nationality" type="text" name="nationality" value="${contact.nationality}">
                 </label>
                 <label>
                     Семейное положение
@@ -80,40 +80,40 @@
                 </label>
                 <label>
                     Website
-                    <input type="text" name="website" value="${contact.website}">
+                    <input id="website" type="text" name="website" value="${contact.website}">
                 </label>
                 <label>
                     Email
-                    <input type="text" name="email" value="${contact.email}">
+                    <input id="email" type="text" name="email" value="${contact.email}">
                 </label>
                 <label>
                     Текущее место работы
-                    <input type="text" name="job" value="${contact.job}">
+                    <input id="job" type="text" name="job" value="${contact.job}">
                 </label>
                 <h3>Адрес</h3>
                 <label>
                     Страна
-                    <input type="text" name="country" value="${contact.address.country}">
+                    <input id="country" type="text" name="country" value="${contact.address.country}">
                 </label>
                 <label>
                     Город
-                    <input type="text" name="city" value="${contact.address.city}">
+                    <input id="city" type="text" name="city" value="${contact.address.city}">
                 </label>
                 <label>
                     Улица
-                    <input type="text" name="street" value="${contact.address.street}">
+                    <input id="street" type="text" name="street" value="${contact.address.street}">
                 </label>
                 <label>
                     Дом
-                    <input type="text" name="house" value="${contact.address.houseNumber}">
+                    <input id="house" type="text" name="house" value="${contact.address.houseNumber}">
                 </label>
                 <label>
                     Квартира
-                    <input type="text" name="flat" value="${contact.address.flatNumber}">
+                    <input id="flat" type="text" name="flat" value="${contact.address.flatNumber}">
                 </label>
                 <label>
                     Почтовый индекс
-                    <input type="text" name="postcode" value="${contact.address.postcode}">
+                    <input id="postcode" type="text" name="postcode" value="${contact.address.postcode}">
                 </label>
             </div>
             <div class="phone-list">
@@ -271,6 +271,17 @@
             <div class="popup-buttons">
                 <div class="button-style" id="submit-attachment-button">Сохранить</div>
                 <div class="button-style" id="cancel-attachment-button">Отмена</div>
+            </div>
+        </div>
+    </div>
+    <div class="popup-window" id="error-message-popup">
+        <div class="popup-content">
+            <div class="popup-title">
+                Некорректный ввод
+            </div>
+            <div id="error-message"></div>
+            <div class="popup-buttons">
+                <div class="button-style" id="submit-error-message-button">Принять</div>
             </div>
         </div>
     </div>

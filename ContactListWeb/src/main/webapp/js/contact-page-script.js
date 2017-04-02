@@ -95,6 +95,10 @@ submitPhoneButton.onclick = function () {
 };
 
 saveContactButton.onclick = function () {
+    if (checkInputFieldsBeforeSubmit()) {
+        openModalWindow(errorMessagePopup);
+        return;
+    }
     fillPhoneList('');
     fillPhoneList('new-');
     fillAttachmentList('');
@@ -419,3 +423,297 @@ deletePhotoButton.onclick = function () {
     contactPhoto.src = 'icons/default_contact_icon.jpeg';
     closeModalWindow(photoPopup);
 };
+
+var errorMessagePopup = document.getElementById('error-message-popup');
+var errorMessage = document.getElementById('error-message');
+var submitErrorMessageButton = document.getElementById('submit-error-message-button');
+
+submitErrorMessageButton.onclick = function () {
+    closeModalWindow(errorMessagePopup);
+    errorMessage.innerHTML = null;
+};
+
+function addErrorMessage(message) {
+    var newError = document.createElement('p');
+    newError.innerHTML = message;
+    errorMessage.appendChild(newError);
+}
+
+var firstName = document.getElementById('first-name');
+firstName.onkeyup = function () {
+    if (checkInputField(this, 30, true, containsLettersHyphen.name) == '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+var lastName = document.getElementById('last-name');
+lastName.onkeyup = function () {
+    if (checkInputField(this, 30, true, containsLettersHyphen.name) == '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+var middleName = document.getElementById('middle-name');
+middleName.onkeyup = function () {
+    if (checkInputField(this, 30, false, containsLettersHyphen.name) == '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+var nationality = document.getElementById('nationality');
+nationality.onkeyup = function () {
+    if (checkInputField(this, 45, false, containsLettersHyphenSpace.name) == '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+var website = document.getElementById('website');
+website.onkeyup = function () {
+    if (checkInputField(this, 45, false, checkWebsite.name) == '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+var email = document.getElementById('email');
+email.onkeyup = function () {
+    if (checkInputField(this, 45, false, checkEmail.name) == '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+var job = document.getElementById('job');
+job.onkeyup = function () {
+    if (checkInputField(this, 100, false) == '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+var country = document.getElementById('country');
+country.onkeyup = function () {
+    if (checkInputField(this, 30, false, containsLettersHyphenSpace.name) == '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+var city = document.getElementById('city');
+city.onkeyup = function () {
+    if (checkInputField(this, 30, false, containsLettersHyphenSpace.name) == '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+var street = document.getElementById('street');
+street.onkeyup = function () {
+    if (checkInputField(this, 30, false, containsLettersDigitsHyphenSpace.name) == '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+var house = document.getElementById('house');
+house.onkeyup = function () {
+    if (checkInputField(this, 10, false, containsDigits.name) == '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+var flat = document.getElementById('flat');
+flat.onkeyup = function () {
+    if (checkInputField(this, 10, false, containsDigits.name) == '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+var postcode = document.getElementById('postcode');
+postcode.onkeyup = function () {
+    if (checkInputField(this, 8, false, containsDigits.name) == '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+function checkInputFieldsBeforeSubmit() {
+    var errorMessages = [];
+    var message;
+    if ((message = checkInputField(firstName, 30, true, containsLettersHyphen.name)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkInputField(lastName, 30, true, containsLettersHyphen.name)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkInputField(middleName, 30, false, containsLettersHyphen.name)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkInputField(nationality, 45, false, containsLettersHyphenSpace.name)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkInputField(job, 100, false)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkInputField(website, 45, false, checkWebsite.name))) {
+        errorMessages.push(message);
+    }
+    if ((message = checkInputField(email, 45, false, checkEmail.name))) {
+        errorMessages.push(message);
+    }
+    if ((message = checkInputField(country, 45, false, containsLettersHyphenSpace.name)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkInputField(city, 45, false, containsLettersHyphenSpace.name)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkInputField(street, 45, false, containsLettersDigitsHyphenSpace.name)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkInputField(house, 10, false, containsDigits.name)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkInputField(flat, 10, false, containsDigits.name)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkInputField(postcode, 8, false, containsDigits.name)) != '') {
+        errorMessages.push(message);
+    }
+    errorMessages.forEach(function (item, i) {
+        addErrorMessage(item);
+    });
+    return errorMessages.length != 0;
+}
+
+function checkInputField(inputField, maxLength, required, checkFunction) {
+    var text = inputField.value;
+    var displayFieldName = inputField.parentNode.textContent.trim();
+    if (required) {
+        var minLength = 2;
+        if (text.length === 0) {
+            return 'Поле "' + displayFieldName + '" должно быть заполнено.';
+        } else if (text.length < minLength) {
+            return 'Длина поля "' + displayFieldName + '" должна быть не меньше ' + minLength + ' символов.';
+        }
+    }
+    if (text.length > maxLength) {
+        return 'Длина поля "' + displayFieldName + '" должна быть не больше ' + maxLength + ' символов.';
+    } else if (text.length === 0) {
+        return '';
+    } else {
+        switch (checkFunction) {
+            case containsLettersHyphen.name:
+                if (!containsLettersHyphen(text)) {
+                    return 'Поле "' + displayFieldName + '" может содержать только буквы.';
+                }
+                break;
+            case containsLettersHyphenSpace.name:
+                if (!containsLettersHyphenSpace(text)) {
+                    return 'Поле "' + displayFieldName + '" может содержать только буквы.';
+                }
+                break;
+            case containsLettersDigitsHyphenSpace.name:
+                if (!containsLettersDigitsHyphenSpace(text)) {
+                    return 'Поле "' + displayFieldName + '" может содержать только буквы и цифры.';
+                }
+                break;
+            case containsDigits.name:
+                if (!containsDigits(text)) {
+                    return 'Поле "' + displayFieldName + '" может содержать только цифры.';
+                }
+                break;
+            case checkEmail.name:
+                if (!checkEmail(inputField)) {
+                    return 'Поле "' + displayFieldName + '" некорректно заполнено.';
+                }
+                break;
+            case checkWebsite.name:
+                if (!checkWebsite(inputField)) {
+                    return 'Поле "' + displayFieldName + '" некорректно заполнено.';
+                }
+                break;
+            default:
+                break;
+        }
+
+    }
+    return '';
+}
+
+function checkEmail(inputElement) {
+    var regex = /^[\w]{1}[\w\.]*@[\w]+\.[a-z]{2,4}$/i;
+    return regex.test(inputElement.value);
+}
+
+function checkWebsite(inputElement) {
+    var regex = /^[\w]*\.[a-z]{2,4}$/i;
+    return regex.test(inputElement.value);
+}
+
+var alphabet_ru = "abcdefghijklmnopqrstuvwxyz";
+var alphabet_en = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+var digits = "0123456789";
+var hyphen = "-";
+var space = " ";
+
+function containsDigits(value) {
+    return containsOnlyCharsIgnoreCase(value, digits);
+}
+
+function containsLettersDigits(value) {
+    return containsOnlyCharsIgnoreCase(value, alphabet_en + alphabet_ru + digits);
+}
+
+function containsLetters(value) {
+    return containsOnlyCharsIgnoreCase(value, alphabet_en + alphabet_ru);
+}
+
+function containsLettersHyphen(value) {
+    return containsOnlyCharsIgnoreCase(value, alphabet_en + alphabet_ru + hyphen);
+}
+
+function containsLettersHyphenSpace(value) {
+    return containsOnlyCharsIgnoreCase(value, alphabet_en + alphabet_ru + hyphen + space);
+}
+
+function containsLettersDigitsHyphenSpace(value) {
+    return containsOnlyCharsIgnoreCase(value, alphabet_en + alphabet_ru + digits + hyphen + space);
+}
+
+function containsOnlyCharsIgnoreCase(value, chars) {
+    var lowerCaseValue = value.toLowerCase();
+    var lowerCaseChars = chars.toLowerCase();
+    for (var i = 0; i < value.length; i++) {
+        if (lowerCaseChars.indexOf(lowerCaseValue.charAt(i)) == -1) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function highlightInput(inputElement, isCorrect) {
+    if(isCorrect) {
+        inputElement.style.borderColor = 'initial';
+    } else {
+        inputElement.style.borderColor = 'red';
+    }
+}

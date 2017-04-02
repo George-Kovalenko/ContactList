@@ -128,3 +128,7 @@ input[type="text"], input[type="file"], textarea {
 #photo-popup .popup-buttons {
     margin-top: 50px;
 }
+
+#error-message {
+    padding-left: 20px;
+}

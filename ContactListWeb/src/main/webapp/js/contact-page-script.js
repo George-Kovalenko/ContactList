@@ -86,6 +86,10 @@ cancelPhoneButton.onclick = function () {
 };
 
 submitPhoneButton.onclick = function () {
+    if (checkPhoneBeforeSubmit()) {
+        openModalWindow(errorMessagePopup);
+        return;
+    }
     if (!isPhoneEdit) {
         createNewPhone();
     } else {
@@ -190,6 +194,59 @@ function editPhone() {
     var phoneCommentCell = document.getElementById(prefix + 'phone-comment-' + editPhoneId);
     phoneCommentCell.innerHTML = phoneComment.value;
 }
+
+function checkPhoneBeforeSubmit() {
+    var errorMessages = [];
+    var message;
+    if ((message = checkTextInputField(countryCodeField, 5, false, containsDigits.name)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkTextInputField(operatorCodeField, 5, false, containsDigits.name)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkTextInputField(phoneNumberField, 7, false, containsDigits.name)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkTextInputField(phoneComment, 255, false))) {
+        errorMessages.push(message);
+    }
+    errorMessages.forEach(function (item) {
+        addErrorMessage(item);
+    });
+    return errorMessages.length != 0;
+}
+
+countryCodeField.onkeyup = function () {
+    if (checkTextInputField(this, 5, false, containsDigits.name) === '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+operatorCodeField.onkeyup = function () {
+    if (checkTextInputField(this, 5, false, containsDigits.name) === '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+phoneNumberField.onkeyup = function () {
+    if (checkTextInputField(this, 7, false, containsDigits.name) === '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
+
+phoneComment.onkeyup = function () {
+    if (checkTextInputField(this, 255, false) === '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
 
 function getCheckedItems(checkName) {
     var checkBoxes = document.getElementsByName(checkName);
@@ -441,7 +498,7 @@ function addErrorMessage(message) {
 
 var firstName = document.getElementById('first-name');
 firstName.onkeyup = function () {
-    if (checkTextInputField(this, 30, true, containsLettersHyphen.name) == '') {
+    if (checkTextInputField(this, 30, true, containsLettersHyphen.name) === '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -450,7 +507,7 @@ firstName.onkeyup = function () {
 
 var lastName = document.getElementById('last-name');
 lastName.onkeyup = function () {
-    if (checkTextInputField(this, 30, true, containsLettersHyphen.name) == '') {
+    if (checkTextInputField(this, 30, true, containsLettersHyphen.name) === '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -459,7 +516,7 @@ lastName.onkeyup = function () {
 
 var middleName = document.getElementById('middle-name');
 middleName.onkeyup = function () {
-    if (checkTextInputField(this, 30, false, containsLettersHyphen.name) == '') {
+    if (checkTextInputField(this, 30, false, containsLettersHyphen.name) === '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -479,11 +536,11 @@ month.onkeyup = function () {
 var year = document.getElementById('year');
 year.onkeyup = function () {
     checkDateInput();
-}
+};
 
 var nationality = document.getElementById('nationality');
 nationality.onkeyup = function () {
-    if (checkTextInputField(this, 45, false, containsLettersHyphenSpace.name) == '') {
+    if (checkTextInputField(this, 45, false, containsLettersHyphenSpace.name) === '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -492,7 +549,7 @@ nationality.onkeyup = function () {
 
 var website = document.getElementById('website');
 website.onkeyup = function () {
-    if (checkTextInputField(this, 45, false, checkWebsite.name) == '') {
+    if (checkTextInputField(this, 45, false, checkWebsite.name) === '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -501,7 +558,7 @@ website.onkeyup = function () {
 
 var email = document.getElementById('email');
 email.onkeyup = function () {
-    if (checkTextInputField(this, 45, false, checkEmail.name) == '') {
+    if (checkTextInputField(this, 45, false, checkEmail.name) === '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -510,7 +567,7 @@ email.onkeyup = function () {
 
 var job = document.getElementById('job');
 job.onkeyup = function () {
-    if (checkTextInputField(this, 100, false) == '') {
+    if (checkTextInputField(this, 100, false) === '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -519,7 +576,7 @@ job.onkeyup = function () {
 
 var country = document.getElementById('country');
 country.onkeyup = function () {
-    if (checkTextInputField(this, 45, false, containsLettersHyphenSpace.name) == '') {
+    if (checkTextInputField(this, 45, false, containsLettersHyphenSpace.name) === '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -528,7 +585,7 @@ country.onkeyup = function () {
 
 var city = document.getElementById('city');
 city.onkeyup = function () {
-    if (checkTextInputField(this, 45, false, containsLettersHyphenSpace.name) == '') {
+    if (checkTextInputField(this, 45, false, containsLettersHyphenSpace.name) === '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -537,7 +594,7 @@ city.onkeyup = function () {
 
 var street = document.getElementById('street');
 street.onkeyup = function () {
-    if (checkTextInputField(this, 45, false, containsLettersDigitsHyphenSpace.name) == '') {
+    if (checkTextInputField(this, 45, false, containsLettersDigitsHyphenSpace.name) === '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -546,7 +603,7 @@ street.onkeyup = function () {
 
 var house = document.getElementById('house');
 house.onkeyup = function () {
-    if (checkTextInputField(this, 10, false, containsDigits.name) == '') {
+    if (checkTextInputField(this, 10, false, containsDigits.name) === '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -555,7 +612,7 @@ house.onkeyup = function () {
 
 var flat = document.getElementById('flat');
 flat.onkeyup = function () {
-    if (checkTextInputField(this, 10, false, containsDigits.name) == '') {
+    if (checkTextInputField(this, 10, false, containsDigits.name) === '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);
@@ -564,7 +621,7 @@ flat.onkeyup = function () {
 
 var postcode = document.getElementById('postcode');
 postcode.onkeyup = function () {
-    if (checkTextInputField(this, 10, false, containsDigits.name) == '') {
+    if (checkTextInputField(this, 10, false, containsDigits.name) === '') {
         highlightInput(this, true);
     } else {
         highlightInput(this, false);

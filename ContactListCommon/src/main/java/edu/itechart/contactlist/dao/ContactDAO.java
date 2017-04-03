@@ -16,7 +16,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
     private static final String SELECT_ALL = "SELECT * FROM contacts";
     private static final String SELECT_CERTAIN_COUNT_BY_OFFSET = "SELECT * FROM contacts LIMIT ? OFFSET ?";
     private static final String SELECT_BY_ID = "SELECT * FROM contacts WHERE id=?";
-    private static final String SELECT_BY_BIRTHDATE ="SELECT * FROM contacts WHERE MONTH(birth_date)=MONTH(CURDATE()) " +
+    private static final String SELECT_BY_BIRTH_DATE ="SELECT * FROM contacts WHERE MONTH(birth_date)=MONTH(CURDATE()) " +
             "AND DAY(birth_date)=DAY(CURDATE())";
     private static final String INSERT_CONTACT = "INSERT INTO contacts (first_name, last_name, middle_name, " +
             "birth_date, nationality, gender, marital_status, website, email, job) " +
@@ -26,7 +26,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
     private static final String DELETE_CONTACT = "DELETE FROM contacts WHERE id=?";
     private static final String GET_LAST_ID = "SELECT last_insert_id() AS last_id FROM contacts";
     private static final String PARAM_QUERY = "SELECT * FROM contacts " +
-            "LEFT JOIN addresses ON addresses.contacts_id = contacts.id WHERE TRUE";
+            "LEFT JOIN addresses ON addresses.contact_id = contacts.id WHERE TRUE";
     private static final String GET_CONTACT_COUNT = "SELECT COUNT(*) AS count FROM contacts";
 
     public ContactDAO(Connection connection) {
@@ -159,7 +159,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
     }
 
     public ArrayList<Contact> findByBirthDate() throws DAOException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_BIRTHDATE)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_BIRTH_DATE)) {
             ArrayList<Contact> contacts = new ArrayList<>();
             ContactFactory contactFactory = new ContactFactory();
             ResultSet resultSet = preparedStatement.executeQuery();

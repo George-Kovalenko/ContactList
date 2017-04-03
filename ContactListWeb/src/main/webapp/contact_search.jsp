@@ -59,7 +59,9 @@
                 </label>
                 <label>
                     Дата рождения
-                    <input type="text" name="birth-date">
+                    <input type="text" id="year" class="birth-date" name="birth-date-year" placeholder="Год">
+                    <input type="text" id="month" class="birth-date" name="birth-date-month" placeholder="Месяц">
+                    <input type="text" id="day" class="birth-date" name="birth-date-day" placeholder="День">
                 </label>
                 <h3>Адрес</h3>
                 <label>

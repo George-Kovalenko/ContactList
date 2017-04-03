@@ -6,6 +6,7 @@ import edu.itechart.contactlist.entity.SearchParameters;
 import edu.itechart.contactlist.service.ContactService;
 import edu.itechart.contactlist.service.ServiceException;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,10 +26,14 @@ public class SearchContactsCommand implements Command {
         searchParameters.setGender(request.getParameter("gender"));
         String maritalStatus = request.getParameter("marital-status");
         searchParameters.setMaritalStatus(StringUtils.isNotEmpty(maritalStatus) ? Integer.parseInt(maritalStatus) : 0);
-        String birthDate = request.getParameter("birth-date");
-        searchParameters.setBirthDate(StringUtils.isNotEmpty(birthDate) ? Date.valueOf(birthDate) : null);
-        DateSearchType dateSearchType = DateSearchType.valueOf(request.getParameter("date-params").toUpperCase());
-        searchParameters.setDateSearchType(dateSearchType);
+        String day = request.getParameter("birth-date-day");
+        String month = request.getParameter("birth-date-month");
+        String year = request.getParameter("birth-date-year");
+        if (StringUtils.isNotEmpty(day) && StringUtils.isNotEmpty(month) && StringUtils.isNotEmpty(year)) {
+            searchParameters.setBirthDate(getDateFromRequest(day, month, year));
+            DateSearchType type = DateSearchType.valueOf(request.getParameter("date-params").toUpperCase());
+            searchParameters.setDateSearchType(type);
+        }
         searchParameters.setCountry(request.getParameter("country"));
         searchParameters.setCity(request.getParameter("city"));
         searchParameters.setStreet(request.getParameter("street"));
@@ -42,5 +47,21 @@ public class SearchContactsCommand implements Command {
             throw new CommandException(e);
         }
         return URL_CONTACT_LIST;
+    }
+
+    private Date getDateFromRequest(String stringDay, String stringMonth, String stringYear) {
+        try {
+            int day = Integer.parseInt(stringDay);
+            int month = Integer.parseInt(stringMonth);
+            int year = Integer.parseInt(stringYear);
+            DateTime dateTime = new DateTime();
+            dateTime = dateTime.withDayOfMonth(day);
+            dateTime = dateTime.withMonthOfYear(month);
+            dateTime = dateTime.withYear(year);
+            return new Date(dateTime.getMillis());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

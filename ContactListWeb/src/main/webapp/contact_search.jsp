@@ -13,15 +13,15 @@
                 <h3>Основная информация</h3>
                 <label>
                     Фамилия
-                    <input type="text" name="last-name">
+                    <input type="text" id="last-name" name="last-name">
                 </label>
                 <label>
                     Имя
-                    <input type="text" name="first-name">
+                    <input type="text" id="first-name" name="first-name">
                 </label>
                 <label>
                     Отчество
-                    <input type="text" name="middle-name">
+                    <input type="text" id="middle-name" name="middle-name">
                 </label>
                 <label>
                     Пол
@@ -33,7 +33,7 @@
                 </label>
                 <label>
                     Гражданство
-                    <input type="text" name="nationality">
+                    <input type="text" id="nationality" name="nationality">
                 </label>
                 <label>
                     Семейное положение
@@ -66,33 +66,45 @@
                 <h3>Адрес</h3>
                 <label>
                     Страна
-                    <input type="text" name="country">
+                    <input type="text" id="country" name="country">
                 </label>
                 <label>
                     Город
-                    <input type="text" name="city">
+                    <input type="text" id="city" name="city">
                 </label>
                 <label>
                     Улица
-                    <input type="text" name="street">
+                    <input type="text" id="street" name="street">
                 </label>
                 <label>
                     Дом
-                    <input type="text" name="house">
+                    <input type="text" id="house" name="house">
                 </label>
                 <label>
                     Квартира
-                    <input type="text" name="flat">
+                    <input type="text" id="flat" name="flat">
                 </label>
                 <label>
                     Почтовый индекс
-                    <input type="text" name="postcode">
+                    <input type="text" id="postcode" name="postcode">
                 </label>
             </div>
-            <input type="submit" class="button-style" id="search-contact-button" value="Поиск">
+            <input type="button" class="button-style" id="search-contact-button" value="Поиск">
             <input type="button" class="button-style" id="back-button" value="Назад">
         </form>
     </div>
+    <div class="popup-window" id="error-message-popup">
+        <div class="popup-content">
+            <div class="popup-title">
+                Некорректный ввод
+            </div>
+            <div id="error-message"></div>
+            <div class="popup-buttons">
+                <div class="button-style" id="submit-error-message-button">Принять</div>
+            </div>
+        </div>
+    </div>
     <script src="js/back-button-script.js"></script>
+    <script src="js/contact-search-script.js"></script>
 </body>
 </html>

@@ -745,7 +745,7 @@ function checkInputFieldsBeforeSubmit() {
 }
 
 function checkTextInputField(inputField, maxLength, required, checkFunction) {
-    var text = inputField.value;
+    var text = inputField.value.trim();
     var displayFieldName = inputField.parentNode.textContent.trim();
     if (required) {
         var minLength = 2;
@@ -853,22 +853,14 @@ function checkWebsite(inputElement) {
     return regex.test(inputElement.value);
 }
 
-var alphabet_ru = "abcdefghijklmnopqrstuvwxyz";
-var alphabet_en = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
-var digits = "0123456789";
-var hyphen = "-";
-var space = " ";
+var alphabet_ru = 'abcdefghijklmnopqrstuvwxyz';
+var alphabet_en = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя';
+var digits = '0123456789';
+var hyphen = '-';
+var space = ' ';
 
 function containsDigits(value) {
     return containsOnlyCharsIgnoreCase(value, digits);
-}
-
-function containsLettersDigits(value) {
-    return containsOnlyCharsIgnoreCase(value, alphabet_en + alphabet_ru + digits);
-}
-
-function containsLetters(value) {
-    return containsOnlyCharsIgnoreCase(value, alphabet_en + alphabet_ru);
 }
 
 function containsLettersHyphen(value) {

@@ -500,12 +500,19 @@ cancelPhotoButton.onclick = function () {
 };
 
 submitPhotoButton.onclick = function () {
-    var fileReader = new FileReader;
-    fileReader.onload = function () {
-        contactPhoto.src = this.result;
-    };
     var image = photoPath.files[0];
     if (image) {
+        var maxSize = 3;
+        var sizeMB = 1024 * 1024;
+        if (image.size > maxSize * sizeMB) {
+            addErrorMessage('Размер фотографии должен быть не больше ' + maxSize + ' МБ.');
+            openModalWindow(errorMessagePopup);
+            return;
+        }
+        var fileReader = new FileReader;
+        fileReader.onload = function () {
+            contactPhoto.src = this.result;
+        };
         fileReader.readAsDataURL(image);
         var photoInputField = document.getElementById('photo-input-field');
         photoInputField.parentNode.removeChild(photoInputField);
@@ -518,11 +525,21 @@ submitPhotoButton.onclick = function () {
         photoPath.id = 'photo-path';
         photoPath.accept = 'image/jpeg, image/png';
         document.getElementById('photo-path-field').appendChild(photoPath);
+    } else {
+        addErrorMessage('Файл не выбран.');
+        openModalWindow(errorMessagePopup);
+        return;
     }
     closeModalWindow(photoPopup);
 };
 
 deletePhotoButton.onclick = function () {
+    console.log(contactPhoto.src);
+    if (contactPhoto.src.indexOf('icons/default_contact_icon.jpeg') != -1) {
+        addErrorMessage('Фотография для контакта не загружена.');
+        openModalWindow(errorMessagePopup);
+        return;
+    }
     var photoInputField = document.getElementById('photo-input-field');
     photoInputField.name = 'photo-field-delete';
     contactPhoto.src = 'icons/default_contact_icon.jpeg';

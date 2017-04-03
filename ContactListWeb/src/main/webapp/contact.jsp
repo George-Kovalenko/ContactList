@@ -251,7 +251,7 @@
                 </select>
             </label>
             <label>Коментарий
-                <textarea rows="5" maxlength="255" id="phone-comment"></textarea>
+                <textarea rows="5" id="phone-comment"></textarea>
             </label>
             <div class="popup-buttons">
                 <div class="button-style" id="submit-phone-button">Сохранить</div>
@@ -268,7 +268,7 @@
                 <input type="file" id="file-path">
             </label>
             <label>Комментарий
-                <textarea rows="5" maxlength="255" id="attachment-comment"></textarea>
+                <textarea rows="5" id="attachment-comment"></textarea>
             </label>
             <div class="popup-buttons">
                 <div class="button-style" id="submit-attachment-button">Сохранить</div>

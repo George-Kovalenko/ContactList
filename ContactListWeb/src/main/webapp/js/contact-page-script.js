@@ -326,6 +326,10 @@ editAttachmentButton.onclick = function () {
 };
 
 submitAttachmentButton.onclick = function () {
+    if (checkAttachmentBeforeSubmit()) {
+        openModalWindow(errorMessagePopup);
+        return;
+    }
     if (!isAttachmentEdit) {
         createNewAttachment();
     } else {
@@ -424,7 +428,7 @@ function fillAttachmentList(prefix) {
     for (var i = 0; i < attachments.length; i++) {
         var attachment = new Attachment();
         var id = prefix ? attachments[i].id.split('-')[2] : attachments[i].id.split('-')[1];
-        attachment.fileName = document.getElementById(prefix + "attachment-file-name-" + id).innerHTML.trim();
+        attachment.fileName = document.getElementById(prefix + 'attachment-file-name-' + id).innerHTML.trim();
         attachment.uploadDate = document.getElementById(prefix + 'attachment-upload-date-' + id).innerHTML.trim();
         attachment.comment = document.getElementById(prefix + 'attachment-comment-' + id).innerHTML.trim();
         attachment.id = prefix ? 0 : id;
@@ -434,6 +438,50 @@ function fillAttachmentList(prefix) {
     var newChild = addItemsInHiddenInput(prefix + 'attachments', JSON.stringify(attachmentList));
     contactForm.appendChild(newChild);
 }
+
+function checkAttachmentBeforeSubmit() {
+    var errorMessages = [];
+    var message;
+    var filePath = document.getElementById('file-path');
+    if (!isAttachmentEdit) {
+        var maxSize = 20;
+        var sizeMB = 1024 * 1024;
+        var file = filePath.files[0];
+        if (file === null || file === undefined) {
+            errorMessages.push('Файл для присоединения не выбран.');
+        } else if (file.size > maxSize * sizeMB) {
+            errorMessages.push('Размер файла должен быть меньше ' + maxSize + ' МБ.');
+        }
+
+    } else if ((message = checkTextInputField(filePath, 100, false)) != '') {
+        errorMessages.push(message);
+    }
+    if ((message = checkTextInputField(phoneComment, 255, false)) != '') {
+        errorMessages.push(message);
+    }
+    errorMessages.forEach(function (item) {
+        addErrorMessage(item);
+    });
+    return errorMessages.length != 0;
+}
+
+document.getElementById('file-path').onkeyup = function () {
+    if (isAttachmentEdit) {
+        if (checkTextInputField(this, 100, false) === '') {
+            highlightInput(this, true);
+        } else {
+            highlightInput(this, false);
+        }
+    }
+};
+
+attachmentComment.onkeyup = function () {
+    if (checkTextInputField(this, 255, false) === '') {
+        highlightInput(this, true);
+    } else {
+        highlightInput(this, false);
+    }
+};
 
 var contactPhoto = document.getElementById('contact-photo-image');
 var photoPath = document.getElementById('photo-path');

@@ -114,7 +114,7 @@ DEFAULT CHARACTER SET utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `georgiy_kovalenko_contact_list`.`attachments` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `file_name` VARCHAR(255) NOT NULL,
+  `file_name` VARCHAR(100) NOT NULL,
   `upload_date` DATE NULL,
   `comment` VARCHAR(255) NULL,
   `contact_id` INT UNSIGNED NOT NULL,

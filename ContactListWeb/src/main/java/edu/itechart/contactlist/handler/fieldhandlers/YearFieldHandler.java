@@ -1,6 +1,7 @@
 package edu.itechart.contactlist.handler.fieldhandlers;
 
 import edu.itechart.contactlist.entity.Contact;
+import edu.itechart.contactlist.handler.FieldHandlerException;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 
@@ -8,7 +9,7 @@ import java.sql.Date;
 
 public class YearFieldHandler implements FieldHandler {
     @Override
-    public void handleInputField(Contact contact, String field) {
+    public void handleInputField(Contact contact, String field) throws FieldHandlerException {
         if (StringUtils.isNotEmpty(field)) {
             try {
                 int year = Integer.parseInt(field);
@@ -21,7 +22,7 @@ public class YearFieldHandler implements FieldHandler {
                     contact.setBirthDate(null);
                 }
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                throw new FieldHandlerException("Invalid year of birth.", e);
             }
         } else {
             contact.setBirthDate(null);

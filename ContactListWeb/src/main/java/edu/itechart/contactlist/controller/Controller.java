@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger(Controller.class);
@@ -39,7 +41,7 @@ public class Controller extends HttpServlet {
                 getServletContext().getRequestDispatcher(page).forward(req, resp);
             }
         } catch (CommandException e) {
-            LOGGER.error(e);
+            e.printStackTrace();
         }
     }
 }

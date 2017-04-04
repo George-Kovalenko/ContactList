@@ -11,7 +11,7 @@ public class FieldHandlerFactory {
         fields = new HashMap<>();
         fields.put("first-name", new FirstNameFieldHandler());
         fields.put("last-name", new LastNameFieldHandler());
-        fields.put("middle-name", new MiddleNameFiledHanlder());
+        fields.put("middle-name", new MiddleNameFiledHandler());
         fields.put("birth-date-day", new DayFieldHandler());
         fields.put("birth-date-month", new MonthFieldHandler());
         fields.put("birth-date-year", new YearFieldHandler());

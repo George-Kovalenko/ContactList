@@ -43,7 +43,7 @@ public class MainHandler {
             }
             request.setAttribute("contact", contact);
             request.setAttribute("attachmentsForUpload", attachmentForUpload);
-        } catch (FileUploadException | UnsupportedEncodingException e) {
+        } catch (FieldHandlerException | FileUploadException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }

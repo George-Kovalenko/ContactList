@@ -104,7 +104,6 @@
             </div>
         </div>
     </div>
-    <script src="js/back-button-script.js"></script>
     <script src="js/contact-search-script.js"></script>
 </body>
 </html>

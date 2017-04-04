@@ -13,14 +13,16 @@
             <div class="email-info">
                 <label>
                     Получатели
-                    <ul>
-                        <c:forEach var="recipient" items="${recipients}">
-                            <li>
-                                <c:out value="${recipient.email}"/>
-                            </li>
-                            <input type="hidden" value="${recipient.id}" name="recipient-id">
-                        </c:forEach>
-                    </ul>
+                    <c:if test="${not empty recipients}">
+                        <ul>
+                            <c:forEach var="recipient" items="${recipients}">
+                                <li>
+                                    <c:out value="${recipient.email}"/>
+                                </li>
+                                <input type="hidden" value="${recipient.id}" name="recipient-id">
+                            </c:forEach>
+                        </ul>
+                    </c:if>
                 </label>
                 <label>
                     Тема
@@ -39,14 +41,24 @@
                 </label>
                 <label>
                     Текст
-                    <textarea name="email-text" id="email-text" rows="7" maxlength="254"></textarea>
+                    <textarea name="email-text" id="email-text" rows="7"></textarea>
                 </label>
                 <input type="button" class="button-style" id="send-email-button" value="Отправить">
                 <input type="button" class="button-style" id="back-button" value="Назад">
             </div>
         </form>
     </div>
-    <script src="js/back-button-script.js"></script>
+    <div class="popup-window" id="error-message-popup">
+        <div class="popup-content">
+            <div class="popup-title">
+                Некорректный ввод
+            </div>
+            <div id="error-message"></div>
+            <div class="popup-buttons">
+                <div class="button-style" id="submit-error-message-button">Принять</div>
+            </div>
+        </div>
+    </div>
     <script src="js/email-page-script.js"></script>
 </body>
 </html>

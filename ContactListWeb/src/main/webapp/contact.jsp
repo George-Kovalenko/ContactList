@@ -288,6 +288,5 @@
         </div>
     </div>
     <script src="js/contact-page-script.js"></script>
-    <script src="js/back-button-script.js"></script>
 </body>
 </html>

@@ -341,3 +341,7 @@ function highlightInput(inputElement, isCorrect) {
         inputElement.style.borderColor = 'red';
     }
 }
+
+document.getElementById('back-button').onclick = function () {
+    window.location.href = 'controller?command=show_contact_list&page=1';
+};

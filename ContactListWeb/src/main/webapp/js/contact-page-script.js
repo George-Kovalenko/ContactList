@@ -845,12 +845,12 @@ function checkDateInput() {
 
 function checkEmail(inputElement) {
     var regex = /^[\w]{1}[\w\.]*@[\w]+\.[a-z]{2,4}$/i;
-    return regex.test(inputElement.value);
+    return regex.test(inputElement.value.trim());
 }
 
 function checkWebsite(inputElement) {
     var regex = /^[\w]*\.[a-z]{2,4}$/i;
-    return regex.test(inputElement.value);
+    return regex.test(inputElement.value.trim());
 }
 
 var alphabet_ru = 'abcdefghijklmnopqrstuvwxyz';
@@ -893,3 +893,7 @@ function highlightInput(inputElement, isCorrect) {
         inputElement.style.borderColor = 'red';
     }
 }
+
+document.getElementById('back-button').onclick = function () {
+    window.location.href = 'controller?command=show_contact_list&page=1';
+};

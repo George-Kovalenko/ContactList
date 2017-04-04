@@ -2,10 +2,10 @@ package edu.itechart.contactlist.dao;
 
 import edu.itechart.contactlist.entity.Address;
 import edu.itechart.contactlist.entity.Contact;
-import edu.itechart.contactlist.entity.DateSearchType;
-import edu.itechart.contactlist.entity.SearchParameters;
-import edu.itechart.contactlist.entityfactory.AddressFactory;
-import edu.itechart.contactlist.entityfactory.ContactFactory;
+import edu.itechart.contactlist.dto.DateSearchType;
+import edu.itechart.contactlist.dto.SearchParameters;
+import edu.itechart.contactlist.entity.factory.AddressFactory;
+import edu.itechart.contactlist.entity.factory.ContactFactory;
 import edu.itechart.contactlist.util.StatementUtils;
 import org.apache.commons.lang3.StringUtils;
 

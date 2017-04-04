@@ -1,4 +1,4 @@
-package edu.itechart.contactlist.entity;
+package edu.itechart.contactlist.dto;
 
 import java.sql.Date;
 

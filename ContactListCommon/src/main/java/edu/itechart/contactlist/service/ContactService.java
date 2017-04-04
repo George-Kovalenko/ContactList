@@ -3,6 +3,7 @@ package edu.itechart.contactlist.service;
 import edu.itechart.contactlist.connectionpool.ConnectionPool;
 import edu.itechart.contactlist.connectionpool.ConnectionPoolException;
 import edu.itechart.contactlist.dao.*;
+import edu.itechart.contactlist.dto.SearchParameters;
 import edu.itechart.contactlist.entity.*;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang3.StringUtils;

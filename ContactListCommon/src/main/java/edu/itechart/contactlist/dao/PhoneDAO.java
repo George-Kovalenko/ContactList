@@ -1,7 +1,7 @@
 package edu.itechart.contactlist.dao;
 
 import edu.itechart.contactlist.entity.Phone;
-import edu.itechart.contactlist.entityfactory.PhoneFactory;
+import edu.itechart.contactlist.entity.factory.PhoneFactory;
 import edu.itechart.contactlist.util.StatementUtils;
 
 import java.sql.Connection;

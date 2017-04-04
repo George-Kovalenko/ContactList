@@ -1,8 +1,8 @@
 package edu.itechart.contactlist.commands;
 
 import edu.itechart.contactlist.entity.Contact;
-import edu.itechart.contactlist.entity.DateSearchType;
-import edu.itechart.contactlist.entity.SearchParameters;
+import edu.itechart.contactlist.dto.DateSearchType;
+import edu.itechart.contactlist.dto.SearchParameters;
 import edu.itechart.contactlist.service.ContactService;
 import edu.itechart.contactlist.service.ServiceException;
 import org.apache.commons.lang3.StringUtils;

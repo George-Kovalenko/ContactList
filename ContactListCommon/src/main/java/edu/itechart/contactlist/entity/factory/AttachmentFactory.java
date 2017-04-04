@@ -1,4 +1,4 @@
-package edu.itechart.contactlist.entityfactory;
+package edu.itechart.contactlist.entity.factory;
 
 import edu.itechart.contactlist.entity.Attachment;
 

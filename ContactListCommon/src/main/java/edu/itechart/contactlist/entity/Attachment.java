@@ -84,4 +84,14 @@ public class Attachment extends Entity {
         result = 31 * result + (int) (getContactID() ^ (getContactID() >>> 32));
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Attachment{" +
+                "fileName='" + fileName + '\'' +
+                ", uploadDate=" + uploadDate +
+                ", comment='" + comment + '\'' +
+                ", contactID=" + contactID +
+                "} " + super.toString();
+    }
 }

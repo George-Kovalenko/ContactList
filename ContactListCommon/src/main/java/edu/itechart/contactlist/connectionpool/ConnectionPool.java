@@ -1,7 +1,7 @@
 package edu.itechart.contactlist.connectionpool;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -19,7 +19,7 @@ public class ConnectionPool {
     private static ReentrantLock locking = new ReentrantLock();
     private static AtomicBoolean created = new AtomicBoolean(false);
     private DataSource dataSource;
-    private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionPool.class);
 
     private ConnectionPool() {
         try {
@@ -52,14 +52,6 @@ public class ConnectionPool {
         }
     }
 
-    public void releaseConnection(Connection connection) throws ConnectionPoolException {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new ConnectionPoolException("Couldn't release connection", e);
-        }
-    }
-
     public void deregisterDrivers() {
         Enumeration<Driver> drivers = DriverManager.getDrivers();
         while (drivers.hasMoreElements()) {
@@ -70,7 +62,7 @@ public class ConnectionPool {
                 try {
                     DriverManager.deregisterDriver(driver);
                 } catch (SQLException e) {
-                    LOGGER.error("Error when deregister driver " + driver.toString());
+                    LOGGER.error("Error when deregister driver {}", driver.toString());
                 }
             }
         }

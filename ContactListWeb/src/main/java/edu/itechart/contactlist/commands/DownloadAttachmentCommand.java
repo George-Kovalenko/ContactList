@@ -5,12 +5,15 @@ import edu.itechart.contactlist.service.AttachmentFileService;
 import edu.itechart.contactlist.service.AttachmentService;
 import edu.itechart.contactlist.service.ServiceException;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 public class DownloadAttachmentCommand implements Command {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DownloadAttachmentCommand.class);
     private static final String REQUEST_PARAM_NAME = "id";
 
     @Override
@@ -33,8 +36,6 @@ public class DownloadAttachmentCommand implements Command {
                     while (fileInputStream.read(buffer) != -1) {
                         outputStream.write(buffer);
                     }
-                } catch (FileNotFoundException e) {
-                    throw new CommandException(e);
                 } catch (IOException e) {
                     throw new CommandException(e);
                 } finally {
@@ -46,7 +47,7 @@ public class DownloadAttachmentCommand implements Command {
                             outputStream.close();
                         }
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        LOGGER.error("Can't close stream");
                     }
                 }
             }

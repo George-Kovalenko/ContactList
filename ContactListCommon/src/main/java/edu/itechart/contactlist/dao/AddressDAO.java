@@ -3,6 +3,7 @@ package edu.itechart.contactlist.dao;
 import edu.itechart.contactlist.entity.Address;
 import edu.itechart.contactlist.entity.factory.AddressFactory;
 import edu.itechart.contactlist.util.StatementUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,7 +34,7 @@ public class AddressDAO extends AbstractDAO<Address> {
             }
             return address;
         } catch (SQLException e) {
-            throw new DAOException("Error in AddressDAO.findById()", e);
+            throw new DAOException(String.format("Can't get address by id = %d", id), e);
         }
     }
 
@@ -44,7 +45,7 @@ public class AddressDAO extends AbstractDAO<Address> {
             preparedStatement.setLong(7, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error in AddressDAO.update()", e);
+            throw new DAOException(String.format("Can't update %s by id = %d", address, id), e);
         }
     }
 
@@ -60,7 +61,7 @@ public class AddressDAO extends AbstractDAO<Address> {
             preparedStatement.setLong(7, address.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error in AddressDAO.insert()", e);
+            throw new DAOException(String.format("Can't insert %s", address), e);
         }
     }
 
@@ -70,7 +71,7 @@ public class AddressDAO extends AbstractDAO<Address> {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error in AddressDAO.delete()", e);
+            throw new DAOException(String.format("Can't delete address by id = %d", id), e);
         }
     }
 

@@ -20,7 +20,7 @@ public class GetPhotoCommand implements Command {
         } catch (ServiceException e) {
             throw new CommandException(e);
         } catch (IOException e) {
-            throw new CommandException("Couldn't write content to response", e);
+            throw new CommandException(String.format("Can't write content of file %s to response", fileName), e);
         }
         return StringUtils.EMPTY;
     }

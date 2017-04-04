@@ -20,9 +20,9 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
         super(connection);
     }
 
-    public ArrayList<Attachment> findByContactId(long id) throws DAOException {
+    public ArrayList<Attachment> findByContactId(long contactId) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_CONTACT_ID)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setLong(1, contactId);
             ResultSet resultSet = preparedStatement.executeQuery();
             ArrayList<Attachment> attachments = new ArrayList<>();
             AttachmentFactory attachmentFactory = new AttachmentFactory();
@@ -32,7 +32,7 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
             }
             return attachments;
         } catch (SQLException e) {
-            throw new DAOException("Error in AttachmentDAO.findByContactId()", e);
+            throw new DAOException(String.format("Can't get attachment by contactId = %d", contactId), e);
         }
     }
 
@@ -49,10 +49,10 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
             if (resultSet.next()) {
                 attachment.setId(resultSet.getLong(1));
             } else {
-                throw new DAOException("Inserting attachment failed, no ID obtained");
+                throw new DAOException(String.format("Can't insert %s, no ID obtained", attachment));
             }
         } catch (SQLException e) {
-            throw new DAOException("Error in AttachmentDAO.insert()", e);
+            throw new DAOException(String.format("Can't insert %s", attachment), e);
         }
     }
 
@@ -64,7 +64,7 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
             preparedStatement.setLong(3, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error in AttachmentDAO.update()", e);
+            throw new DAOException(String.format("Can't update %s by id = %d", attachment, id), e);
         }
     }
 
@@ -74,7 +74,7 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error in AttachmentDAO.delete()", e);
+            throw new DAOException(String.format("Can't delete attachment by id = %d", id), e);
         }
     }
 
@@ -94,7 +94,7 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
             }
             return attachment;
         } catch (SQLException e) {
-            throw new DAOException("Error in AttachmentDAO.findById()", e);
+            throw new DAOException(String.format("Can't get attachment by id = %d", id), e);
         }
     }
 
@@ -103,7 +103,7 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
             preparedStatement.setLong(1, contactId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error in AttachmentDAO.delete()", e);
+            throw new DAOException(String.format("Can't delete attachment by contactId = %d", contactId), e);
         }
     }
 }

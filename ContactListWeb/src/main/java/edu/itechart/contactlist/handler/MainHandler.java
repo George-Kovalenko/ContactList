@@ -7,6 +7,8 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainHandler.class);
+
     public void handleInputFields(HttpServletRequest request) {
         DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
         ServletFileUpload servletFileUpload = new ServletFileUpload(diskFileItemFactory);
@@ -31,7 +35,11 @@ public class MainHandler {
                 if (item.isFormField()) {
                     FieldHandler fieldHandler = factory.getFieldHandler(item.getFieldName());
                     if (fieldHandler != null) {
-                        fieldHandler.handleInputField(contact, item.getString("UTF-8"));
+                        try {
+                            fieldHandler.handleInputField(contact, item.getString("UTF-8"));
+                        } catch (FieldHandlerException | UnsupportedEncodingException e) {
+                            LOGGER.error("Can't handle field {}", item.getFieldName(), e);
+                        }
                     }
                 } else if (StringUtils.startsWith(item.getFieldName(), "new-attachment-input-")) {
                     attachmentForUpload.add(item);
@@ -43,8 +51,8 @@ public class MainHandler {
             }
             request.setAttribute("contact", contact);
             request.setAttribute("attachmentsForUpload", attachmentForUpload);
-        } catch (FieldHandlerException | FileUploadException | UnsupportedEncodingException e) {
-            e.printStackTrace();
+        } catch (FileUploadException e) {
+            LOGGER.error("Can't parse request", e);
         }
     }
 }

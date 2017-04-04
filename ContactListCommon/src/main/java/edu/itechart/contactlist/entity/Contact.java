@@ -161,4 +161,23 @@ public class Contact extends Entity {
     public void setAttachments(ArrayList<Attachment> attachments) {
         this.attachments = attachments;
     }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", birthDate=" + birthDate +
+                ", nationality='" + nationality + '\'' +
+                ", gender='" + gender + '\'' +
+                ", maritalStatus=" + maritalStatus +
+                ", website='" + website + '\'' +
+                ", email='" + email + '\'' +
+                ", job='" + job + '\'' +
+                ", address=" + address +
+                ", phones=" + phones +
+                ", attachments=" + attachments +
+                "} " + super.toString();
+    }
 }

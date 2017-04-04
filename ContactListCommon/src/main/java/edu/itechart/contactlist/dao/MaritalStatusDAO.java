@@ -27,7 +27,7 @@ public class MaritalStatusDAO extends AbstractDAO<MaritalStatus> {
             }
             return maritalStatuses;
         } catch (SQLException e) {
-            throw new DAOException("Error in MaritalStatusDAO.findAll()", e);
+            throw new DAOException("Can't get all marital statuses", e);
         }
     }
 

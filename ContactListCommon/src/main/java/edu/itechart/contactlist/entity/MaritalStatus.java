@@ -18,4 +18,11 @@ public class MaritalStatus extends Entity {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "MaritalStatus{" +
+                "name='" + name + '\'' +
+                "} " + super.toString();
+    }
 }

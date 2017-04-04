@@ -4,19 +4,17 @@ import edu.itechart.contactlist.commands.Command;
 import edu.itechart.contactlist.commands.CommandException;
 import edu.itechart.contactlist.commands.CommandFactory;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 public class Controller extends HttpServlet {
-    private static final Logger LOGGER = LogManager.getLogger(Controller.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
 
     public Controller() {
     }
@@ -41,7 +39,7 @@ public class Controller extends HttpServlet {
                 getServletContext().getRequestDispatcher(page).forward(req, resp);
             }
         } catch (CommandException e) {
-            e.printStackTrace();
+            LOGGER.error("Error when process request", e);
         }
     }
 }

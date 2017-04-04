@@ -23,9 +23,9 @@ public class PhoneDAO extends AbstractDAO<Phone> {
         super(connection);
     }
 
-    public ArrayList<Phone> findByContactId(long id) throws DAOException {
+    public ArrayList<Phone> findByContactId(long contactId) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_CONTACT_ID)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setLong(1, contactId);
             ResultSet resultSet = preparedStatement.executeQuery();
             ArrayList<Phone> phones = new ArrayList<>();
             PhoneFactory phoneFactory = new PhoneFactory();
@@ -35,7 +35,7 @@ public class PhoneDAO extends AbstractDAO<Phone> {
             }
             return phones;
         } catch (SQLException e) {
-            throw new DAOException("Error in PhoneDAO.findByContactId", e);
+            throw new DAOException(String.format("Can't get attachment by contactId = %d", contactId), e);
         }
     }
 
@@ -46,7 +46,7 @@ public class PhoneDAO extends AbstractDAO<Phone> {
             StatementUtils.setLongValue(preparedStatement, 6, phone.getContactID());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error in PhoneDAO.insert()", e);
+            throw new DAOException(String.format("Can't insert %s", phone), e);
         }
     }
 
@@ -57,7 +57,7 @@ public class PhoneDAO extends AbstractDAO<Phone> {
             preparedStatement.setLong(6, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error in PhoneDAO.update()", e);
+            throw new DAOException(String.format("Can't update %s by id = %d", phone, id), e);
         }
     }
 
@@ -67,7 +67,7 @@ public class PhoneDAO extends AbstractDAO<Phone> {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error in PhoneDAO.delete()", e);
+            throw new DAOException(String.format("Can't delete phone by id = %d", id), e);
         }
     }
 
@@ -86,7 +86,7 @@ public class PhoneDAO extends AbstractDAO<Phone> {
             preparedStatement.setLong(1, contactId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error in PhoneDAO.deleteByContactId()", e);
+            throw new DAOException(String.format("Can't delete phone by contactId = %d", contactId), e);
         }
     }
 

@@ -45,7 +45,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
             }
             return contacts;
         } catch (SQLException e) {
-            throw new DAOException("Error in ContactDAO.findAll()", e);
+            throw new DAOException("Can't get all contacts", e);
         }
     }
 
@@ -60,7 +60,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
             }
             return contact;
         } catch (SQLException e) {
-            throw new DAOException("Error in ContactDAO.findById()", e);
+            throw new DAOException(String.format("Can't find contact by id = %d", id), e);
         }
     }
 
@@ -71,7 +71,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
             preparedStatement.setLong(11, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error in ContactDAO.update()", e);
+            throw new DAOException(String.format("Can't find update %s by id = %d", contact, id), e);
         }
     }
 
@@ -82,7 +82,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DAOException("Error in ContactDAO.insert()", e);
+            throw new DAOException(String.format("Can't insert %s", contact), e);
         }
     }
 
@@ -92,7 +92,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error in ContactDAO.delete()", e);
+            throw new DAOException(String.format("Can't delete contact by id = %d", id), e);
         }
     }
 
@@ -105,7 +105,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
             }
             return id;
         } catch (SQLException e) {
-            throw new DAOException("Error in ContactDAO.getLastId()", e);
+            throw new DAOException("Can't get last id", e);
         }
     }
 
@@ -124,7 +124,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
             }
             return contacts;
         } catch (SQLException e) {
-            throw new DAOException("Error in ContactDAO.findByParameters()", e);
+            throw new DAOException(String.format("Can't find contact by %s", searchParameters), e);
         }
     }
 
@@ -137,7 +137,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
             }
             return count;
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Can't get contact count from table 'contacts'" ,e);
         }
     }
 
@@ -154,7 +154,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
             }
             return contacts;
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException(String.format("Can't get contacts by offset = %d limit = %d", offset, limit), e);
         }
     }
 
@@ -169,7 +169,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
             }
             return contacts;
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Can't get contacts by birth date", e);
         }
     }
 

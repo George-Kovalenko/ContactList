@@ -28,7 +28,7 @@ public class AttachmentFileService {
             try {
                 writeFileItem(path, fileItem);
             } catch (Exception e) {
-                throw new ServiceException("Couldn't write attachment " + fileItem.getName(), e);
+                throw new ServiceException(String.format("Can't write attachment %s", fileItem.getName()) , e);
             }
         }
     }
@@ -39,7 +39,7 @@ public class AttachmentFileService {
         try {
             writeFileItem(path, photo);
         } catch (Exception e) {
-            throw new ServiceException("Couldn't write photo " + photo.getName(), e);
+            throw new ServiceException(String.format("Can't write photo %s", photo.getName()) , e);
         }
     }
 
@@ -66,7 +66,7 @@ public class AttachmentFileService {
             try {
                 content = Files.readAllBytes(file.toPath());
             } catch (IOException e) {
-                throw new ServiceException("Couldn't read file " + file.getAbsolutePath(), e);
+                throw new ServiceException(String.format("Can't read file %s", file.getAbsolutePath()) , e);
             }
         }
         return content;

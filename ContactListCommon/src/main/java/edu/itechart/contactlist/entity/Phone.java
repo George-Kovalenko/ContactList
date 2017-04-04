@@ -113,4 +113,16 @@ public class Phone extends Entity {
         result = 31 * result + (int) (getContactID() ^ (getContactID() >>> 32));
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "countryCode='" + countryCode + '\'' +
+                ", operatorCode='" + operatorCode + '\'' +
+                ", number='" + number + '\'' +
+                ", phoneType=" + phoneType +
+                ", comment='" + comment + '\'' +
+                ", contactID=" + contactID +
+                "} " + super.toString();
+    }
 }

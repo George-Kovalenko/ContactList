@@ -132,4 +132,24 @@ public class SearchParameters {
     public void setPostcode(String postcode) {
         this.postcode = postcode;
     }
+
+    @Override
+    public String toString() {
+        return "SearchParameters{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", birthDate=" + birthDate +
+                ", dateSearchType=" + dateSearchType +
+                ", nationality='" + nationality + '\'' +
+                ", gender='" + gender + '\'' +
+                ", maritalStatus=" + maritalStatus +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", houseNumber='" + houseNumber + '\'' +
+                ", flatNumber='" + flatNumber + '\'' +
+                ", postcode='" + postcode + '\'' +
+                '}';
+    }
 }

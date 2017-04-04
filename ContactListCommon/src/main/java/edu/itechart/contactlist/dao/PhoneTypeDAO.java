@@ -27,7 +27,7 @@ public class PhoneTypeDAO extends AbstractDAO<PhoneType> {
             }
             return phoneTypes;
         } catch (SQLException e) {
-            throw new DAOException("Error in PhoneTypeDAO.findAll()", e);
+            throw new DAOException("Can't get all phone types", e);
         }
     }
 

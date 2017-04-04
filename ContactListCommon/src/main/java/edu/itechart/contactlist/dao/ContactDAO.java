@@ -71,7 +71,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
             preparedStatement.setLong(11, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException(String.format("Can't find update %s by id = %d", contact, id), e);
+            throw new DAOException(String.format("Can't update %s by id = %d", contact, id), e);
         }
     }
 

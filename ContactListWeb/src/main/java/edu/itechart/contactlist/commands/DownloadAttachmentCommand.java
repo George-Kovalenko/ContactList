@@ -22,6 +22,7 @@ public class DownloadAttachmentCommand implements Command {
         try {
             Attachment attachment = AttachmentService.findById(id);
             String path = AttachmentFileService.getPathToAttachment(attachment.getContactID(), attachment.getId());
+            LOGGER.info("Download attachment with id = {}, path = {}", id, path);
             if (StringUtils.isNotEmpty(path)) {
                 File file = new File(path);
                 FileInputStream fileInputStream = null;

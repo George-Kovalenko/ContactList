@@ -1,5 +1,8 @@
 package edu.itechart.contactlist.util.email;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -7,6 +10,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class EmailManager {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailManager.class);
     private static String senderEmail =
             ResourceBundle.getBundle("emailconfig").getObject("sender_name").toString();
     private static String senderPassword =
@@ -29,6 +33,7 @@ public class EmailManager {
     }
 
     public void sendMail(String email, String subject, String text) throws MessagingException {
+        LOGGER.info("Send email to {} with subject {} and text {}", email, subject, text);
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(senderEmail));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));

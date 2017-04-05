@@ -7,12 +7,16 @@ import edu.itechart.contactlist.dto.SearchParameters;
 import edu.itechart.contactlist.entity.*;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ContactService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContactService.class);
+
     public static Contact findById(long id) throws ServiceException {
         try (Connection connection = ConnectionPool.getInstance().getConnection()) {
             Contact contact = new ContactDAO(connection).findById(id);
@@ -96,8 +100,10 @@ public class ContactService {
                 ArrayList<Attachment> attachmentsForInsert = updateEntityList(contact.getAttachments(), oldAttachments,
                         attachmentDAO);
                 AttachmentFileService.writeAttachments(attachmentsForInsert, fileItems);
-                oldAttachments.forEach(item -> AttachmentFileService.removeFile(item.getContactID(), item.getId(),
-                        AttachmentFileService.PATH_TO_ATTACHMENTS));
+                for (Attachment oldAttach : oldAttachments) {
+                    AttachmentFileService.removeFile(oldAttach.getContactID(), oldAttach.getId(),
+                            AttachmentFileService.PATH_TO_ATTACHMENTS);
+                }
                 if (photo.getSize() != 0) {
                     AttachmentFileService.writePhoto(id, photo);
                 } else if (StringUtils.equals(photo.getFieldName(), "photo-field-delete")) {
@@ -189,15 +195,18 @@ public class ContactService {
                 entitiesIndexes.add(entity.getId());
             }
         }
+        LOGGER.debug("INSERT: {}", entitiesForInsert);
         list.removeAll(entitiesForInsert);
         ArrayList<T> entitiesForUpdate = new ArrayList<>(list);
         entitiesForUpdate.removeAll(oldList);
+        LOGGER.debug("UPDATE: {}", entitiesForUpdate);
         ArrayList<Long> indexesForDelete = new ArrayList<>();
         for (T entity : oldList) {
             indexesForDelete.add(entity.getId());
         }
         indexesForDelete.removeIf(entitiesIndexes::contains);
         oldList.removeIf(item -> !indexesForDelete.contains(item.getId()));
+        LOGGER.debug("DELETE: {}", oldList);
         for (T entity : entitiesForInsert) {
             dao.insert(entity);
         }

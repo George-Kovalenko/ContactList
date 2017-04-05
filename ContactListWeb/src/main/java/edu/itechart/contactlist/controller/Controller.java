@@ -34,8 +34,10 @@ public class Controller extends HttpServlet {
             Command command = CommandFactory.createCommand(req);
             String page = command.execute(req, resp);
             if (command.needsRedirect()) {
+                LOGGER.info("Redirect on page {}", page);
                 resp.sendRedirect(page);
             } else if (StringUtils.isNotEmpty(page)) {
+                LOGGER.info("Forward on page {}", page);
                 getServletContext().getRequestDispatcher(page).forward(req, resp);
             }
         } catch (CommandException e) {

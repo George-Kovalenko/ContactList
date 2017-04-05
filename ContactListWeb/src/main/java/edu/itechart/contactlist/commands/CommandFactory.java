@@ -1,5 +1,6 @@
 package edu.itechart.contactlist.commands;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,16 +12,16 @@ public class CommandFactory {
 
     public static Command createCommand(HttpServletRequest request) throws CommandException {
         String command = request.getParameter(PARAM_NAME);
-        if (command != null) {
+        if (StringUtils.isNotEmpty(command)) {
             try {
                 command = command.toUpperCase();
-                LOGGER.info("Command {}", command);
+                LOGGER.info("Returned command {}", command);
                 return CommandEnum.valueOf(command).getCommand();
             } catch (IllegalArgumentException e) {
                 throw new CommandException(e);
             }
         } else {
-            LOGGER.info("Default command {}", CommandEnum.SHOW_CONTACT_LIST);
+            LOGGER.info("Returned default command {}", CommandEnum.SHOW_CONTACT_LIST);
             return new ShowContactListCommand();
         }
     }

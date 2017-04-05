@@ -7,6 +7,8 @@ import edu.itechart.contactlist.service.ContactService;
 import edu.itechart.contactlist.service.ServiceException;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class SearchContactsCommand implements Command {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SearchContactsCommand.class);
     private static final String URL_CONTACT_LIST = "/contact_list.jsp";
 
     @Override
@@ -40,6 +43,7 @@ public class SearchContactsCommand implements Command {
         searchParameters.setHouseNumber(request.getParameter("house"));
         searchParameters.setFlatNumber(request.getParameter("flat"));
         searchParameters.setPostcode(request.getParameter("postcode"));
+        LOGGER.info("Search contacts with params {}", searchParameters);
         try {
             ArrayList<Contact> contacts = ContactService.findAllByParameters(searchParameters);
             request.setAttribute("contacts", contacts);
@@ -60,7 +64,7 @@ public class SearchContactsCommand implements Command {
             dateTime = dateTime.withYear(year);
             return new Date(dateTime.getMillis());
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            LOGGER.error("Can't parse date from request {}", e);
         }
         return null;
     }

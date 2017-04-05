@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8">
     <title>Контакты</title>
+    <link rel="stylesheet" href="css/popup-window-style.css">
     <link rel="stylesheet" href="css/table-style.css">
     <link rel="stylesheet" href="css/nav-button-style.css">
 </head>
@@ -128,6 +129,17 @@
                 </tbody>
             </table>
         </form>
+    </div>
+    <div class="popup-window" id="error-message-popup">
+        <div class="popup-content">
+            <div class="popup-title">
+                Некорректный ввод
+            </div>
+            <div id="error-message"></div>
+            <div class="popup-buttons">
+                <div class="button-style" id="submit-error-message-button">Принять</div>
+            </div>
+        </div>
     </div>
     <script src="js/contact-list-script.js"></script>
 </body>

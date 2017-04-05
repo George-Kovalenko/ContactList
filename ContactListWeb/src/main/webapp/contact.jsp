@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="css/table-style.css">
     <link rel="stylesheet" href="css/contact-style.css">
     <link rel="stylesheet" href="css/nav-button-style.css">
+    <link rel="stylesheet" href="css/popup-window-style.css">
 </head>
 <body>
     <div class="contact-container">

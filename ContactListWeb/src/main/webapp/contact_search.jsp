@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Поиск контактов</title>
     <link rel="stylesheet" href="css/contact-style.css">
+    <link rel="stylesheet" href="css/popup-window-style.css">
 </head>
 <body>
     <div class="contact-container">

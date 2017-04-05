@@ -50,18 +50,24 @@ addPhoneButton.onclick = function () {
 editPhoneButton.onclick = function () {
     isPhoneEdit = true;
     var checkedPhones = getCheckedItems('check-phone');
-    if (checkedPhones.length > 0) {
+    var checkedNewPhones = getCheckedItems('check-new-phone');
+    if (checkedPhones.length === 0 && checkedNewPhones.length === 0) {
+        addErrorMessage('Телефон для редактирования не выбран.');
+        openModalWindow(errorMessagePopup);
+        return;
+    }
+    if (checkedPhones.length === 1 && checkedNewPhones.length === 0) {
         editPhoneId = checkedPhones[0];
         appendPhonePopupFields(editPhoneId, '');
         openModalWindow(phonePopup);
+    } else if (checkedPhones.length === 0 && checkedNewPhones.length === 1) {
+        isNewPhoneEdit = true;
+        editPhoneId = checkedNewPhones[0];
+        appendPhonePopupFields(editPhoneId, 'new-');
+        openModalWindow(phonePopup);
     } else {
-        var checkedNewPhones = getCheckedItems('check-new-phone');
-        if (checkedNewPhones.length > 0) {
-            isNewPhoneEdit = true;
-            editPhoneId = checkedNewPhones[0];
-            appendPhonePopupFields(editPhoneId, 'new-');
-            openModalWindow(phonePopup);
-        }
+        addErrorMessage('Необходимо выбрать только один телефон для редактирования.');
+        openModalWindow(errorMessagePopup);
     }
 };
 
@@ -76,8 +82,13 @@ function appendPhonePopupFields(phoneId, prefix) {
 
 deletePhoneButton.onclick = function () {
     var checkedPhones = getCheckedItems('check-phone');
-    deleteItemsFromPage(checkedPhones, 'phone-');
     var checkedNewPhones = getCheckedItems('check-new-phone');
+    if (checkedPhones.length === 0 && checkedNewPhones.length === 0) {
+        addErrorMessage('Телефоны для удаления не выбраны.');
+        openModalWindow(errorMessagePopup);
+        return;
+    }
+    deleteItemsFromPage(checkedPhones, 'phone-');
     deleteItemsFromPage(checkedNewPhones, 'new-phone-');
 };
 
@@ -300,28 +311,39 @@ addAttachmentButton.onclick = function () {
 
 deleteAttachmentButton.onclick = function () {
     var checkedAttachments = getCheckedItems('check-attachment');
+    var checkedNewAttachments = getCheckedItems('check-new-attachment');
+    if (checkedAttachments.length === 0 && checkedNewAttachments.length === 0) {
+        addErrorMessage('Файлы для удаления не выбраны.');
+        openModalWindow(errorMessagePopup);
+        return;
+    }
     deleteItemsFromPage(checkedAttachments, 'attachment-');
-    var newCheckedAttachments = getCheckedItems('check-new-attachment');
-    deleteItemsFromPage(newCheckedAttachments, 'new-attachment-');
-    deleteItemsFromPage(newCheckedAttachments, 'new-attachment-input-');
+    deleteItemsFromPage(checkedNewAttachments, 'new-attachment-');
+    deleteItemsFromPage(checkedNewAttachments, 'new-attachment-input-');
 };
 
 editAttachmentButton.onclick = function () {
     isAttachmentEdit = true;
     document.getElementById('file-path').value = '';
     var checkedAttachments = getCheckedItems('check-attachment');
-    if (checkedAttachments.length > 0) {
+    var checkedNewAttachments = getCheckedItems('check-new-attachment');
+    if (checkedAttachments.length === 0 && checkedNewAttachments.length === 0) {
+        addErrorMessage('Файл для редактирования не выбран.');
+        openModalWindow(errorMessagePopup);
+        return;
+    }
+    if (checkedAttachments.length === 1 && checkedNewAttachments.length === 0) {
         editAttachmentId = checkedAttachments[0];
         appendAttachmentPopupFields(editAttachmentId, '');
         openModalWindow(attachmentPopup);
+    } else if (checkedAttachments.length === 0 && checkedNewAttachments.length === 1) {
+        isNewAttachmentEdit = true;
+        editAttachmentId = checkedNewAttachments[0];
+        appendAttachmentPopupFields(editAttachmentId, 'new-');
+        openModalWindow(attachmentPopup);
     } else {
-        var checkedNewAttachments = getCheckedItems('check-new-attachment');
-        if (checkedNewAttachments.length > 0) {
-            isNewAttachmentEdit = true;
-            editAttachmentId = checkedNewAttachments[0];
-            appendAttachmentPopupFields(editAttachmentId, 'new-');
-            openModalWindow(attachmentPopup);
-        }
+        addErrorMessage('Необходимо выбрать только один файл для редактирования.');
+        openModalWindow(errorMessagePopup);
     }
 };
 

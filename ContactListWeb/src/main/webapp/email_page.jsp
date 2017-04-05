@@ -6,6 +6,7 @@
     <title>Отправка Email</title>
     <link rel="stylesheet" type="text/css" href="css/contact-style.css">
     <link rel="stylesheet" type="text/css" href="css/email-page-style.css">
+    <link rel="stylesheet" href="css/popup-window-style.css">
 </head>
 <body>
     <div class="email-container">

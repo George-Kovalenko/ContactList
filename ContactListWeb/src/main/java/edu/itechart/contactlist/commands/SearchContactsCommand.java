@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class SearchContactsCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchContactsCommand.class);
-    private static final String URL_CONTACT_LIST = "/contact_list.jsp";
+    private static final String URL_CONTACT_LIST = "contact_list.jsp";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

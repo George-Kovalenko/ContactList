@@ -17,7 +17,7 @@ public class CreateContactCommand implements Command {
     private static final String REQUEST_ATTR_CONTACT = "contact";
     private static final String REQUEST_ATTR_ATTACHMENTS = "attachmentsForUpload";
     private static final String REQUEST_ATTR_PHOTO = "photoForUpload";
-    private static final String URL_CONTACT_LIST = "/controller?command=show_contact_list";
+    private static final String URL_CONTACT_LIST = "controller?command=show_contact_list";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

@@ -17,7 +17,7 @@ public class ShowEmailPageCommand implements Command {
     private static final String REQUEST_PARAM_NAME = "check-contact";
     private static final String REQUEST_ATTR_RECIPIENTS = "recipients";
     private static final String REQUEST_ATTR_TEMPLATES = "templates";
-    private static final String URL_EMAIL_PAGE = "/email_page.jsp";
+    private static final String URL_EMAIL_PAGE = "email_page.jsp";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

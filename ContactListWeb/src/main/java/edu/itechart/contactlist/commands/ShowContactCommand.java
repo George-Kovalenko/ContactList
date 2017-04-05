@@ -24,7 +24,7 @@ public class ShowContactCommand implements Command {
     private static final String REQUEST_ATTR_YEAR = "year";
     private static final String REQUEST_ATTR_MONTH = "month";
     private static final String REQUEST_ATTR_DAY = "day";
-    private static final String URL_CONTACT = "/contact.jsp";
+    private static final String URL_CONTACT = "contact.jsp";
     private static final String REDIRECT_URL = "controller";
     private boolean needsRedirect;
 
@@ -33,7 +33,11 @@ public class ShowContactCommand implements Command {
         try {
             String stringId = request.getParameter(REQUEST_PARAM_NAME);
             LOGGER.info("Show contact with id = {}", stringId);
-            if (StringUtils.isNotEmpty(stringId) && Validator.isNumber(stringId)) {
+            if (StringUtils.isNotEmpty(stringId)) {
+                if (!Validator.isNumber(stringId)) {
+                    needsRedirect = true;
+                    return REDIRECT_URL;
+                }
                 long id = Long.parseLong(request.getParameter(REQUEST_PARAM_NAME));
                 Contact contact = ContactService.findById(id);
                 if (contact.getId() == 0) {
@@ -49,14 +53,11 @@ public class ShowContactCommand implements Command {
                 String pathToPhoto = AttachmentFileService.getPathToPhoto(id);
                 request.setAttribute(REQUEST_ATTR_CONTACTS, contact);
                 request.setAttribute(REQUEST_ATTR_PHOTO, pathToPhoto);
-                ArrayList<MaritalStatus> maritalStatuses = MaritalStatusService.findAll();
-                ArrayList<PhoneType> phoneTypes = PhoneTypeService.findAll();
-                request.setAttribute(REQUEST_ATTR_MARITAL_STATUSES, maritalStatuses);
-                request.setAttribute(REQUEST_ATTR_PHONE_TYPES, phoneTypes);
-            } else {
-                needsRedirect = true;
-                return REDIRECT_URL;
             }
+            ArrayList<MaritalStatus> maritalStatuses = MaritalStatusService.findAll();
+            ArrayList<PhoneType> phoneTypes = PhoneTypeService.findAll();
+            request.setAttribute(REQUEST_ATTR_MARITAL_STATUSES, maritalStatuses);
+            request.setAttribute(REQUEST_ATTR_PHONE_TYPES, phoneTypes);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

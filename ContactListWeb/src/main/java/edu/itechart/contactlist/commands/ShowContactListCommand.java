@@ -17,7 +17,7 @@ public class ShowContactListCommand implements Command {
     private static final String REQUEST_PARAM_PAGE = "page";
     private static final String REQUEST_ATTR_CONTACTS = "contacts";
     private static final String REQUEST_ATTR_PAGINATION = "pagination";
-    private static final String URL_CONTACT_LIST = "/contact_list.jsp";
+    private static final String URL_CONTACT_LIST = "contact_list.jsp";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

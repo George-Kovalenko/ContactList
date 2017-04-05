@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ShowContactSearchPageCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShowContactSearchPageCommand.class);
     private static final String REQUEST_ATTR__MARITAL_STATUSES = "maritalStatuses";
-    private static final String URL_CONTACT_SEARCH = "/contact_search.jsp";
+    private static final String URL_CONTACT_SEARCH = "contact_search.jsp";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

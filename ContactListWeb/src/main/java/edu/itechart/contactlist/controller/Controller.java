@@ -38,7 +38,7 @@ public class Controller extends HttpServlet {
                 resp.sendRedirect(page);
             } else if (StringUtils.isNotEmpty(page)) {
                 LOGGER.info("Forward on page {}", page);
-                getServletContext().getRequestDispatcher(page).forward(req, resp);
+                req.getRequestDispatcher(page).forward(req, resp);
             }
         } catch (CommandException e) {
             LOGGER.error("Error when process request", e);

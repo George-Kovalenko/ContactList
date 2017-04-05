@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DeleteContactCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(DeleteContactCommand.class);
     private static final String REQUEST_PARAM_NAME = "check-contact";
-    private static final String URL_CONTACT_LIST = "/controller";
+    private static final String URL_CONTACT_LIST = "controller";
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

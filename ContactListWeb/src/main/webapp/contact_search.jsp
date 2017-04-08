@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="css/popup-window-style.css">
 </head>
 <body>
-    <div class="contact-container">
+    <div class="search-container">
         <form method="post" id="contact-search" action="controller?command=search_contacts">
-            <div class="contact-info">
+            <div class="contact-info search-info">
                 <h3>Основная информация</h3>
                 <label>
                     Фамилия

@@ -18,14 +18,16 @@ li {
 }
 
 .email-container {
-    width: 100%;
-    margin-left: 10px;
-    margin-bottom: 20px;
+    width: 40%;
+    position: relative;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+    border: 1px solid #EDF1FD;
+    border-radius: 5px;
 }
 
 .email-info {
-    width: 40%;
-    margin: 0 auto;
+    margin: 5% 5% 0 5%;
 }
 
 label {
@@ -35,12 +37,12 @@ label {
 
 #email-text, #email-subject, #email-template {
     display: block;
-    width: 90%;
+    width: 100%;
     float: none;
     margin-top: 5px;
     margin-bottom: 10px;
 }
 
 #send-email-button {
-    margin: 20px 20px 10px 0;
+    margin: 2% 2% 1% 0;
 }

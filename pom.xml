@@ -11,8 +11,8 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>ContactListCommon</module>
-        <module>ContactListWeb</module>
+        <module>contact-list-common</module>
+        <module>contact-list-web</module>
     </modules>
 
     <properties>

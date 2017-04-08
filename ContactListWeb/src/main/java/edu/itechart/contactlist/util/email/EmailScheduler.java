@@ -2,10 +2,13 @@ package edu.itechart.contactlist.util.email;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ResourceBundle;
 
 public class EmailScheduler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailScheduler.class);
     private Scheduler scheduler;
 
     public void init() {
@@ -23,7 +26,7 @@ public class EmailScheduler {
             scheduler.scheduleJob(sendEmailJob, sendEmailTrigger);
             scheduler.start();
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            LOGGER.error("Can't init scheduler", e);
         }
     }
 
@@ -31,7 +34,7 @@ public class EmailScheduler {
         try {
             scheduler.shutdown(false);
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            LOGGER.error("Can't shutdown scheduler", e);
         }
     }
 }

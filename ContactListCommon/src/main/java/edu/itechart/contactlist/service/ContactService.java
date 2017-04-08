@@ -72,7 +72,9 @@ public class ContactService {
                 AttachmentDAO attachmentDAO = new AttachmentDAO(connection);
                 insertEntityList(contact.getAttachments(), attachmentDAO);
                 AttachmentFileService.writeAttachments(contact.getAttachments(), fileItems);
-                AttachmentFileService.writePhoto(contact.getId(), photo);
+                if (photo.getSize() != 0) {
+                    AttachmentFileService.writePhoto(contact.getId(), photo);
+                }
                 connection.commit();
             } catch (DAOException | ServiceException e) {
                 connection.rollback();

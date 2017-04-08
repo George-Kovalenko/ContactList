@@ -36,7 +36,7 @@ public class MainHandler {
                     FieldHandler fieldHandler = factory.getFieldHandler(item.getFieldName());
                     if (fieldHandler != null) {
                         try {
-                            fieldHandler.handleInputField(contact, item.getString("UTF-8"));
+                            fieldHandler.handleInputField(contact, StringUtils.trim(item.getString("UTF-8")));
                         } catch (FieldHandlerException | UnsupportedEncodingException e) {
                             LOGGER.error("Can't handle field {}", item.getFieldName(), e);
                         }

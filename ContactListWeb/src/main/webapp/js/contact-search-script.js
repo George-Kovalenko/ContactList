@@ -1,37 +1,3 @@
-var errorMessagePopup = document.getElementById('error-message-popup');
-var errorMessage = document.getElementById('error-message');
-var submitErrorMessageButton = document.getElementById('submit-error-message-button');
-
-function openModalWindow(modalWindow) {
-    modalWindow.style.display = 'block';
-}
-
-function closeModalWindow(modalWindow) {
-    modalWindow.style.display = 'none';
-}
-
-submitErrorMessageButton.onclick = function () {
-    closeModalWindow(errorMessagePopup);
-    errorMessage.innerHTML = null;
-};
-
-function addErrorMessage(message) {
-    var newError = document.createElement('p');
-    newError.innerHTML = message;
-    errorMessage.appendChild(newError);
-}
-
-var searchContactButton = document.getElementById('search-contact-button');
-var contactSearchForm = document.getElementById('contact-search');
-
-searchContactButton.onclick = function () {
-    if (checkInputFieldsBeforeSubmit()) {
-        openModalWindow(errorMessagePopup);
-        return;
-    }
-    contactSearchForm.submit();
-};
-
 var firstName = document.getElementById('first-name');
 firstName.onkeyup = function () {
     if (checkTextInputField(this, 30, containsLettersHyphen.name) === '') {
@@ -332,6 +298,44 @@ function highlightInput(inputElement, isCorrect) {
         inputElement.style.borderColor = 'red';
     }
 }
+
+var errorMessagePopup = document.getElementById('error-message-popup');
+var errorMessage = document.getElementById('error-message');
+var submitErrorMessageButton = document.getElementById('submit-error-message-button');
+
+function openModalWindow(modalWindow) {
+    modalWindow.style.display = 'block';
+}
+
+function closeModalWindow(modalWindow) {
+    modalWindow.style.display = 'none';
+}
+
+submitErrorMessageButton.onclick = function () {
+    closeModalWindow(errorMessagePopup);
+    errorMessage.innerHTML = null;
+};
+
+function addErrorMessage(message) {
+    var newError = document.createElement('p');
+    newError.innerHTML = message;
+    errorMessage.appendChild(newError);
+}
+
+var searchContactButton = document.getElementById('search-contact-button');
+var contactSearchForm = document.getElementById('contact-search');
+
+searchContactButton.onclick = function () {
+    if (checkInputFieldsBeforeSubmit()) {
+        openModalWindow(errorMessagePopup);
+        return;
+    }
+    var inputs = document.getElementsByTagName('input["text"]');
+    for (var i = 0; i < inputs.length; i++) {
+        inputs[i].value = inputs[i].value.trim();
+    }
+    contactSearchForm.submit();
+};
 
 document.getElementById('back-button').onclick = function () {
     window.location.href = 'controller?command=show_contact_list&page=1';

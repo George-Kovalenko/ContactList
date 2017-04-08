@@ -8,9 +8,6 @@ var Phone = function () {
     this.contactId = 0;
 };
 
-var contactForm = document.getElementById('contact-form');
-var saveContactButton = document.getElementById('save-contact-button');
-
 var addPhoneButton = document.getElementById('add-phone-button');
 var editPhoneButton = document.getElementById('edit-phone-button');
 var deletePhoneButton = document.getElementById('delete-phone-button');
@@ -28,14 +25,6 @@ var isPhoneEdit = false;
 var isNewPhoneEdit = false;
 var newPhoneId = 0;
 var editPhoneId = 0;
-
-function openModalWindow(modalWindow) {
-    modalWindow.style.display = 'block';
-}
-
-function closeModalWindow(modalWindow) {
-    modalWindow.style.display = 'none';
-}
 
 addPhoneButton.onclick = function () {
     isPhoneEdit = false;
@@ -109,18 +98,6 @@ submitPhoneButton.onclick = function () {
     closeModalWindow(phonePopup);
 };
 
-saveContactButton.onclick = function () {
-    if (checkInputFieldsBeforeSubmit()) {
-        openModalWindow(errorMessagePopup);
-        return;
-    }
-    fillPhoneList('');
-    fillPhoneList('new-');
-    fillAttachmentList('');
-    fillAttachmentList('new-');
-    contactForm.submit();
-};
-
 function fillPhoneList(prefix) {
     var phones = document.getElementsByClassName(prefix + 'phone');
     var phoneList = [];
@@ -144,23 +121,15 @@ function fillPhoneList(prefix) {
     contactForm.appendChild(newChild);
 }
 
-function addItemsInHiddenInput(name, items) {
-    var input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = name;
-    input.value = items;
-    return input;
-}
-
 function createNewPhone() {
     newPhoneId++;
     var phone = new Phone();
     phone.id = newPhoneId;
-    phone.countryCode = countryCodeField.value;
-    phone.operatorCode = operatorCodeField.value;
-    phone.number = phoneNumberField.value;
+    phone.countryCode = countryCodeField.value.trim();
+    phone.operatorCode = operatorCodeField.value.trim();
+    phone.number = phoneNumberField.value.trim();
     phone.type = phoneTypeSelect.value;
-    phone.comment = phoneComment.value;
+    phone.comment = phoneComment.value.trim();
     var phoneBody = document.getElementById('phone-body');
     var tableRow = document.createElement('tr');
     tableRow.id = 'new-phone-' + phone.id;
@@ -197,13 +166,14 @@ function editPhone() {
         isNewPhoneEdit = false;
     }
     var numberCell = document.getElementById(prefix + 'phone-number-' + editPhoneId);
-    numberCell.innerHTML = countryCodeField.value + ' ' + operatorCodeField.value + ' ' + phoneNumberField.value;
+    numberCell.innerHTML = countryCodeField.value.trim() + ' ' + operatorCodeField.value.trim()
+        + ' ' + phoneNumberField.value.trim();
     var phoneTypeCell = document.getElementById(prefix + 'phone-type-' + editPhoneId);
     if (phoneTypeSelect.value) {
         phoneTypeCell.innerHTML = phoneTypeSelect.value;
     }
     var phoneCommentCell = document.getElementById(prefix + 'phone-comment-' + editPhoneId);
-    phoneCommentCell.innerHTML = phoneComment.value;
+    phoneCommentCell.innerHTML = phoneComment.value.trim();
 }
 
 function checkPhoneBeforeSubmit() {
@@ -258,25 +228,6 @@ phoneComment.onkeyup = function () {
         highlightInput(this, false);
     }
 };
-
-function getCheckedItems(checkName) {
-    var checkBoxes = document.getElementsByName(checkName);
-    var checked = [];
-    for (var i = 0; i < checkBoxes.length; i++) {
-        if (checkBoxes[i].checked) {
-            checked.push(checkBoxes[i].value);
-        }
-    }
-    return checked;
-}
-
-function deleteItemsFromPage(items, checkedValue) {
-    for (var i = 0; i < items.length; i++) {
-        var item = document.getElementById(checkedValue + items[i]);
-        item.parentNode.removeChild(item);
-    }
-}
-
 
 var Attachment = function () {
     this.id = 0;
@@ -370,7 +321,7 @@ function createNewAttachment() {
     attachment.id = newAttachmentId;
     var fileName = document.getElementById('file-path').value.split('\\');
     attachment.fileName = fileName[fileName.length - 1];
-    attachment.comment = attachmentComment.value;
+    attachment.comment = attachmentComment.value.trim();
     attachment.uploadDate = getDateTime();
     var attachmentBody = document.getElementById('attachment-body');
     var tableRow = document.createElement('tr');
@@ -433,9 +384,9 @@ function editAttachment() {
         isNewAttachmentEdit = false;
     }
     var attachmentNameCell = document.getElementById(prefix + 'attachment-file-name-' + editAttachmentId);
-    attachmentNameCell.innerHTML = document.getElementById('file-path').value + editFileExtension;
+    attachmentNameCell.innerHTML = document.getElementById('file-path').value.trim() + editFileExtension;
     var attachmentCommentCell = document.getElementById(prefix + 'attachment-comment-' + editAttachmentId);
-    attachmentCommentCell.innerHTML = attachmentComment.value;
+    attachmentCommentCell.innerHTML = attachmentComment.value.trim();
 }
 
 function getDateTime() {
@@ -567,21 +518,6 @@ deletePhotoButton.onclick = function () {
     contactPhoto.src = 'icons/default_contact_icon.jpeg';
     closeModalWindow(photoPopup);
 };
-
-var errorMessagePopup = document.getElementById('error-message-popup');
-var errorMessage = document.getElementById('error-message');
-var submitErrorMessageButton = document.getElementById('submit-error-message-button');
-
-submitErrorMessageButton.onclick = function () {
-    closeModalWindow(errorMessagePopup);
-    errorMessage.innerHTML = null;
-};
-
-function addErrorMessage(message) {
-    var newError = document.createElement('p');
-    newError.innerHTML = message;
-    errorMessage.appendChild(newError);
-}
 
 var firstName = document.getElementById('first-name');
 firstName.onkeyup = function () {
@@ -906,6 +842,74 @@ function highlightInput(inputElement, isCorrect) {
         inputElement.style.borderColor = 'red';
     }
 }
+
+function addItemsInHiddenInput(name, items) {
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = name;
+    input.value = items;
+    return input;
+}
+
+function getCheckedItems(checkName) {
+    var checkBoxes = document.getElementsByName(checkName);
+    var checked = [];
+    for (var i = 0; i < checkBoxes.length; i++) {
+        if (checkBoxes[i].checked) {
+            checked.push(checkBoxes[i].value);
+        }
+    }
+    return checked;
+}
+
+function deleteItemsFromPage(items, checkedValue) {
+    for (var i = 0; i < items.length; i++) {
+        var item = document.getElementById(checkedValue + items[i]);
+        item.parentNode.removeChild(item);
+    }
+}
+
+function openModalWindow(modalWindow) {
+    modalWindow.style.display = 'block';
+}
+
+function closeModalWindow(modalWindow) {
+    modalWindow.style.display = 'none';
+}
+
+var errorMessagePopup = document.getElementById('error-message-popup');
+var errorMessage = document.getElementById('error-message');
+var submitErrorMessageButton = document.getElementById('submit-error-message-button');
+
+submitErrorMessageButton.onclick = function () {
+    closeModalWindow(errorMessagePopup);
+    errorMessage.innerHTML = null;
+};
+
+function addErrorMessage(message) {
+    var newError = document.createElement('p');
+    newError.innerHTML = message;
+    errorMessage.appendChild(newError);
+}
+
+var contactForm = document.getElementById('contact-form');
+var saveContactButton = document.getElementById('save-contact-button');
+
+saveContactButton.onclick = function () {
+    if (checkInputFieldsBeforeSubmit()) {
+        openModalWindow(errorMessagePopup);
+        return;
+    }
+    fillPhoneList('');
+    fillPhoneList('new-');
+    fillAttachmentList('');
+    fillAttachmentList('new-');
+    var inputs = document.getElementsByTagName('input["text"]');
+    for (var i = 0; i < inputs.length; i++) {
+        inputs[i].value = inputs[i].value.trim();
+    }
+    contactForm.submit();
+};
 
 document.getElementById('back-button').onclick = function () {
     window.location.href = 'controller?command=show_contact_list&page=1';

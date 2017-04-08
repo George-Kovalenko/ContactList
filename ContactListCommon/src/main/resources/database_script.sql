@@ -5,12 +5,11 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema georgiy_kovalenko_contact_list
 -- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema georgiy_kovalenko_contact_list
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `georgiy_kovalenko_contact_list` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `georgiy_kovalenko_contact_list` DEFAULT CHARACTER SET utf8;
 USE `georgiy_kovalenko_contact_list`;
+CREATE USER 'kovalenko_georgiy'@'localhost' IDENTIFIED BY '1234567';
+GRANT ALL PRIVILEGES ON georgiy_kovalenko_contact_list.* TO 'kovalenko_georgiy'@'localhost';
+FLUSH PRIVILEGES;
 
 -- -----------------------------------------------------
 -- Table `georgiy_kovalenko_contact_list`.`marital_statuses`

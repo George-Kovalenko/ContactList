@@ -7,8 +7,8 @@
         maxTotal="30"
         maxIdle="10"
         maxWaitMillis="1000"
-        username="root"
-        password="admin"
+        username="kovalenko_georgiy"
+        password="1234567"
         driverClassName="com.mysql.jdbc.Driver"
         url="jdbc:mysql://localhost:3306/georgiy_kovalenko_contact_list"/>
 </Context>

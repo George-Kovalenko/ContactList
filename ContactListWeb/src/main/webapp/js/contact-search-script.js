@@ -257,47 +257,38 @@ function checkTextInputField(inputField, maxLength, checkFunction) {
     return '';
 }
 
-function checkDigitsInputField(inputField, min, max, required) {
-    var length = inputField.value.trim().length;
-    if (required && length < 1) {
-        return false;
-    }
-    if (!required && length === 0) {
-        return true;
-    }
-    if (containsDigits(inputField.value)) {
-        if (inputField.value >= min && inputField.value <= max) {
-            return true;
-        }
-    }
-    return false;
-}
-
 function checkDateInput() {
-    var dayCorrect, monthCorrect, yearCorrect;
+    var dayCorrect = true;
+    var monthCorrect = true;
+    var yearCorrect = true;
     var message = '';
     if (day.value.length > 0 || month.value.length > 0 || year.value.length > 0) {
-        dayCorrect = checkDigitsInputField(day, 1, 31, true);
-        monthCorrect = checkDigitsInputField(month, 1, 12, true);
-        yearCorrect = checkDigitsInputField(year, 1930, new Date().getFullYear(), true);
-        highlightInput(day, dayCorrect);
-        highlightInput(month, monthCorrect);
-        highlightInput(year, yearCorrect);
-        if (!dayCorrect) {
-            message += 'Поле "День" некорректно заполнено.<br>';
+        var date = new Date(year.value, month.value - 1, day.value);
+        dayCorrect = false;
+        monthCorrect = false;
+        yearCorrect = false;
+        if (date == 'Invalid Date') {
+            message += 'Дата введена неправильно.<br>';
+        } else if (date > new Date()) {
+            message += 'Введеная дата больше текущей.<br>';
+        } else {
+            dayCorrect = date.getDate() == day.value;
+            monthCorrect = date.getMonth() == month.value - 1;
+            yearCorrect = date.getFullYear() == year.value && year.value >= 1917;
+            if (!dayCorrect) {
+                message += 'Поле "День" некорректно заполнено.<br>';
+            }
+            if (!monthCorrect) {
+                message += 'Поле "Месяц" некорректно заполнено.<br>';
+            }
+            if (!yearCorrect) {
+                message += 'Поле "Год" некорректно заполнено.<br>';
+            }
         }
-        if (!monthCorrect) {
-            message += 'Поле "Месяц" некорректно заполнено.<br>';
-        }
-        if (!yearCorrect) {
-            message += 'Поле "Год" некорректно заполнено.<br>';
-        }
-        return message;
-    } else {
-        highlightInput(day, true);
-        highlightInput(month, true);
-        highlightInput(year, true);
     }
+    highlightInput(day, dayCorrect);
+    highlightInput(month, monthCorrect);
+    highlightInput(year, yearCorrect);
     return message;
 }
 
@@ -327,7 +318,7 @@ function containsOnlyCharsIgnoreCase(value, chars) {
     var lowerCaseValue = value.toLowerCase();
     var lowerCaseChars = chars.toLowerCase();
     for (var i = 0; i < value.length; i++) {
-        if (lowerCaseChars.indexOf(lowerCaseValue.charAt(i)) == -1) {
+        if (lowerCaseChars.indexOf(lowerCaseValue.charAt(i)) === -1) {
             return false;
         }
     }

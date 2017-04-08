@@ -61,6 +61,7 @@ public class ContactService {
                 ContactDAO contactDAO = new ContactDAO(connection);
                 contactDAO.insert(contact);
                 long id = contactDAO.getLastId();
+                contact.setId(id);
                 AddressDAO addressDAO = new AddressDAO(connection);
                 contact.getAddress().setId(id);
                 addressDAO.insert(contact.getAddress());

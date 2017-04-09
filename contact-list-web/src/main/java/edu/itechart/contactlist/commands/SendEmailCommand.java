@@ -25,8 +25,8 @@ public class SendEmailCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         try {
-            String subject = request.getParameter(PARAM_SUBJECT);
-            String text = request.getParameter(PARAM_TEXT);
+            String subject = StringUtils.trim(request.getParameter(PARAM_SUBJECT));
+            String text = StringUtils.trim(request.getParameter(PARAM_TEXT));
             int templateIndex = Integer.parseInt(request.getParameter(PARAM_TEMPLATE_INDEX));
             ArrayList<Contact> recipients = getAllRecipients(request);
             LOGGER.info("Send email to contacts with id {} with subject = {}, templateIndex = {} and text = {}",

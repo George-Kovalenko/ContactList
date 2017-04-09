@@ -1,0 +1,18 @@
+html, body {
+    font-size: 14px;
+    background-color: #DCE2EF;
+}
+
+a {
+    text-decoration: none;
+}
+
+.error-container {
+    width: 40%;
+    position: relative;
+    margin: 1% auto;
+    background-color: #FFFFFF;
+    border: 1px solid #EDF1FD;
+    border-radius: 5px;
+    text-align: center;
+}

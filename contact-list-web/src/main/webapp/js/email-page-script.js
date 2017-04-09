@@ -45,6 +45,8 @@ sendEmailButton.onclick = function () {
     input.name = 'template-index';
     input.value = emailTemplateSelect.selectedIndex;
     sendEmailForm.appendChild(input);
+    emailSubject.value = emailSubject.value.trim();
+    emailText.value = emailText.value.trim();
     sendEmailForm.submit();
 };
 

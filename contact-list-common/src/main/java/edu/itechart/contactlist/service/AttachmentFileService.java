@@ -26,15 +26,15 @@ public class AttachmentFileService {
         while (attachmentsIterator.hasNext() && attachmentFilesIterator.hasNext()) {
             Attachment attachment = attachmentsIterator.next();
             FileItem fileItem = attachmentFilesIterator.next();
-            String path = getDirectory(PATH_TO_ATTACHMENTS, attachment.getContactID());
+            String path = getDirectory(PATH_TO_ATTACHMENTS, attachment.getContactId());
             path += attachment.getId();
             LOGGER.debug("Write attachment with contactId = {}, id = {} and full path = {}",
-                    attachment.getContactID(), attachment.getId(), path);
+                    attachment.getContactId(), attachment.getId(), path);
             try {
                 writeFileItem(path, fileItem);
             } catch (Exception e) {
                 throw new ServiceException(String.format("Can't write attachment with id = %d to %s",
-                        attachment.getId(), path) , e);
+                        attachment.getId(), path), e);
             }
         }
     }
@@ -42,13 +42,12 @@ public class AttachmentFileService {
     public static void writePhoto(long contactId, FileItem photo) throws ServiceException {
         String path = getDirectory(PATH_TO_PHOTO, contactId);
         path += contactId;
-        LOGGER.debug("Write attachment with contactId = {} and full path = {}",
-                contactId, path);
+        LOGGER.debug("Write attachment with contactId = {} and full path = {}", contactId, path);
         try {
             writeFileItem(path, photo);
         } catch (Exception e) {
             throw new ServiceException(String.format("Can't write photo with contactId = %d to %s",
-                    contactId, photo.getName()) , e);
+                    contactId, photo.getName()), e);
         }
     }
 
@@ -75,7 +74,7 @@ public class AttachmentFileService {
             try {
                 content = Files.readAllBytes(file.toPath());
             } catch (IOException e) {
-                throw new ServiceException(String.format("Can't read file %s", file.getAbsolutePath()) , e);
+                throw new ServiceException(String.format("Can't read file %s", file.getAbsolutePath()), e);
             }
         }
         return content;

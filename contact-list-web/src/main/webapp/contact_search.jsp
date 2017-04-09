@@ -26,8 +26,8 @@
                 </label>
                 <label>
                     Пол
-                    <select class="select-field" name="gender">
-                        <option value="x">Не выбран</option>
+                    <select id="gender" class="select-field" name="gender">
+                        <option value="">Не выбран</option>
                         <option value="m">Мужской</option>
                         <option value="f">Женский</option>
                     </select>
@@ -38,7 +38,7 @@
                 </label>
                 <label>
                     Семейное положение
-                    <select class="select-field" name="marital-status">
+                    <select class="select-field" id="marital-status" name="marital-status">
                         <option value="0">
                             Не выбрано
                         </option>

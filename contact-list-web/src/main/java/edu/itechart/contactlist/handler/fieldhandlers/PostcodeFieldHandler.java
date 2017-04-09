@@ -17,7 +17,7 @@ public class PostcodeFieldHandler implements FieldHandler {
                 throw new FieldHandlerException("Invalid postcode.");
             }
         } else {
-           address.setPostcode(null);
+            address.setPostcode(null);
         }
     }
 }

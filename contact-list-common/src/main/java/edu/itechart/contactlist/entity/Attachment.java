@@ -6,17 +6,17 @@ public class Attachment extends Entity {
     private String fileName;
     private Date uploadDate;
     private String comment;
-    private long contactID;
+    private long contactId;
 
     public Attachment() {
     }
 
-    public Attachment(long id, String fileName, Date uploadDate, String comment, long contactID) {
+    public Attachment(long id, String fileName, Date uploadDate, String comment, long contactId) {
         super(id);
         this.fileName = fileName;
         this.uploadDate = uploadDate;
         this.comment = comment;
-        this.contactID = contactID;
+        this.contactId = contactId;
     }
 
     public String getFileName() {
@@ -43,12 +43,12 @@ public class Attachment extends Entity {
         this.comment = comment;
     }
 
-    public long getContactID() {
-        return contactID;
+    public long getContactId() {
+        return contactId;
     }
 
-    public void setContactID(long contactID) {
-        this.contactID = contactID;
+    public void setContactId(long contactId) {
+        this.contactId = contactId;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class Attachment extends Entity {
             return false;
         }
         Attachment that = (Attachment) o;
-        if (getContactID() != that.getContactID()) {
+        if (getContactId() != that.getContactId()) {
             return false;
         }
         if (getFileName() != null ? !getFileName().equals(that.getFileName()) : that.getFileName() != null) {
@@ -81,7 +81,7 @@ public class Attachment extends Entity {
         result = 31 * result + (getFileName() != null ? getFileName().hashCode() : 0);
         result = 31 * result + (getUploadDate() != null ? getUploadDate().hashCode() : 0);
         result = 31 * result + (getComment() != null ? getComment().hashCode() : 0);
-        result = 31 * result + (int) (getContactID() ^ (getContactID() >>> 32));
+        result = 31 * result + (int) (getContactId() ^ (getContactId() >>> 32));
         return result;
     }
 
@@ -91,7 +91,7 @@ public class Attachment extends Entity {
                 "fileName='" + fileName + '\'' +
                 ", uploadDate=" + uploadDate +
                 ", comment='" + comment + '\'' +
-                ", contactID=" + contactID +
+                ", contactId=" + contactId +
                 "} " + super.toString();
     }
 }

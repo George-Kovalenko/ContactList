@@ -2,7 +2,6 @@ package edu.itechart.contactlist.commands;
 
 import edu.itechart.contactlist.service.ContactService;
 import edu.itechart.contactlist.service.ServiceException;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

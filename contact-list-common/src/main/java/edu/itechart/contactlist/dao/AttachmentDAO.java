@@ -11,8 +11,8 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
     private static final String SELECT_BY_CONTACT_ID = "SELECT * FROM attachments WHERE contact_id=?";
     private static final String SELECT_BY_ID = "SELECT * FROM attachments WHERE id=?";
     private static final String UPDATE_ATTACHMENT = "UPDATE attachments SET file_name=?, comment=? WHERE id=?";
-    private static final String INSERT_ATTACHMENT = "INSERT INTO attachments (file_name, upload_date, comment, " +
-            "contact_id) VALUES(?, ?, ?, ?)";
+    private static final String INSERT_ATTACHMENT = "INSERT INTO attachments (file_name, upload_date, comment, "
+            + "contact_id) VALUES(?, ?, ?, ?)";
     private static final String DELETE_ATTACHMENT = "DELETE FROM attachments WHERE id=?";
     private static final String DELETE_BY_CONTACT_ID = "DELETE FROM attachments WHERE contact_id=?";
 
@@ -43,7 +43,7 @@ public class AttachmentDAO extends AbstractDAO<Attachment> {
             StatementUtils.setStringValue(preparedStatement, 1, attachment.getFileName());
             StatementUtils.setDateValue(preparedStatement, 2, attachment.getUploadDate());
             StatementUtils.setStringValue(preparedStatement, 3, attachment.getComment());
-            StatementUtils.setLongValue(preparedStatement, 4, attachment.getContactID());
+            StatementUtils.setLongValue(preparedStatement, 4, attachment.getContactId());
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {

@@ -183,6 +183,12 @@ function isAnyFieldEntered() {
     if (postcode.value.trim().length > 0) {
         return true;
     }
+    if (document.getElementById('marital-status').selectedIndex != 0) {
+        return true;
+    }
+    if (document.getElementById('gender').selectedIndex != 0) {
+        return true;
+    }
     return false;
 }
 

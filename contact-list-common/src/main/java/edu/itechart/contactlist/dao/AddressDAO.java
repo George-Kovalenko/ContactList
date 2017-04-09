@@ -3,7 +3,6 @@ package edu.itechart.contactlist.dao;
 import edu.itechart.contactlist.entity.Address;
 import edu.itechart.contactlist.entity.factory.AddressFactory;
 import edu.itechart.contactlist.util.StatementUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,10 +12,10 @@ import java.util.ArrayList;
 
 public class AddressDAO extends AbstractDAO<Address> {
     private static final String SELECT_BY_ID = "SELECT * FROM addresses WHERE contact_id=?";
-    private static final String UPDATE_ADDRESS = "UPDATE addresses SET country=?, city=?, street=?, house_number=?," +
-            "flat_number=?, postcode=? WHERE contact_id=?";
-    private static final String INSERT_ADDRESS = "INSERT INTO addresses (country, city, street, house_number, " +
-            "flat_number, postcode, contact_id) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private static final String UPDATE_ADDRESS = "UPDATE addresses SET country=?, city=?, street=?, house_number=?,"
+            + "flat_number=?, postcode=? WHERE contact_id=?";
+    private static final String INSERT_ADDRESS = "INSERT INTO addresses (country, city, street, house_number, "
+            + "flat_number, postcode, contact_id) VALUES(?, ?, ?, ?, ?, ?, ?)";
     private static final String DELETE_ADDRESS = "DELETE FROM addresses WHERE contact_id=?";
 
     public AddressDAO(Connection connection) {

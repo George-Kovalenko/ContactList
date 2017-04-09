@@ -42,7 +42,7 @@ public class Controller extends HttpServlet {
             }
         } catch (CommandException e) {
             LOGGER.error("Error when process request", e);
-            req.getRequestDispatcher("/error.jsp").forward(req, resp);
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }
 }

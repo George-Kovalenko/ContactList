@@ -65,10 +65,10 @@ public class ContactService {
                 AddressDAO addressDAO = new AddressDAO(connection);
                 contact.getAddress().setId(id);
                 addressDAO.insert(contact.getAddress());
-                contact.getPhones().forEach(item -> item.setContactID(id));
+                contact.getPhones().forEach(item -> item.setContactId(id));
                 PhoneDAO phoneDAO = new PhoneDAO(connection);
                 insertEntityList(contact.getPhones(), phoneDAO);
-                contact.getAttachments().forEach(item -> item.setContactID(id));
+                contact.getAttachments().forEach(item -> item.setContactId(id));
                 AttachmentDAO attachmentDAO = new AttachmentDAO(connection);
                 insertEntityList(contact.getAttachments(), attachmentDAO);
                 AttachmentFileService.writeAttachments(contact.getAttachments(), fileItems);
@@ -104,7 +104,7 @@ public class ContactService {
                         attachmentDAO);
                 AttachmentFileService.writeAttachments(attachmentsForInsert, fileItems);
                 for (Attachment oldAttach : oldAttachments) {
-                    AttachmentFileService.removeFile(oldAttach.getContactID(), oldAttach.getId(),
+                    AttachmentFileService.removeFile(oldAttach.getContactId(), oldAttach.getId(),
                             AttachmentFileService.PATH_TO_ATTACHMENTS);
                 }
                 if (photo.getSize() != 0) {

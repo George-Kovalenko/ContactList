@@ -10,7 +10,10 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class DownloadAttachmentCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(DownloadAttachmentCommand.class);
@@ -21,7 +24,7 @@ public class DownloadAttachmentCommand implements Command {
         long id = Long.parseLong(request.getParameter(REQUEST_PARAM_NAME));
         try {
             Attachment attachment = AttachmentService.findById(id);
-            String path = AttachmentFileService.getPathToAttachment(attachment.getContactID(), attachment.getId());
+            String path = AttachmentFileService.getPathToAttachment(attachment.getContactId(), attachment.getId());
             LOGGER.info("Download attachment with id = {}, path = {}", id, path);
             if (StringUtils.isNotEmpty(path)) {
                 File file = new File(path);

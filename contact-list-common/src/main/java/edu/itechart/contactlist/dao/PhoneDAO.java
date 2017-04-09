@@ -12,10 +12,10 @@ import java.util.ArrayList;
 
 public class PhoneDAO extends AbstractDAO<Phone> {
     private static final String SELECT_BY_CONTACT_ID = "SELECT * FROM phones WHERE contact_id=?";
-    private static final String UPDATE_PHONE = "UPDATE phones SET country_code=?, operator_code=?, number=?, " +
-            "phone_type=?, comment=? WHERE id=?";
-    private static final String INSERT_PHONE = "INSERT INTO phones (country_code, operator_code, number, phone_type, " +
-            "comment, contact_id) VALUES(?, ?, ?, ?, ?, ?)";
+    private static final String UPDATE_PHONE = "UPDATE phones SET country_code=?, operator_code=?, number=?, "
+            + "phone_type=?, comment=? WHERE id=?";
+    private static final String INSERT_PHONE = "INSERT INTO phones (country_code, operator_code, number, phone_type, "
+            + "comment, contact_id) VALUES(?, ?, ?, ?, ?, ?)";
     private static final String DELETE_PHONE = "DELETE FROM phones WHERE id=?";
     private static final String DELETE_BY_CONTACT_ID = "DELETE FROM phones WHERE contact_id=?";
 
@@ -43,7 +43,7 @@ public class PhoneDAO extends AbstractDAO<Phone> {
     public void insert(Phone phone) throws DAOException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PHONE)) {
             fillPreparedStatement(preparedStatement, phone);
-            StatementUtils.setLongValue(preparedStatement, 6, phone.getContactID());
+            StatementUtils.setLongValue(preparedStatement, 6, phone.getContactId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(String.format("Can't insert %s", phone), e);

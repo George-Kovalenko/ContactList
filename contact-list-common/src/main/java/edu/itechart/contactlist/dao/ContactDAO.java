@@ -1,9 +1,9 @@
 package edu.itechart.contactlist.dao;
 
-import edu.itechart.contactlist.entity.Address;
-import edu.itechart.contactlist.entity.Contact;
 import edu.itechart.contactlist.dto.DateSearchType;
 import edu.itechart.contactlist.dto.SearchParameters;
+import edu.itechart.contactlist.entity.Address;
+import edu.itechart.contactlist.entity.Contact;
 import edu.itechart.contactlist.entity.factory.AddressFactory;
 import edu.itechart.contactlist.entity.factory.ContactFactory;
 import edu.itechart.contactlist.util.StatementUtils;
@@ -16,7 +16,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
     private static final String SELECT_ALL = "SELECT * FROM contacts";
     private static final String SELECT_CERTAIN_COUNT_BY_OFFSET = "SELECT * FROM contacts LIMIT ? OFFSET ?";
     private static final String SELECT_BY_ID = "SELECT * FROM contacts WHERE id=?";
-    private static final String SELECT_BY_BIRTH_DATE ="SELECT * FROM contacts WHERE MONTH(birth_date)=MONTH(CURDATE()) " +
+    private static final String SELECT_BY_BIRTH_DATE = "SELECT * FROM contacts WHERE MONTH(birth_date)=MONTH(CURDATE()) " +
             "AND DAY(birth_date)=DAY(CURDATE())";
     private static final String INSERT_CONTACT = "INSERT INTO contacts (first_name, last_name, middle_name, " +
             "birth_date, nationality, gender, marital_status, website, email, job) " +
@@ -137,7 +137,7 @@ public class ContactDAO extends AbstractDAO<Contact> {
             }
             return count;
         } catch (SQLException e) {
-            throw new DAOException("Can't get contact count from table 'contacts'" ,e);
+            throw new DAOException("Can't get contact count from table 'contacts'", e);
         }
     }
 

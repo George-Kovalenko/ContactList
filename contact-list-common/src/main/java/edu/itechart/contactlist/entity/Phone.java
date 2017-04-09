@@ -6,20 +6,20 @@ public class Phone extends Entity {
     private String number;
     private int phoneType;
     private String comment;
-    private long contactID;
+    private long contactId;
 
     public Phone() {
     }
 
     public Phone(long id, String countryCode, String operatorCode, String number, int phoneType, String comment,
-                 long contactID) {
+                 long contactId) {
         super(id);
         this.countryCode = countryCode;
         this.operatorCode = operatorCode;
         this.number = number;
         this.phoneType = phoneType;
         this.comment = comment;
-        this.contactID = contactID;
+        this.contactId = contactId;
     }
 
     public String getCountryCode() {
@@ -62,12 +62,12 @@ public class Phone extends Entity {
         this.comment = comment;
     }
 
-    public long getContactID() {
-        return contactID;
+    public long getContactId() {
+        return contactId;
     }
 
-    public void setContactID(long contactID) {
-        this.contactID = contactID;
+    public void setContactId(long contactId) {
+        this.contactId = contactId;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class Phone extends Entity {
         if (getPhoneType() != phone.getPhoneType()) {
             return false;
         }
-        if (getContactID() != phone.getContactID()) {
+        if (getContactId() != phone.getContactId()) {
             return false;
         }
         if (getCountryCode() != null ? !getCountryCode().equals(phone.getCountryCode()) :
@@ -110,7 +110,7 @@ public class Phone extends Entity {
         result = 31 * result + (getNumber() != null ? getNumber().hashCode() : 0);
         result = 31 * result + getPhoneType();
         result = 31 * result + (getComment() != null ? getComment().hashCode() : 0);
-        result = 31 * result + (int) (getContactID() ^ (getContactID() >>> 32));
+        result = 31 * result + (int) (getContactId() ^ (getContactId() >>> 32));
         return result;
     }
 
@@ -122,7 +122,7 @@ public class Phone extends Entity {
                 ", number='" + number + '\'' +
                 ", phoneType=" + phoneType +
                 ", comment='" + comment + '\'' +
-                ", contactID=" + contactID +
+                ", contactId=" + contactId +
                 "} " + super.toString();
     }
 }

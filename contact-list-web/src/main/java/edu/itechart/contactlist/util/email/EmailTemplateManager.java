@@ -22,7 +22,7 @@ public class EmailTemplateManager {
         ArrayList<String> templates = new ArrayList<>();
         int i = 1;
         ST st;
-        while ((st = stGroup.getInstanceOf(TEMPLATE_PREFIX + i++)) != null){
+        while ((st = stGroup.getInstanceOf(TEMPLATE_PREFIX + i++)) != null) {
             st.add(PARAM_NAME, PARAM_VALUE);
             templates.add(st.render());
         }

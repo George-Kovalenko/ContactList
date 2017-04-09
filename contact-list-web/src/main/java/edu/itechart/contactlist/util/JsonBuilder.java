@@ -24,7 +24,7 @@ public class JsonBuilder {
             phone.setNumber((String) jsonObject.get("number"));
             phone.setPhoneType(Integer.parseInt(jsonObject.get("type").toString()));
             phone.setComment((String) jsonObject.get("comment"));
-            phone.setContactID(Long.parseLong(jsonObject.get("contactId").toString()));
+            phone.setContactId(Long.parseLong(jsonObject.get("contactId").toString()));
             phones.add(phone);
         }
         return phones;
@@ -41,10 +41,9 @@ public class JsonBuilder {
             attachment.setFileName((String) jsonObject.get("fileName"));
             attachment.setUploadDate(Date.valueOf(jsonObject.get("uploadDate").toString()));
             attachment.setComment((String) jsonObject.get("comment"));
-            attachment.setContactID(Long.parseLong(jsonObject.get("contactId").toString()));
+            attachment.setContactId(Long.parseLong(jsonObject.get("contactId").toString()));
             attachments.add(attachment);
         }
-
         return attachments;
     }
 }

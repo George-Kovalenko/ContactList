@@ -30,7 +30,7 @@ public class Validator {
     }
 
     public static boolean isGender(String value) {
-        return StringUtils.containsAny(value, "x", "m", "f");
+        return StringUtils.containsAny(value,  "m", "f");
     }
 
     public static boolean isEmail(String value) {

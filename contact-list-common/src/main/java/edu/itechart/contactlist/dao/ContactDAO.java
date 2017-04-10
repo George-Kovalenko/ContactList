@@ -204,8 +204,8 @@ public class ContactDAO extends AbstractDAO<Contact> {
     }
 
     private String createSearchStringPart(String paramName, String paramValue) {
-        return StringUtils.isNotEmpty(paramValue) ? String.format(" AND %s LIKE '%s'", paramName, paramValue)
-                : StringUtils.EMPTY;
+        return StringUtils.isNotEmpty(paramValue) ? String.format(" AND %s LIKE '%s'", paramName, "%" + paramValue
+                + "%") : StringUtils.EMPTY;
     }
 
     private String createSearchGenderPart(String gender) {

@@ -7,10 +7,12 @@ import edu.itechart.contactlist.util.email.EmailTemplateManager;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.stringtemplate.v4.ST;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ShowEmailPageCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShowEmailPageCommand.class);
@@ -34,10 +36,10 @@ public class ShowEmailPageCommand implements Command {
                     }
                 }
             }
-            EmailTemplateManager emailTemplateManager = new EmailTemplateManager();
-            ArrayList<String> templates = emailTemplateManager.getAllTemplates();
+            Map<String, ST> templates = EmailTemplateManager.getTemplates(EmailTemplateManager.TEMPLATES_PATH);
+            Map<String, String> genericTemplates = EmailTemplateManager.getGenericTemplates(templates);
             request.setAttribute(REQUEST_ATTR_RECIPIENTS, recipients);
-            request.setAttribute(REQUEST_ATTR_TEMPLATES, templates);
+            request.setAttribute(REQUEST_ATTR_TEMPLATES, genericTemplates);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

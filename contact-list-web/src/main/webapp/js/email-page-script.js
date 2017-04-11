@@ -30,8 +30,12 @@ var sendEmailForm = document.getElementById('send-email');
 
 emailTemplateSelect.onchange = function () {
     var selectedIndex = emailTemplateSelect.selectedIndex;
-    emailTextArea.value = emailTemplateSelect[selectedIndex].value;
     emailTextArea.disabled = selectedIndex > 0;
+    if (emailTextArea.disabled) {
+        emailTextArea.value = document.getElementById(emailTemplateSelect[selectedIndex].value).value;
+    } else {
+        emailTextArea.value = '';
+    }
 };
 
 
@@ -40,11 +44,6 @@ sendEmailButton.onclick = function () {
         openModalWindow(errorMessagePopup);
         return;
     }
-    var input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'template-index';
-    input.value = emailTemplateSelect.selectedIndex;
-    sendEmailForm.appendChild(input);
     emailSubject.value = emailSubject.value.trim();
     emailText.value = emailText.value.trim();
     sendEmailForm.submit();

@@ -3,36 +3,27 @@ package edu.itechart.contactlist.util.email;
 import edu.itechart.contactlist.entity.Contact;
 import edu.itechart.contactlist.service.ContactService;
 import edu.itechart.contactlist.service.ServiceException;
+import org.apache.commons.collections4.CollectionUtils;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupFile;
 
 import javax.mail.MessagingException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class SendEmailJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         try {
-            ArrayList<Contact> contacts = getContacts();
+            ArrayList<Contact> contacts = ContactService.findByBirthDate();
             sendEmail(contacts);
-        } catch (MessagingException e) {
+        } catch (ServiceException | MessagingException e) {
             throw new JobExecutionException(e);
         }
-    }
-
-    private ArrayList<Contact> getContacts() {
-        ArrayList<Contact> contactsWithBirthdayToday = new ArrayList<>();
-        try {
-            contactsWithBirthdayToday = ContactService.findByBirthDate();
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
-        return contactsWithBirthdayToday;
     }
 
     private void sendEmail(ArrayList<Contact> contacts) throws MessagingException {
@@ -44,26 +35,17 @@ public class SendEmailJob implements Job {
     }
 
     private String getEmailText(ArrayList<Contact> contacts) {
-        ST st;
-        String text;
-        if (!contacts.isEmpty()) {
-            text = getBirthdayTemplate("startLine").render() + "\n";
-            for (Contact contact : contacts) {
-                st = getBirthdayTemplate("contact");
-                st.add("first_name", contact.getFirstName());
-                st.add("last_name", contact.getLastName());
-                text += st.render() + "\n";
-            }
+        Map<String, ST> templates = EmailTemplateManager.getTemplates(EmailTemplateManager.SCHEDULE_TEMPLATES_PATH);
+        StringBuilder text = new StringBuilder();
+        if (CollectionUtils.isNotEmpty(contacts)) {
+            text.append(templates.get("startLine").render());
+            Collection<String> templateValues
+                    = EmailTemplateManager.getFinalTemplates(EmailTemplateManager.SCHEDULE_TEMPLATES_PATH, "contact",
+                    contacts).values();
+            templateValues.forEach(text::append);
         } else {
-            text = getBirthdayTemplate("noBirthday").render();
+            text.append(templates.get("noBirthday").render());
         }
-        return text;
-    }
-
-    private ST getBirthdayTemplate(String templateName) {
-        String path = ResourceBundle.getBundle("emailconfig").getObject("schedule_template_file_path").toString();
-        STGroup stGroup;
-        stGroup = new STGroupFile(path);
-        return stGroup.getInstanceOf(templateName);
+        return text.toString();
     }
 }

@@ -33,13 +33,13 @@
                     Шаблон
                     <select name="email-template" id="email-template">
                         <option value="">Не выбран</option>
-                        <c:forEach var="template" items="${templates}" varStatus="loop">
-                            <option value="${template}">
-                                Шаблон №${loop.index + 1}
-                            </option>
-                        </c:forEach>
+                        <option value="birthday">День рождения</option>
+                        <option value="newYear">Новый год</option>
                     </select>
                 </label>
+                <c:forEach var="template" items="${templates}">
+                    <input type="hidden" value="${template.value}" name="${template.key}">
+                </c:forEach>
                 <label>
                     Текст
                     <textarea name="email-text" id="email-text" rows="7"></textarea>

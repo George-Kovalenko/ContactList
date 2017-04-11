@@ -13,13 +13,14 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class SendEmailCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(SendEmailCommand.class);
     private static final String PARAM_SUBJECT = "email-subject";
     private static final String PARAM_TEXT = "email-text";
     private static final String PARAM_RECIPIENTS = "recipient-id";
-    private static final String PARAM_TEMPLATE_INDEX = "template-index";
+    private static final String PARAM_TEMPLATE_NAME = "email-template";
     private static final String URL_CONTACT_LIST = "controller";
 
     @Override
@@ -27,16 +28,16 @@ public class SendEmailCommand implements Command {
         try {
             String subject = StringUtils.trim(request.getParameter(PARAM_SUBJECT));
             String text = StringUtils.trim(request.getParameter(PARAM_TEXT));
-            int templateIndex = Integer.parseInt(request.getParameter(PARAM_TEMPLATE_INDEX));
+            String templateName = request.getParameter(PARAM_TEMPLATE_NAME);
             ArrayList<Contact> recipients = getAllRecipients(request);
-            LOGGER.info("Send email to contacts with id {} with subject = {}, templateIndex = {} and text = {}",
-                    request.getParameterValues(PARAM_RECIPIENTS), templateIndex, subject, text);
+            LOGGER.info("Send email to contacts with id {} with subject = {}, template = {} and text = {}",
+                    request.getParameterValues(PARAM_RECIPIENTS), subject, templateName, text);
             EmailManager emailManager = new EmailManager();
-            if (templateIndex > 0) {
-                EmailTemplateManager emailTemplateManager = new EmailTemplateManager();
+            if (StringUtils.isNotEmpty(templateName)) {
+                Map<Long, String> templates = EmailTemplateManager.getFinalTemplates(EmailTemplateManager.TEMPLATES_PATH,
+                        templateName, recipients);
                 for (Contact recipient : recipients) {
-                    text = emailTemplateManager.makeEmailText(templateIndex, recipient.getFirstName());
-                    emailManager.sendMail(recipient.getEmail(), subject, text);
+                    emailManager.sendMail(recipient.getEmail(), subject, templates.get(recipient.getId()));
                 }
             } else {
                 for (Contact recipient : recipients) {

@@ -1,6 +1,6 @@
 package edu.itechart.contactlist.util.pagination;
 
-import org.apache.commons.lang3.StringUtils;
+import edu.itechart.contactlist.util.Validator;
 
 public class PaginationManager {
     private static final int CONTACTS_PER_PAGE = 10;
@@ -28,7 +28,7 @@ public class PaginationManager {
     private int getActivePage(String page) {
         int pageNumber = 1;
         int pageCount = pagination.getPageCount();
-        if (StringUtils.isNotEmpty(page)) {
+        if (Validator.isNumber(page)) {
             pageNumber = Integer.parseInt(page);
         }
         pageNumber = pageNumber >= pageCount ? pageCount : pageNumber;

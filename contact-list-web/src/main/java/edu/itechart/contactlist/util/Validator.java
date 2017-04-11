@@ -44,6 +44,6 @@ public class Validator {
     }
 
     private static boolean containsChars(String value, String chars) {
-        return StringUtils.containsOnly(value.toLowerCase(), chars);
+        return StringUtils.containsOnly(StringUtils.lowerCase(value), chars);
     }
 }

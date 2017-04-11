@@ -2,8 +2,8 @@ startLine() ::= <<
 Сегодня день рождения празднуют:
 >>
 
-contact(first_name, last_name) ::= <<
-<last_name> <first_name>
+contact(contact) ::= <<
+<\n> <contact.lastName> <contact.firstName> <contact.email>
 >>
 
 noBirthday() ::= <<

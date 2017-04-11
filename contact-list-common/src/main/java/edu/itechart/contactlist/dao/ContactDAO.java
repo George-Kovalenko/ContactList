@@ -187,20 +187,21 @@ public class ContactDAO extends AbstractDAO<Contact> {
     }
 
     private String buildParamQuery(SearchParameters parameters, String query) {
-        query += createSearchStringPart("first_name", parameters.getFirstName());
-        query += createSearchStringPart("last_name", parameters.getLastName());
-        query += createSearchStringPart("middle_name", parameters.getMiddleName());
-        query += createSearchStringPart("nationality", parameters.getNationality());
-        query += createSearchGenderPart(parameters.getGender());
-        query += createSearchIntPart("marital_status", parameters.getMaritalStatus());
-        query += createSearchDatePart(parameters.getBirthDate(), parameters.getDateSearchType());
-        query += createSearchStringPart("country", parameters.getCountry());
-        query += createSearchStringPart("city", parameters.getCity());
-        query += createSearchStringPart("street", parameters.getStreet());
-        query += createSearchStringPart("house_number", parameters.getHouseNumber());
-        query += createSearchStringPart("flat_number", parameters.getFlatNumber());
-        query += createSearchStringPart("postcode", parameters.getPostcode());
-        return query;
+        StringBuilder buildQuery = new StringBuilder(query);
+        buildQuery.append(createSearchStringPart("first_name", parameters.getFirstName()));
+        buildQuery.append(createSearchStringPart("last_name", parameters.getLastName()));
+        buildQuery.append(createSearchStringPart("middle_name", parameters.getMiddleName()));
+        buildQuery.append(createSearchStringPart("nationality", parameters.getNationality()));
+        buildQuery.append(createSearchGenderPart(parameters.getGender()));
+        buildQuery.append(createSearchIntPart(parameters.getMaritalStatus()));
+        buildQuery.append(createSearchDatePart(parameters.getBirthDate(), parameters.getDateSearchType()));
+        buildQuery.append(createSearchStringPart("country", parameters.getCountry()));
+        buildQuery.append(createSearchStringPart("city", parameters.getCity()));
+        buildQuery.append(createSearchStringPart("street", parameters.getStreet()));
+        buildQuery.append(createSearchStringPart("house_number", parameters.getHouseNumber()));
+        buildQuery.append(createSearchStringPart("flat_number", parameters.getFlatNumber()));
+        buildQuery.append(createSearchStringPart("postcode", parameters.getPostcode()));
+        return buildQuery.toString();
     }
 
     private String createSearchStringPart(String paramName, String paramValue) {
@@ -213,29 +214,29 @@ public class ContactDAO extends AbstractDAO<Contact> {
                 : StringUtils.EMPTY;
     }
 
-    private String createSearchIntPart(String paramName, Integer number) {
+    private String createSearchIntPart(Integer number) {
         if (number != null && number != 0) {
-            return createSearchStringPart(paramName, number.toString());
+            return createSearchStringPart("marital_status", number.toString());
         }
         return StringUtils.EMPTY;
     }
 
     private String createSearchDatePart(Date date, DateSearchType dateSearchType) {
         if (date != null) {
-            String queryPart = " AND birth_date ";
+            StringBuilder queryPart = new StringBuilder(" AND birth_date ");
             switch (dateSearchType) {
                 case OLDER:
-                    queryPart += "< ";
+                    queryPart.append("< ");
                     break;
                 case YOUNGER:
-                    queryPart += "> ";
+                    queryPart.append("> ");
                     break;
                 case EQUALS:
-                    queryPart += "= ";
+                    queryPart.append("= ");
                     break;
             }
-            queryPart += String.format("'%s'", date.toString());
-            return queryPart;
+            queryPart.append(String.format("'%s'", date.toString()));
+            return queryPart.toString();
         }
         return StringUtils.EMPTY;
     }

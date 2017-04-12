@@ -1,7 +1,6 @@
 package edu.itechart.contactlist.dao;
 
 import edu.itechart.contactlist.entity.MaritalStatus;
-import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,18 +34,18 @@ public class MaritalStatusDAO extends AbstractDAO<MaritalStatus> {
 
     @Override
     public MaritalStatus findById(long id) throws DAOException {
-       try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
-           preparedStatement.setLong(1, id);
-           ResultSet resultSet = preparedStatement.executeQuery();
-           MaritalStatus maritalStatus = new MaritalStatus();
-           if (resultSet.next()) {
-               maritalStatus.setId(resultSet.getLong("id_marital_status"));
-               maritalStatus.setName(resultSet.getString("name"));
-           }
-           return maritalStatus;
-       } catch (SQLException e) {
-           throw new DAOException(String.format("Can't get marital status by id = %d", id), e);
-       }
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            MaritalStatus maritalStatus = new MaritalStatus();
+            if (resultSet.next()) {
+                maritalStatus.setId(resultSet.getLong("id_marital_status"));
+                maritalStatus.setName(resultSet.getString("name"));
+            }
+            return maritalStatus;
+        } catch (SQLException e) {
+            throw new DAOException(String.format("Can't get marital status by id = %d", id), e);
+        }
     }
 
     @Override

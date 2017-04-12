@@ -38,7 +38,7 @@
                     </select>
                 </label>
                 <c:forEach var="template" items="${templates}">
-                    <input type="hidden" value="${template.value}" name="${template.key}">
+                    <input type="hidden" value="${template.value}" id="${template.key}">
                 </c:forEach>
                 <label>
                     Текст

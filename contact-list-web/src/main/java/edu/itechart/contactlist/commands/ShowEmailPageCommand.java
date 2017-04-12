@@ -38,6 +38,7 @@ public class ShowEmailPageCommand implements Command {
             }
             Map<String, ST> templates = EmailTemplateManager.getTemplates(EmailTemplateManager.TEMPLATES_PATH);
             Map<String, String> genericTemplates = EmailTemplateManager.getGenericTemplates(templates);
+            System.out.println(genericTemplates);
             request.setAttribute(REQUEST_ATTR_RECIPIENTS, recipients);
             request.setAttribute(REQUEST_ATTR_TEMPLATES, genericTemplates);
         } catch (ServiceException e) {

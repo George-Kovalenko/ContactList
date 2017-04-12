@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +21,30 @@
                 <a class="nav-button mail" title="mail" id="send-mail-button"></a>
                 <a class="nav-button home" title="home" id="home-button" href="controller?command=show_contact_list&page=1"></a>
             </div>
+            <c:if test="${not empty searchParameters}">
+                <label class="search-info">
+                    <c:choose>
+                        <c:when test="${empty contacts}">
+                            <c:out value="По вашему запросу контакты не найдены."/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:out value="Контактов найдено: ${fn:length(contacts)}."/>
+                        </c:otherwise>
+                    </c:choose>
+                </label>
+                <div class="search-container">
+                    <label>
+                        Параметры поиска:
+                    </label>
+                    <ul class="search-parameters">
+                        <c:forEach var="searchParameter" items="${searchParameters}">
+                            <li class="search-parameter">
+                                <c:out value="${searchParameter.key}: ${searchParameter.value}"/>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </c:if>
             <c:if test="${not empty pagination and not empty contacts}">
                 <c:set var="firstPage" value="${1}"/>
                 <c:set var="lastPage" value="${pagination.pageCount}"/>

@@ -5,6 +5,7 @@ import edu.itechart.contactlist.dto.SearchParameters;
 import edu.itechart.contactlist.entity.Contact;
 import edu.itechart.contactlist.service.ContactService;
 import edu.itechart.contactlist.service.ServiceException;
+import edu.itechart.contactlist.util.SearchParametersUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -14,9 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class SearchContactsCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchContactsCommand.class);
+    private static final String REQUEST_ATTR_CONTACT = "contacts";
+    private static final String REQUEST_ATTR_SEARCH_PARAMETERS = "searchParameters";
     private static final String URL_CONTACT_LIST = "contact_list.jsp";
 
     @Override
@@ -28,7 +32,8 @@ public class SearchContactsCommand implements Command {
         searchParameters.setNationality(request.getParameter("nationality"));
         searchParameters.setGender(request.getParameter("gender"));
         String maritalStatus = request.getParameter("marital-status");
-        searchParameters.setMaritalStatus(StringUtils.isNotEmpty(maritalStatus) ? Integer.parseInt(maritalStatus) : 0);
+        searchParameters.setMaritalStatus(StringUtils.isNotEmpty(maritalStatus) ? Integer.parseInt(maritalStatus)
+                : null);
         String day = request.getParameter("birth-date-day");
         String month = request.getParameter("birth-date-month");
         String year = request.getParameter("birth-date-year");
@@ -46,7 +51,9 @@ public class SearchContactsCommand implements Command {
         LOGGER.info("Search contacts with params {}", searchParameters);
         try {
             ArrayList<Contact> contacts = ContactService.findAllByParameters(searchParameters);
-            request.setAttribute("contacts", contacts);
+            Map<String, String> parametersMap = SearchParametersUtils.searchParamsToMap(searchParameters);
+            request.setAttribute(REQUEST_ATTR_CONTACT, contacts);
+            request.setAttribute(REQUEST_ATTR_SEARCH_PARAMETERS, parametersMap);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }
